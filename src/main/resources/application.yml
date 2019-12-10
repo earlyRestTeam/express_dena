@@ -6,11 +6,11 @@ spring:
         url: jdbc:mysql://localhost:3306/expressage?useUnicode=true
         username: root
         password: 110412
-    #邮箱配置
+    #閭閰嶇疆
     mail:
         host: smtp.163.com
         username: 18216308307@163.com
-        #QQ邮箱的授权码
+        #QQ閭鐨勬巿鏉冪爜
         password: m4gewo
         default-encoding: UTF-8
         properties:
@@ -28,7 +28,7 @@ spring:
         cache: false
 
 
-#设置一个邮件发送人
+#璁剧疆涓�涓偖浠跺彂閫佷汉
 want:
     mail:
         senderName: want-conpany
