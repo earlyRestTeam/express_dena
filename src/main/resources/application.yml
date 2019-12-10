@@ -38,10 +38,10 @@ mybatis:
     mapper-locations:
         - classpath:mapper/*.xml
         - classpath*:com/**/mapper/*.xml
-elasticsearch:
-    host: 127.0.0.1
-    port: 9300
-    cluster:
-        name: want-lifu
-    pool: 5
+#elasticsearch:
+#    host: 127.0.0.1
+#    port: 9300
+#    cluster:
+#        name: want-lifu
+#    pool: 5
 
