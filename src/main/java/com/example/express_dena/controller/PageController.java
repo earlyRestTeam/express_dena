@@ -62,4 +62,8 @@ public class PageController {
     public String wallet(){
         return "/wallet";
     }
+    @GetMapping("userHistoryOrder")
+    public String userHistoryOrder(){
+        return "/userHistoryOrder";
+    }
 }
