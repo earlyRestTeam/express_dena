@@ -14,56 +14,56 @@ public class StaffController {
     //登录页面跳转
     @RequestMapping("login")
     public String stafflogin(){
-        return "login";
+        return "/login";
     }
 
     //注册界面跳转
     @RequestMapping("register")
     public String staffRegister(){
-        return "register";
+        return "/register";
     }
 
     //快递员钱主界面
     @RequestMapping("staffmain")
     public String staffMain(){
-        return "staff/staffmain";
+        return "/staff/staffmain";
     }
 
     //快递员钱包界面跳转
     @RequestMapping("staffwallet")
     public String staffWaller(){
-        return "staff/staffwallet";
+        return "/staff/staffwallet";
     }
 
     //快递员个人信息
     @RequestMapping("staffinfo")
     public String staffInfo(){
-        return "staff/staffinfo";
+        return "/staff/staffinfo";
     }
 
     //历史订单界面
     @RequestMapping("staffHistoryOrder")
     public String staffHistoryOrder(){
 
-        return "staff/staffHistoryOrder";
+        return "/staff/staffHistoryOrder";
     }
 
     //更改密码界面
     @RequestMapping("staffchangePwd")
     public String staffchangePwd(){
-        return "staff/staffchangePwd";
+        return "/staff/staffchangePwd";
     }
 
     //当订单详情页面
     @RequestMapping("detailsOrder")
     public String detailsOrder(){
-        return "staff/detailsOrder";
+        return "/staff/detailsOrder";
     }
 
     //当前订单跳转1
     @RequestMapping("currentStaffOrder")
     public String currentStaffOrder(){
-        return "staff/currentStaffOrder";
+        return "/staff/currentStaffOrder";
     }
 
 }

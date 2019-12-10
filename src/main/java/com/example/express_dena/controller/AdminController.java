@@ -79,69 +79,69 @@ public class AdminController {
 
     @RequestMapping("member_del")
     public String member_del(){
-        return "/member_del";
+        return "/admin/member_del";
     }
 
     @RequestMapping("member_list")
     public String member_list(){
-        return "/member_list";
+        return "/admin/member_list";
     }
 
     @RequestMapping("picture_add")
     public String picture_add(){
-        return "/picture_add";
+        return "/admin/picture_add";
     }
 
     @RequestMapping("picture_list")
     public String picture_list(){
-        return "/picture_list";
+        return "/admin/picture_list";
     }
 
     @RequestMapping("picture_show")
     public String picture_show(){
-        return "/picture_show";
+        return "/admin/picture_show";
     }
 
     @RequestMapping("record_browse")
     public String record_browse(){
-        return "/record_browse";
+        return "/admin/record_browse";
     }
 
     @RequestMapping("record_download")
     public String record_download(){
-        return "/record_download";
+        return "/admin/record_download";
     }
 
     @RequestMapping("record_share")
     public String record_share(){
-        return "/record_share";
+        return "/admin/record_share";
     }
 
     @RequestMapping("user_add")
     public String user_add(){
-        return "/user_add";
+        return "/admin/user_add";
     }
 
     @RequestMapping("user_list")
     public String user_list(){
-        return "/user_list";
+        return "/admin/user_list";
     }
 
     @RequestMapping("user_password_edit")
     public String user_password_edit(){
-        return "/user_password_edit";
+        return "/admin/user_password_edit";
     }
 
 
 
     @RequestMapping("user_show")
     public String user_show(){
-        return "/user_show";
+        return "/admin/user_show";
     }
 
     @RequestMapping("welcome")
     public String welcome(){
-        return "/welcome";
+        return "/admin/welcome";
     }
 
 
