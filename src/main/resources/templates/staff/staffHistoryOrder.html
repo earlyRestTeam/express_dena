@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carbon - Admin Template</title>
+    <link rel="stylesheet" href="../vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="../vendors/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <!----------------Global css------------------->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap-table.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <!--orderuser-->
+    <link href="../css/authority/basic_layout.css" rel="stylesheet" type="text/css">
+    <link href="../css/authority/common_style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../style/authority/jquery.fancybox-1.3.4.css" media="screen"></link>
+
+
+</head>
+<body>
+<style>
+    .delete{
+        font: bold 11px Arial;
+        text-decoration: none;
+        background-color: red;
+        color: red;
+        padding: 2px 6px 2px 6px;
+        border-top: 1px solid #CCCCCC;
+        border-right: 1px solid #CCCCCC;
+        border-bottom: 1px solid #CCCCCC;
+        border-left: 1px solid #CCCCCC;
+    }
+</style>
+<!-------------------Preloader---------------->
+<div class="preloader" style="position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:100000;
+    backface-visibility: hidden;
+    background: #ffffff;">
+    <div style=" width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-position: center;
+    margin:-25px 0 0 -25px;">
+        <img src="../images/loader.gif" alt="loading...">
+    </div>
+</div>
+<!----------------Preloader end----------------->
+
+<!-------------Header start--------->
+<div class="tp-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-7 col-md-6">
+                <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                <a href="#"> <i class="fa fa-instagram" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-xs-5 col-md-6 text-right">
+                 <span class="signin" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="../login.html">登陆</a>
+                    <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
+                </span>
+
+                <span class="register" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="../register.html">注册</a>
+                    </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
+                </i></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#myMegamenu"><span
+                        class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="../images/3.png" class="img-responsive" alt="company-logo">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
+                <ul class="nav navbar-nav">
+                    <li class="list2"><a href="../index.html" class="hvr-underline-from-center">主页</a></li>
+                    <li class="list2"><a href="../staff/staffmain.html" class="hvr-underline-from-center">个人中心</a></li>
+                    <li class="list2"><a href="../about_us.html" class="hvr-underline-from-center">关于我们</a></li>
+                    <li class="list2"><a href="../blog.html" class="hvr-underline-from-center">博客</a></li>
+                    <li class="list2"><a href="../careers.html" class="hvr-underline-from-center">职业</a></li>
+                    <li class="list2"><a href="../products.html" class="hvr-underline-from-center">产品</a></li>
+                    <li class="list2"><a href="../contact_us.html" class="hvr-underline-from-center">联系我们</a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </div>
+</header>
+<!-------------Header end--------->
+
+<!-------------main start--------->
+    <div class="main-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-title">Navigation</li>
+
+                    <li class="nav-item">
+                        <a href="main.html" class="nav-link active">
+                            <i class="icon icon-speedometer"></i> Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 个人主页 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="../staff/staffInfo.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 我的信息
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="../staff/staffchangePwd.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 修改密码
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="../staff/staffwallet.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 我的钱包
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-energy"></i> 我的订单 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="../staff/currentStaffOrder.html class="nav-link">
+                                    <i class="icon icon-energy"></i> 接单大厅
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="../staff/currentStaffOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 我的订单
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="../staff/staffHistoryOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 历史订单
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-graph"></i> 我的消息 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="icon icon-graph"></i> 消息
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+<!-------------contenr start--------->
+        <div class="content">
+            <form id="submitForm" name="submitForm" action="" method="post">
+                <input type="hidden" name="allIDCheck" value="" id="allIDCheck"/>
+                <input type="hidden" name="fangyuanEntity.fyXqName" value="" id="fyXqName"/>
+                <div id="container">
+                    <div class="ui_content">
+                        <div class="ui_text_indent">
+                            <div id="box_border">
+                                <div id="box_top">搜索</div>
+                                <div id="box_center">
+                                    订单状态
+                                    <select name="fangyuanEntity.fyXqCode" id="fyXq" class="ui_select01" onchange="getFyDhListByFyXqCode();">
+                                        <option value=""
+                                        >--请选择--</option>
+                                        <option value="6">正在进行</option>
+                                        <option value="77">已完成</option>
+                                        <option value="83">已取消</option>
+                                    </select>
+
+                                    栋号
+                                    <select name="fangyuanEntity.fyDhCode" id="fyDh" class="ui_select01">
+                                        <option value="">--请选择--</option>
+                                    </select>
+                                    户型
+                                    <select name="fangyuanEntity.fyHxCode" id="fyHx" class="ui_select01">
+                                        <option value="">--请选择--</option>
+                                        <option value="76">一室一厅一卫</option>
+                                        <option value="10">两室一厅一卫</option>
+                                        <option value="14">三室一厅一卫</option>
+                                        <option value="71">三室两厅一卫</option>
+                                    </select>
+                                    状态
+                                    <select name="fangyuanEntity.fyStatus" id="fyStatus" class="ui_select01">
+                                        <option value="">--请选择--</option>
+                                        <option value="26">在建</option>
+                                        <option value="25">建成待租</option>
+                                        <option value="13">已配租</option>
+                                        <option value="12">已租赁</option>
+                                        <option value="24">腾退待租</option>
+                                        <option value="23">欠费</option>
+                                        <option value="27">其他</option>
+                                    </select>
+
+                                    座落&nbsp;&nbsp;<input type="text" id="fyZldz" name="fangyuanEntity.fyZldz" class="ui_input_txt02" />
+                                </div>
+                                <div id="box_bottom">
+                                    <input type="button" value="查询" class="btn btn-info" onclick="search();" />
+                                    <input type="button" value="新增" class="btn btn-info" id="addBtn" />
+                                    <input type="button" value="删除" class="btn btn-info" onclick="batchDel();" />
+                                    <input type="button" value="导入" class="btn btn-info" id="importBtn" />
+                                    <input type="button" value="导出" class="btn btn-info" onclick="exportExcel();" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui_content">
+                        <div class="ui_tb">
+                            <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+                                <tr>
+                                    <th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" />
+                                    </th>
+                                    <th>订单号</th>
+                                    <th>下单用户</th>
+                                    <th>订单开始时间</th>
+                                    <th>价格订单</th>
+                                    <th>状态</th>
+                                    <th>完成时间</th>
+                                    <th>操作</th>
+                                    <th>显示详情</th>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>
+                                    <td>df122002</td>
+                                    <td>杨秀秀</td>
+                                    <td>2018-6-5</td>
+                                    <td>￥5</td>
+                                    <td>已完成</td>
+                                    <td>2018-6-6</td>
+                                    <td>
+                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
+                                    </td>
+                                    <td><button>点击显示详情</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" name="IDCheck" value="14458638753194" class="acb" /></td>
+                                    <td>df122002</td>
+                                    <td>杨秀秀</td>
+                                    <td>2018-6-5</td>
+                                    <td>￥5</td>
+                                    <td>已完成</td>
+                                    <td>2018-6-6</td>
+                                    <td>
+                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
+                                    </td>
+                                    <td><button>点击显示详情</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" name="IDCheck" value="14458606278350" class="acb" /></td>
+                                    <td>df122002</td>
+                                    <td>杨秀秀</td>
+                                    <td>2018-6-5</td>
+                                    <td>￥5</td>
+                                    <td>已完成</td>
+                                    <td>2018-6-6</td>
+                                    <td>
+                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
+                                    </td>
+                                    <td><button>点击显示详情</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" name="IDCheck" value="14458644830000" class="acb" /></td>
+                                    <td>df122002</td>
+                                    <td>杨秀秀</td>
+                                    <td>2018-6-5</td>
+                                    <td>￥5</td>
+                                    <td>已完成</td>
+                                    <td>2018-6-6</td>
+                                    <td>
+                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
+                                    </td>
+                                    <td><button>点击显示详情</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" name="IDCheck" value="14458612828548" class="acb" /></td>
+                                    <td>df122002</td>
+                                    <td>杨秀秀</td>
+                                    <td>2018-6-5</td>
+                                    <td>￥5</td>
+                                    <td>已完成</td>
+                                    <td>2018-6-6</td>
+                                    <td>
+                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
+                                    </td>
+                                    <td><button>点击显示详情</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" name="IDCheck" value="14458619251417" class="acb" /></td>
+                                    <td>df122002</td>
+                                    <td>杨秀秀</td>
+                                    <td>2018-6-5</td>
+                                    <td>￥5</td>
+                                    <td>已完成</td>
+                                    <td>2018-6-6</td>
+                                    <td>
+                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
+                                    </td>
+                                    <td><button>点击显示详情</button></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <div class="ui_tb_h30">
+                            <div class="ui_flt" style="height: 30px; line-height: 30px;">
+                                共有
+                                <span class="ui_txt_bold04">90</span>
+                                条记录，当前第
+                                <span class="ui_txt_bold04">1
+						/
+						9</span>
+                                页
+                            </div>
+                            <div class="ui_frt">
+                                <!--    如果是第一页，则只显示下一页、尾页 -->
+
+                                <input type="button" value="首页" class="ui_input_btn01" />
+                                <input type="button" value="上一页" class="ui_input_btn01" />
+                                <input type="button" value="下一页" class="ui_input_btn01"
+                                       onclick="jumpNormalPage(2);" />
+                                <input type="button" value="尾页" class="ui_input_btn01"
+                                       onclick="jumpNormalPage(9);" />
+                                <!--     如果是最后一页，则只显示首页、上一页 -->
+                                转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
+                                <input type="button" class="ui_input_btn01" value="跳转" onclick="jumpInputPage(9);" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+<!-------------contenr end--------->
+    </div>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/chart.js/chart.min.js"></script>
+<script src="../js/chart.js"></script>
+<script src="../js/carbon.js"></script>
+<script src="../js/demo.js"></script>
+        <!------------------Copy rights End------------------>
+<script src="../js/bootstrap.min.js"></script>
+<!----------------------page Level Js-------------------------->
+<script src="../js/custom.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+
+<!--orderuser-->
+<script type="text/javascript" src="../js/artDialog/artDialog.js?skin=default"></script>
+<script type="text/javascript" src="../js/authority/commonAll.js"></script>
+<script type="text/javascript" src="../js/fancybox/jquery.fancybox-1.3.4.js"></script>
+<script type="text/javascript" src="../js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        /** 新增   **/
+        $("#addBtn").fancybox({
+            'href'  : 'house_edit.html',
+            'width' : 733,
+            'height' : 530,
+            'type' : 'iframe',
+            'hideOnOverlayClick' : false,
+            'showCloseButton' : false,
+            'onClosed' : function() {
+                window.location.href = 'house_list.html';
+            }
+        });
+
+        /** 导入  **/
+        $("#importBtn").fancybox({
+            'href'  : '/xngzf/archives/importFangyuan.action',
+            'width' : 633,
+            'height' : 260,
+            'type' : 'iframe',
+            'hideOnOverlayClick' : false,
+            'showCloseButton' : false,
+            'onClosed' : function() {
+                window.location.href = 'house_list.html';
+            }
+        });
+
+        /**编辑   **/
+        $("a.edit").fancybox({
+            'width' : 733,
+            'height' : 530,
+            'type' : 'iframe',
+            'hideOnOverlayClick' : false,
+            'showCloseButton' : false,
+            'onClosed' : function() {
+                window.location.href = 'house_list.html';
+            }
+        });
+    });
+    /** 用户角色   **/
+    var userRole = '';
+
+    /** 模糊查询来电用户  **/
+    function search(){
+        $("#submitForm").attr("action", "house_list.html?page=" + 1).submit();
+    }
+
+    /** 新增   **/
+    function add(){
+        $("#submitForm").attr("action", "/xngzf/archives/luruFangyuan.action").submit();
+    }
+
+    /** Excel导出  **/
+    function exportExcel(){
+        if( confirm('您确定要导出吗？') ){
+            var fyXqCode = $("#fyXq").val();
+            var fyXqName = $('#fyXq option:selected').text();
+//	 		alert(fyXqCode);
+            if(fyXqCode=="" || fyXqCode==null){
+                $("#fyXqName").val("");
+            }else{
+//	 			alert(fyXqCode);
+                $("#fyXqName").val(fyXqName);
+            }
+            $("#submitForm").attr("action", "/xngzf/archives/exportExcelFangyuan.action").submit();
+        }
+    }
+
+    /** 删除 **/
+    function del(fyID){
+        // 非空判断
+        if(fyID == '') return;
+        if(confirm("您确定要删除吗？")){
+            $("#submitForm").attr("action", "/xngzf/archives/delFangyuan.action?fyID=" + fyID).submit();
+        }
+    }
+
+    /** 批量删除 **/
+    function batchDel(){
+        if($("input[name='IDCheck']:checked").size()<=0){
+            art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'至少选择一条', ok:true,});
+            return;
+        }
+        // 1）取出用户选中的checkbox放入字符串传给后台,form提交
+        var allIDCheck = "";
+        $("input[name='IDCheck']:checked").each(function(index, domEle){
+            bjText = $(domEle).parent("td").parent("tr").last().children("td").last().prev().text();
+// 			alert(bjText);
+            // 用户选择的checkbox, 过滤掉“已审核”的，记住哦
+            if($.trim(bjText)=="已审核"){
+// 				$(domEle).removeAttr("checked");
+                $(domEle).parent("td").parent("tr").css({color:"red"});
+                $("#resultInfo").html("已审核的是不允许您删除的，请联系管理员删除！！！");
+// 				return;
+            }else{
+                allIDCheck += $(domEle).val() + ",";
+            }
+        });
+        // 截掉最后一个","
+        if(allIDCheck.length>0) {
+            allIDCheck = allIDCheck.substring(0, allIDCheck.length-1);
+            // 赋给隐藏域
+            $("#allIDCheck").val(allIDCheck);
+            if(confirm("您确定要批量删除这些记录吗？")){
+                // 提交form
+                $("#submitForm").attr("action", "/xngzf/archives/batchDelFangyuan.action").submit();
+            }
+        }
+    }
+
+    /** 普通跳转 **/
+    function jumpNormalPage(page){
+        $("#submitForm").attr("action", "house_list.html?page=" + page).submit();
+    }
+
+    /** 输入页跳转 **/
+    function jumpInputPage(totalPage){
+        // 如果“跳转页数”不为空
+        if($("#jumpNumTxt").val() != ''){
+            var pageNum = parseInt($("#jumpNumTxt").val());
+            // 如果跳转页数在不合理范围内，则置为1
+            if(pageNum<1 | pageNum>totalPage){
+                art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
+                pageNum = 1;
+            }
+            $("#submitForm").attr("action", "house_list.html?page=" + pageNum).submit();
+        }else{
+            // “跳转页数”为空
+            art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
+            $("#submitForm").attr("action", "house_list.html?page=" + 1).submit();
+        }
+    }
+</script>
+</body>
+</html>
+

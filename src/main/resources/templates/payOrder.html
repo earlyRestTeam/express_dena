@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carbon - Admin Template</title>
+    <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="vendors/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!----------------Global css------------------->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!--pay Order-->
+    <link rel="stylesheet" href="css/express.css">
+
+</head>
+<body>
+
+<!-------------------Preloader---------------->
+<div class="preloader" style="position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:100000;
+    backface-visibility: hidden;
+    background: #ffffff;">
+    <div style=" width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-position: center;
+    margin:-25px 0 0 -25px;">
+        <img src="images/loader.gif" alt="loading...">
+    </div>
+</div>
+<!----------------Preloader end----------------->
+
+<!-------------Header start--------->
+<div class="tp-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-7 col-md-6">
+                <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                <a href="#"> <i class="fa fa-instagram" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-xs-5 col-md-6 text-right">
+               <span class="signin" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="login.html">登陆</a>
+                    <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
+                </span>
+
+                <span class="register" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="register.html">注册</a>
+                    </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
+                </i></span>
+            </div>
+        </div>
+    </div>
+</div>
+<header>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#myMegamenu"><span
+                        class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/3.png" class="img-responsive" alt="company-logo">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
+                <ul class="nav navbar-nav">
+                    <li class="list2"><a href="index.html" class="hvr-underline-from-center">主页</a></li>
+                    <li class="list2"><a href="main.html" class="hvr-underline-from-center">个人中心</a></li>
+                    <li class="list2"><a href="about_us.html" class="hvr-underline-from-center">关于我们</a></li>
+                    <li class="list2"><a href="blog.html" class="hvr-underline-from-center">博客</a></li>
+                    <li class="list2"><a href="careers.html" class="hvr-underline-from-center">职业</a></li>
+                    <li class="list2"><a href="products.html" class="hvr-underline-from-center">产品</a></li>
+                    <li class="list2"><a href="contact_us.html" class="hvr-underline-from-center">联系我们</a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </div>
+</header>
+<!-------------Header end--------->
+
+<!-------------mian start--------->
+    <div class="main-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-title">Navigation</li>
+
+                    <li class="nav-item">
+                        <a href="main.html" class="nav-link active">
+                            <i class="icon icon-speedometer"></i> Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 个人主页 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="userInfo.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 我的信息
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="changePwd.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 修改密码
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="wallet.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 我的钱包
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-energy"></i> 我的订单 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="submitOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 发布订单
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="currentUserOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 我的订单
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="userHistoryOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 历史订单
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-graph"></i> 我的消息 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="icon icon-graph"></i> 消息
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-graph"></i> 加入我们 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="userApplication.html" class="nav-link">
+                                    <i class="icon icon-graph"></i> 申请
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+<!-------------contenr start--------->
+        <div class="content">
+            <div class="container">
+                <!-- 导航栏 -->
+                <nav class="navbar navbar-default">
+                    <div class="collapse navbar-collapse">
+                        <a class="navbar-brand" href="/">快递代拿信息填写</a>
+                    </div>
+                </nav>
+                <!-- 主体部分 -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>您的订单信息已生成，请核验无误后支付订单</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <div class="col-sm-6">
+                                <h4>订单信息</h4>
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="expressName" class="col-sm-2 control-label">姓名</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static" id="expressName">杨秀秀</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="expressTel" class="col-sm-2 control-label">联系电话</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static" id="expressTel">15697881</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="expressAddress" class="col-sm-2 control-label">配送地址</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static" id="expressAddress">湖南理工大学</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="expressMessage" class="col-sm-2 control-label">取件短信</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static" id="expressMessage">bf-515</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="expressRemark" class="col-sm-2 control-label">备注</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static" id="expressRemark">帮我带杯奶茶</p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div  class="col-sm-6">
+                                <h4>价格计算</h4>
+                                <blockquote class="pt10">
+                                    <p>< 500g/件：2元；< 1kg/件：3元；> 1kg/kg：4元</p>
+                                </blockquote>
+                                <h4>预估价格： <span class="red-span" lang="totalPrice">0.00</span> 元</h4>
+                                <form class="form-horizontal" id="packageForm">
+                                </form>
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="button" class="btn btn-info" onclick="addPackage()">添加包裹</button>
+                                    <button type="button" class="btn btn-info" onclick="deletePackage()">删除包裹</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 pt10">
+                            <h4>支付方式（在线方式至少付款0.01元）</h4>
+                            <form class="form-inline col-sm-4" id="alipayForm" action="/payment/alipay" method="post">
+                                <input type="hidden" id="alipayMoney" name="money">
+                                <button class="btn btn-info" type="button" onclick="alipay()">支付宝支付</button>
+                            </form>
+                            <form class="form-inline col-sm-4" id="wechatForm" action="/payment/wechat" method="post">
+                                <button class="btn btn-info" type="button" disabled>微信支付</button>
+                            </form>
+                            <form class="form-inline col-sm-2">
+                                <button class="btn btn-info" type="button" onclick="OfflinePay()">线下支付</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-------------contenr end--------->
+    </div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/chart.js/chart.min.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/carbon.js"></script>
+<script src="js/demo.js"></script>
+        <!------------------Copy rights End------------------>
+<script src="js/bootstrap.min.js"></script>
+<!----------------------page Level Js-------------------------->
+<script src="js/custom.js"></script>
+
+<!--pay Order-->
+<script src="js/submitOrder/jquery3.3.1.min.js"></script>
+<script src="js/submitOrder/layer/layer.js"></script>
+<script src="js/submitOrder/http.js"></script>
+<script>
+    var express,total=0;
+    $(function () {
+        sendJson("get", "/payment/express", {}, false, function (res) {
+            if (!res.status) {
+                layer.msg(res.info,{icon:2});
+            } else {
+                express = res.data;
+                $("#expressName").text(express.name);
+                $("#expressTel").text(express.tel);
+                $("#expressAddress").text(express.address);
+                $("#expressMessage").text(express.message);
+                $("#expressRemark").text(express.remark);
+            }
+        }, function () {
+            layer.msg("未知错误",{icon:2});
+        });
+    });
+
+    // 更新价格
+    function updatePrice() {
+        total = 0;
+        $("input[name='price']").each(function(){
+            var weight = $(this).val();
+            if(weight !== "") {
+                if(!isNaN(weight)) {
+                    weight = parseFloat(weight);
+                    var tmp = 0;
+                    // 如果小于500g，2元
+                    if(weight < 0.5)
+                        tmp = 2;
+                    else if(weight < 1)
+                        tmp = 3;
+                    else if(weight >= 1)
+                    // 向上取整
+                        tmp = 4 * Math.ceil(weight);
+                    total += tmp;
+                } else {
+                    // 如果不是数字，将input值修改为空
+                    $(this).val("");
+                }
+            }
+        });
+        // 两位小数，四舍五入
+        total = total.toFixed(2);
+        $("span[lang='totalPrice']").each(function() {
+            $(this).text(total);
+        });
+    }
+
+    function addPackage() {
+        var html = '<div class="form-group">\n' +
+            '                            <label class="col-sm-3 control-label">预估重量（单位：KG）</label>\n' +
+            '                            <div class="col-sm-9">\n' +
+            '                                <input type="number" class="form-control" name="price" onchange="updatePrice()" onkeyup="updatePrice()">\n' +
+            '                            </div>\n' +
+            '                        </div>';
+        $("#packageForm").append(html);
+    }
+
+    function deletePackage() {
+        $("#packageForm").children().last().remove();
+        updatePrice();
+    }
+
+    // 判断订单是否存在
+    function checkExpressValid() {
+        if(express == null) {
+            layer.msg("订单已失效，请刷新页面。如无法解决，请重新下单",{icon:2});
+            return false;
+        }
+        return true;
+    }
+
+    function OfflinePay() {
+        layer.confirm("您选择了线下支付方式，请准备好现金。是否确认下单？", {
+            btn: ['确定','取消']
+        }, function(){
+            if(checkExpressValid()) {
+                sendJson("post", "/payment/offline", {"money":total}, false, function (res) {
+                    if (!res.status) {
+                        layer.msg(res.info,{icon:2});
+                    } else {
+                        window.location.href = res.data;
+                    }
+                }, function () {
+                    layer.msg("未知错误",{icon:2});
+                });
+            }
+        }, function(){
+        });
+    }
+
+    function alipay() {
+        if(checkExpressValid()) {
+            if(total === 0)
+                total = 0.01;
+            $("#alipayMoney").val(total);
+            $("#alipayForm").submit();
+        }
+    }
+
+</script>
+</body>
+</html>
+

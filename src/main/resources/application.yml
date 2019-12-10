@@ -1,0 +1,47 @@
+server:
+    port: 8080
+
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/expressage?useUnicode=true
+        username: root
+        password: 110412
+    #邮箱配置
+    mail:
+        host: smtp.163.com
+        username: 18216308307@163.com
+        #QQ邮箱的授权码
+        password: m4gewo
+        default-encoding: UTF-8
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+                        required: true
+    thymeleaf:
+        mode: HTML
+        encoding: UTF-8
+        servlet:
+            content-type: text/html
+        cache: false
+
+
+#设置一个邮件发送人
+want:
+    mail:
+        senderName: want-conpany
+
+
+mybatis:
+    mapper-locations:
+        - classpath:mapper/*.xml
+        - classpath*:com/**/mapper/*.xml
+elasticsearch:
+    host: 127.0.0.1
+    port: 9300
+    cluster:
+        name: want-lifu
+    pool: 5
+

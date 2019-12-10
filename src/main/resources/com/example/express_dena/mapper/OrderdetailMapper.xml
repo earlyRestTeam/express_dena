@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.express_dena.mapper.OrderdetailMapper">
+  <resultMap id="BaseResultMap" type="com.example.express_dena.pojo.Orderdetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="balance" jdbcType="REAL" property="balance" />
+    <result column="kg" jdbcType="REAL" property="kg" />
+    <result column="pick_up_code" jdbcType="VARCHAR" property="pickUpCode" />
+    <result column="pick_up_address" jdbcType="VARCHAR" property="pickUpAddress" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, orderid, balance, kg, pick_up_code, pick_up_address
+  </sql>
+  <select id="selectByExample" parameterType="com.example.express_dena.pojo.OrderdetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderdetail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orderdetail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.express_dena.pojo.OrderdetailExample">
+    delete from orderdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.express_dena.pojo.Orderdetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into orderdetail (orderid, balance, kg, 
+      pick_up_code, pick_up_address)
+    values (#{orderid,jdbcType=INTEGER}, #{balance,jdbcType=REAL}, #{kg,jdbcType=REAL}, 
+      #{pickUpCode,jdbcType=VARCHAR}, #{pickUpAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.express_dena.pojo.Orderdetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into orderdetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="kg != null">
+        kg,
+      </if>
+      <if test="pickUpCode != null">
+        pick_up_code,
+      </if>
+      <if test="pickUpAddress != null">
+        pick_up_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=REAL},
+      </if>
+      <if test="kg != null">
+        #{kg,jdbcType=REAL},
+      </if>
+      <if test="pickUpCode != null">
+        #{pickUpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pickUpAddress != null">
+        #{pickUpAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.express_dena.pojo.OrderdetailExample" resultType="java.lang.Long">
+    select count(*) from orderdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update orderdetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderid != null">
+        orderid = #{record.orderid,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null">
+        balance = #{record.balance,jdbcType=REAL},
+      </if>
+      <if test="record.kg != null">
+        kg = #{record.kg,jdbcType=REAL},
+      </if>
+      <if test="record.pickUpCode != null">
+        pick_up_code = #{record.pickUpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pickUpAddress != null">
+        pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update orderdetail
+    set id = #{record.id,jdbcType=INTEGER},
+      orderid = #{record.orderid,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=REAL},
+      kg = #{record.kg,jdbcType=REAL},
+      pick_up_code = #{record.pickUpCode,jdbcType=VARCHAR},
+      pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.express_dena.pojo.Orderdetail">
+    update orderdetail
+    <set>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=REAL},
+      </if>
+      <if test="kg != null">
+        kg = #{kg,jdbcType=REAL},
+      </if>
+      <if test="pickUpCode != null">
+        pick_up_code = #{pickUpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pickUpAddress != null">
+        pick_up_address = #{pickUpAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.express_dena.pojo.Orderdetail">
+    update orderdetail
+    set orderid = #{orderid,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=REAL},
+      kg = #{kg,jdbcType=REAL},
+      pick_up_code = #{pickUpCode,jdbcType=VARCHAR},
+      pick_up_address = #{pickUpAddress,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

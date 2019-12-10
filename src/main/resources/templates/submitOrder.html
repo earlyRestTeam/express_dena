@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carbon - Admin Template</title>
+    <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="vendors/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <!----------------Global css------------------->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <!--Sumbit order-->
+    <link rel="stylesheet" href="css/express.css"/>
+</head>
+<body>
+
+<!-------------------Preloader---------------->
+<div class="preloader" style="position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:100000;
+    backface-visibility: hidden;
+    background: #ffffff;">
+    <div style=" width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-position: center;
+    margin:-25px 0 0 -25px;">
+        <img src="images/loader.gif" alt="loading...">
+    </div>
+</div>
+<!----------------Preloader end----------------->
+
+<!-------------Header--------->
+<div class="tp-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-7 col-md-6">
+                <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                <a href="#"> <i class="fa fa-instagram" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-xs-5 col-md-6 text-right">
+              <span class="signin" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="login.html">登陆</a>
+                    <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
+                </span>
+
+                <span class="register" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="register.html">注册</a>
+                    </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
+                </i></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#myMegamenu"><span
+                        class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/3.png" class="img-responsive" alt="company-logo">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
+                <ul class="nav navbar-nav">
+                    <li class="list2"><a href="index.html" class="hvr-underline-from-center">主页</a></li>
+                    <li class="list2"><a href="main.html" class="hvr-underline-from-center">个人中心</a></li>
+                    <li class="list2"><a href="about_us.html" class="hvr-underline-from-center">关于我们</a></li>
+                    <li class="list2"><a href="blog.html" class="hvr-underline-from-center">博客</a></li>
+                    <li class="list2"><a href="careers.html" class="hvr-underline-from-center">职业</a></li>
+                    <li class="list2"><a href="products.html" class="hvr-underline-from-center">产品</a></li>
+                    <li class="list2"><a href="contact_us.html" class="hvr-underline-from-center">联系我们</a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </div>
+</header>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-title">Navigation</li>
+
+                    <li class="nav-item">
+                        <a href="main.html" class="nav-link active">
+                            <i class="icon icon-speedometer"></i> Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 个人主页 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="userInfo.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 我的信息
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="changePwd.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 修改密码
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="wallet.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 我的钱包
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-energy"></i> 我的订单 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="submitOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 发布订单
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="currentUserOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 我的订单
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="userHistoryOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 历史订单
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-graph"></i> 我的消息 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="icon icon-graph"></i> 消息
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-graph"></i> 加入我们 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="userApplication.html" class="nav-link">
+                                    <i class="icon icon-graph"></i> 申请
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content">
+            <div class="container">
+                <!-- 导航栏 -->
+                <nav class="navbar navbar-default">
+                    <div class="collapse navbar-collapse">
+                        <a class="navbar-brand">快递代拿信息填写</a>
+                    </div>
+                </nav>
+                <!-- 主体 -->
+                <form class="form-horizontal" id="expressForm">
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-1 control-label">取件姓名</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="inputName" name="name" placeholder="请输入取件姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTel" class="col-sm-1 control-label">联系电话</label>
+                        <div class="col-sm-11">
+                            <input type="tel" class="form-control" id="inputTel" name="tel" placeholder="请输入联系电话">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputInfo" class="col-sm-1 control-label">取件短信</label>
+                        <div class="col-sm-11">
+                <textarea class="form-control dis_change_textarea" id="inputInfo" name="message" rows="5"
+                          placeholder="请直接复制取件短信（一个快递一个订单）"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-sm-1 control-label">配送地址</label>
+                        <div class="col-sm-11">
+                <textarea class="form-control dis_change_textarea" id="inputAddress" name="address" rows="5"
+                          placeholder="请输入配送地址"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemark" class="col-sm-1 control-label">备注（可选）</label>
+                        <div class="col-sm-11">
+                <textarea class="form-control dis_change_textarea" id="inputRemark" name="remark" rows="5"
+                          placeholder="如果有特殊要求，请备注于此"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputVerify" class="col-sm-1 control-label">验证码</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="inputVerify" name="verify" placeholder="请输入验证码">
+                        </div>
+                        <div class="col-sm-5" style="margin-top: 10px">
+                            <img id="verifyCode" src="getVerifyCode" title="看不清，请点我" onclick="refresh(this)"
+                                 onmouseover="mouseover(this)"/>
+                        </div>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <button class="btn btn-primary" type="submit">前往支付</button>
+                        <button class="btn btn-warning" type="reset">重新填写</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/chart.js/chart.min.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/carbon.js"></script>
+<script src="js/demo.js"></script>
+        <!------------------Copy rights End------------------>
+<script src="js/bootstrap.min.js"></script>
+<!----------------------page Level Js-------------------------->
+<script src="js/custom.js"></script>
+
+<!--submitOrder-->
+
+<script src="js/submitOrder/jquery3.3.1.min.js"></script>
+<script src="js/submitOrder/jquery.validate.min.js"></script>
+<script src="js/submitOrder/layer/layer.js"></script>
+<script src="js/submitOrder/http.js"></script>
+
+<script type="text/javascript">
+    function refresh(obj) {
+        obj.src = "getVerifyCode?" + Math.random();
+    }
+
+    function mouseover(obj) {
+        obj.style.cursor = "pointer";
+    }
+
+    $().ready(function() {
+        $("#expressForm").validate({
+            rules: {
+                name: "required",
+                tel: {
+                    required: true,
+                    minlength: 11
+                },
+                message: "required",
+                address: "required",
+                verify: "required"
+            },
+            messages: {
+                name: "取件姓名不能为空",
+                tel: {
+                    required: "联系电话不能为空",
+                    minlength: "手机号码不少于11位"
+                },
+                message: "取件短信不能为空",
+                address: "配送地址不能为空",
+                verify: "验证码不能为空"
+            },
+            submitHandler: function (form) {
+                sendJson("post", "/checkVerifyCode", {"data": $("#inputVerify").val()}, false, function (res) {
+                    if (!res.status) {
+                        layer.msg(res.info,{icon:2});
+                    } else {
+                        sendJson("post", "/express", $("#expressForm").serialize(), false, function (res) {
+                            if (!res.status) {
+                                layer.msg(res.info,{icon:2});
+                            } else {
+                                window.location.href = res.data;
+                            }
+                        }, function () {
+                            layer.msg("未知错误",{icon:2});
+                        });
+                    }
+                }, function () {
+                    layer.msg("未知错误",{icon:2});
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
+

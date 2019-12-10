@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carbon - Admin Template</title>
+    <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="vendors/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <!----------------Global css------------------->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!--application-->
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+
+</head>
+<body>
+
+<!-------------------Preloader---------------->
+<div class="preloader" style="position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:100000;
+    backface-visibility: hidden;
+    background: #ffffff;">
+    <div style=" width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-position: center;
+    margin:-25px 0 0 -25px;">
+        <img src="images/loader.gif" alt="loading...">
+    </div>
+</div>
+<!----------------Preloader end----------------->
+
+<!-------------Header start--------->
+<div class="tp-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-7 col-md-6">
+                <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                <a href="#"> <i class="fa fa-instagram" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-xs-5 col-md-6 text-right">
+                <span class="signin" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="login.html">登陆</a>
+                    <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
+                </span>
+
+                <span class="register" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="register.html">注册</a>
+                    </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
+                </i></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#myMegamenu"><span
+                        class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/3.png" class="img-responsive" alt="company-logo">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
+                <ul class="nav navbar-nav">
+                    <li class="list2"><a href="index.html" class="hvr-underline-from-center">主页</a></li>
+                    <li class="list2"><a href="main.html" class="hvr-underline-from-center">个人中心</a></li>
+                    <li class="list2"><a href="about_us.html" class="hvr-underline-from-center">关于我们</a></li>
+                    <li class="list2"><a href="blog.html" class="hvr-underline-from-center">博客</a></li>
+                    <li class="list2"><a href="careers.html" class="hvr-underline-from-center">职业</a></li>
+                    <li class="list2"><a href="products.html" class="hvr-underline-from-center">产品</a></li>
+                    <li class="list2"><a href="contact_us.html" class="hvr-underline-from-center">联系我们</a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </div>
+</header>
+<!-------------Header end--------->
+
+<!-------------main start--------->
+    <div class="main-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-title">Navigation</li>
+
+                    <li class="nav-item">
+                        <a href="main.html" class="nav-link active">
+                            <i class="icon icon-speedometer"></i> Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 个人主页 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="userInfo.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 我的信息
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="changePwd.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 修改密码
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="wallet.html" class="nav-link">
+                                    <i class="icon icon-target"></i> 我的钱包
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-energy"></i> 我的订单 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="submitOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 发布订单
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="currentUserOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 我的订单
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="userHistoryOrder.html" class="nav-link">
+                                    <i class="icon icon-energy"></i> 历史订单
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-graph"></i> 我的消息 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="icon icon-graph"></i> 消息
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-graph"></i> 加入我们 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="userApplication.html" class="nav-link">
+                                    <i class="icon icon-graph"></i> 申请
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+<!-------------contenr start--------->
+        <div class="content">
+            <section class="aui-content">
+                <div style="height:20px;"></div>
+                <div class="aui-content-up">
+                    <form action="" name="form1" method="post">
+                        <div class="aui-content-up-form">
+                            <h2>申请表格</h2>
+                        </div>
+                        <div class="aui-form-group clear">
+                            <label class="aui-label-control">
+                                姓名 <em>*</em>
+                            </label>
+                            <div class="aui-form-input">
+                                <input type="text" class="aui-form-control-two" name="yourname" onBlur="checkna()" required id="1" placeholder="请输入身份证名字">
+                                <span class="tips" id="divname">长度1~6个字符</span>
+                            </div>
+                        </div>
+                        <div class="aui-form-group clear">
+                            <label class="aui-label-control">
+                                手机号码 <em>*</em>
+                            </label>
+                            <div class="aui-form-input">
+                                <input type="text" class="aui-form-control-two" name="youphone" id="2" placeholder="请输入11位的手机号码" onBlur="checkpsd1()" required/>
+                                <span class="tips" id="phone">必须是11位的数字</span>
+                            </div>
+                        </div>
+                        <div class="aui-form-group clear">
+                            <label class="aui-label-control">
+                                身份证号码 <em>*</em>
+                            </label>
+                            <div class="aui-form-input">
+                                <input type="text" class="aui-form-control-two" name="youziz" id="3" placeholder="身份证号码" onBlur="checkpsd2()" required/>
+                                <span class="tips" id="zizhi">必须是本人身份证号码</span>
+                            </div>
+                        </div>
+                        <div class="aui-form-group clear">
+                            <label class="aui-label-control">
+                                邮箱<em>*</em>
+                            </label>
+                            <div class="aui-form-input">
+                                <input type="text" class="aui-form-control-two" name="youemail" id="4" placeholder="邮箱" onBlur="checkpsd2()" required/>
+                                <span class="tips" id="youxiang">必须是可用邮箱</span>
+                            </div>
+                        </div>
+                        <div class="aui-form-group clear">
+                            <label class="aui-label-control">
+                                申请原因
+                            </label>
+                            <div class="aui-form-input">
+                                <textarea class="aui-form-control" name="description" id="5" minlength="5">请输入您要推广的内容...</textarea>
+                            </div>
+                        </div>
+                        <div class="aui-form-group clear">
+                            <label class="aui-label-control">
+                                营业执照 <em>*</em>
+                                <span>小于5M</span>
+                            </label>
+                            <div class="aui-form-input">
+                                <div class="aui-content-img-box aui-content-full">
+                                    <div class="aui-photo aui-up-img clear">
+                                        <section class="aui-file-up fl">
+                                            <img src="img/up.png" class="add-img">
+                                            <input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple/>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="aui-form-group-text">
+                            <h3>需要以下材料</h3>
+                            <p>营业执照或组织机构代码等生产方《化妆品生产许可证》代生产合同或经销证明国产非特殊用途化妆品食药监查询截图进口化妆品，需提供国务院食药监行政部门备案登记即《进口（非）特殊用途化妆品备案凭证》</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="aui-btn-default">
+                    <button class="aui-btn aui-btn-account">保存并提交审核</button>
+                </div>
+            </section>
+            <!-- mask begin -->
+            <div class="aui-mask aui-works-mask">
+                <div class="aui-mask-content">
+                    <p class="aui-delete-text">确定要删除你上传的资料？</p>
+                    <p class="aui-check-text">
+                        <span class="aui-delete aui-accept-ok">确定</span>
+                        <span class="aui-accept-no">取消</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+<!-------------contenr end--------->
+    </div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/chart.js/chart.min.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/carbon.js"></script>
+<script src="js/demo.js"></script>
+        <!------------------Copy rights End------------------>
+<script src="js/bootstrap.min.js"></script>
+<!----------------------page Level Js-------------------------->
+<script src="js/custom.js"></script>
+<!--application js-->
+<script type="text/javascript" src="js/up.js"></script>
+<script type="text/javascript">
+    //验证姓名
+    function checkna(){
+        na=form1.yourname.value;
+        if( na.length <1 || na.length >6)
+        {
+            divname.innerHTML='<font class="tips_false">长度是1~6个字符</font>';
+        }else{
+
+            divname.innerHTML='<font class="tips_true">输入正确</font>';
+        }
+    }
+
+    //验证手机号码
+    function checkpsd1(){
+        na=form1.youphone.value;
+        if( na.length <11 || na.length >11)
+        {
+            phone.innerHTML='<font class="tips_false">必须是11位的数字</font>';
+        }else{
+
+            phone.innerHTML='<font class="tips_true">输入正确</font>';
+        }
+    }
+
+    //验证社会统一代码
+    function checkpsd2(){
+        na=form1.youziz.value;
+        if( na.length <18 || na.length >18)
+        {
+            zizhi.innerHTML='<font class="tips_false">必须是18位社会信用代码</font>';
+
+        }else{
+
+            zizhi.innerHTML='<font class="tips_true">输入正确</font>';
+        }
+    }
+</script>
+</body>
+</html>
+
