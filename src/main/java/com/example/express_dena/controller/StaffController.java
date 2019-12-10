@@ -12,52 +12,58 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StaffController {
 
     //登录页面跳转
-    @RequestMapping("/login")
+    @RequestMapping("login")
     public String stafflogin(){
-        return "/login";
+        return "login";
     }
 
     //注册界面跳转
-    @RequestMapping("/register")
+    @RequestMapping("register")
+    public String staffRegister(){
+        return "register";
+    }
+
+    //快递员钱主界面
+    @RequestMapping("staffmain")
     public String staffMain(){
-        return "/register";
+        return "staff/staffmain";
     }
 
     //快递员钱包界面跳转
-    @RequestMapping("/wallet")
+    @RequestMapping("staffwallet")
     public String staffWaller(){
-        return "/staff/wallet";
+        return "staff/staffwallet";
     }
 
     //快递员个人信息
-    @RequestMapping("/staffinfo")
+    @RequestMapping("staffinfo")
     public String staffInfo(){
-        return "/staff/staffinfo";
+        return "staff/staffinfo";
     }
 
     //历史订单界面
-    @RequestMapping("/HistoryOrder")
+    @RequestMapping("staffHistoryOrder")
     public String staffHistoryOrder(){
 
-        return "/staff/HistoryOrder";
+        return "staff/staffHistoryOrder";
     }
 
     //更改密码界面
-    @RequestMapping("/changePwd")
+    @RequestMapping("staffchangePwd")
     public String staffchangePwd(){
-        return "/staff/changePwd";
+        return "staff/staffchangePwd";
     }
 
     //当订单详情页面
-    @RequestMapping("/detailsOrder")
+    @RequestMapping("detailsOrder")
     public String detailsOrder(){
-        return "/staff/detailsOrder";
+        return "staff/detailsOrder";
     }
 
     //当前订单跳转1
-    @RequestMapping("/currentStaffOrder")
+    @RequestMapping("currentStaffOrder")
     public String currentStaffOrder(){
-        return "/staff/currentStaffOrder";
+        return "staff/currentStaffOrder";
     }
 
 }
