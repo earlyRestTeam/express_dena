@@ -32,10 +32,10 @@
 				<ul class="cl">
 					<li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
 						<ul class="dropDown-menu menu radius box-shadow">
-							<li><a href="javascript:;" onclick="article_add('添加资讯','article-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
-							<li><a href="javascript:;" onclick="picture_add('添加资讯','picture-add.html')"><i class="Hui-iconfont">&#xe613;</i> 图片</a></li>
-							<li><a href="javascript:;" onclick="product_add('添加资讯','product-add.html')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
-							<li><a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
+							<li><a href="javascript:;" onclick="article_add('添加资讯','article-add')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
+							<li><a href="javascript:;" onclick="picture_add('添加资讯','picture-add')"><i class="Hui-iconfont">&#xe613;</i> 图片</a></li>
+							<li><a href="javascript:;" onclick="product_add('添加资讯','product-add')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
+							<li><a href="javascript:;" onclick="member_add('添加用户','member-add','','510')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -73,7 +73,7 @@
 			<dt><i class="Hui-iconfont">&#xe616;</i> 资讯管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="article-list.html" data-title="审核管理" href="javascript:void(0)">审核管理</a></li>
+					<li><a data-href="article-list" data-title="审核管理" href="javascript:void(0)">审核管理</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -81,7 +81,7 @@
 			<dt><i class="Hui-iconfont">&#xe613;</i> 图片管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="picture-list.html" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
+					<li><a data-href="picture-list" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -90,7 +90,7 @@
 			<dd>
 				<ul>
 					<li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:;">评论列表</a></li>
-					<li><a data-href="feedback-list.html" data-title="意见反馈" href="javascript:void(0)">意见反馈</a></li>
+					<li><a data-href="feedback-list" data-title="意见反馈" href="javascript:void(0)">意见反馈</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -98,8 +98,8 @@
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="member-list.html" data-title="会员列表" href="javascript:;">会员列表</a></li>
-					<li><a data-href="member-del.html" data-title="删除的会员" href="javascript:;">删除的会员</a></li>
+					<li><a data-href="member-list" data-title="会员列表" href="javascript:;">会员列表</a></li>
+					<li><a data-href="member-del" data-title="删除的会员" href="javascript:;">删除的会员</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -107,8 +107,8 @@
 			<dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="admin-role.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-					<li><a data-href="admin-permission.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+					<li><a data-href="admin-role" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+					<li><a data-href="admin-permission" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -116,8 +116,8 @@
 			<dt><i class="Hui-iconfont">&#xe62e;</i> 骑手管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="system-base.html" data-title="骑手列表" href="javascript:void(0)">系统设置</a></li>
-					<li><a data-href="system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
+					<li><a data-href="system-base" data-title="骑手列表" href="javascript:void(0)">系统设置</a></li>
+					<li><a data-href="system-category" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -125,8 +125,8 @@
 			<dt><i class="Hui-iconfont">&#xe61a;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="charts-1.html" data-title="订单列表" href="javascript:void(0)">折线图</a></li>
-					<li><a data-href="charts-2.html" data-title="时间轴折线图" href="javascript:void(0)">时间轴折线图</a></li>
+					<li><a data-href="charts-1" data-title="订单列表" href="javascript:void(0)">折线图</a></li>
+					<li><a data-href="charts-2" data-title="时间轴折线图" href="javascript:void(0)">时间轴折线图</a></li>
 				</ul>
 			</dd>
 </div>
@@ -137,7 +137,7 @@
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
 				<li class="active">
-					<span title="我的桌面" data-href="welcome.html">我的桌面</span>
+					<span title="我的桌面" data-href="welcome">我的桌面</span>
 					<em></em></li>
 		</ul>
 	</div>
@@ -146,7 +146,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="welcome"></iframe>
 	</div>
 </div>
 </section>
