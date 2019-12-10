@@ -10,69 +10,69 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
     @RequestMapping("404error")
     public String error404(){
-        return "/404";
+        return "/admin/404";
     }
 
     @RequestMapping("_header")
     public String _header(){
-        return "/_header";
+        return "/admin/_header";
     }
     
     
     @RequestMapping("admin_add")
     public String admin_add(){
-        return "/admin_add";
+        return "/admin/admin_add";
     }
 
     @RequestMapping("admin_list")
     public String admin_list(){
-        return "/admin_list";
+        return "/admin/admin_list";
     }
 
     @RequestMapping("admin_password_edit")
     public String admin_password_edit(){
-        return "/admin_password_edit";
+        return "/admin/admin_password_edit";
     }
 
     @RequestMapping("admin_permission")
     public String admin_permission(){
-        return "/admin_permission";
+        return "/admin/admin_permission";
     }
 
     @RequestMapping("admin_role")
     public String admin_role(){
-        return "/admin_role";
+        return "/admin/admin_role";
     }
 
     @RequestMapping("admin_role_add")
     public String admin_role_add(){
-        return "/admin_role_add";
+        return "/admin/admin_role_add";
     }
 
     @RequestMapping("article_list")
     public String article_list(){
-        return "/article_list";
+        return "/admin/article_list";
     }
 
     @RequestMapping("change_password")
     public String change_password(){
-        return "/change_password";
+        return "/admin/change_password";
     }
 
 
     @RequestMapping("feedback_list")
     public String feedback_list(){
-        return "/feedback_list";
+        return "/admin/feedback_list";
     }
 
     @RequestMapping("index")
     public String index(){
-        return "/index";
+        return "/admin/index";
     }
 
     @RequestMapping("member_add")
     public String member_add(){
-        return "/member_add";
+        return "/admin/member_add";
     }
 
 
