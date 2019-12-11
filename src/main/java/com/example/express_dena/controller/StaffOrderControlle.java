@@ -4,6 +4,7 @@ import com.example.express_dena.pojo.Order;
 import com.example.express_dena.services.impl.StaffOrderService;
 import com.github.pagehelper.PageInfo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,8 +14,9 @@ import java.util.HashMap;
 @Controller
 @RequestMapping("/staff")
 public class StaffOrderControlle {
-    StaffOrderService staffOrderService = new StaffOrderService();
 
+    @Autowired
+    StaffOrderService staffOrderService;
     //平台订单
     @RequestMapping("currentStaffOrder")
     public String currentStaffOrder(Integer indexpage, HttpServletRequest request){
@@ -32,40 +34,58 @@ public class StaffOrderControlle {
         return "/staff/detailsOrder";
     }
 
-    //当前订单跳转1
+    //领取任务
     @RequestMapping("getOrder")
-    public String etOrder(Integer orderid){
-        Order order = staffOrderService.getOrderInfo(orderid);
-        if(order!=null && order.getStatus()==1){
-            order.setHosermanid(1);
-            order.setHosermainPhone("13378052140");
-            order.setHosermanName("铂金");
-        }
-        staffOrderService.pickupUserOrder(order);
-        return "redirect:/staff/staffGetOrder?indexpage=1&hosermanid=1";
+    public String getOrder(Integer id){
+
+
+        boolean b = staffOrderService.pickupUserOrder(id);
+        System.out.println("领取任务:" + b);
+
+        return "redirect:/staff/staffGetOrder?indexpage=1";
     }
 
     //领取的订单列表
     @RequestMapping("staffGetOrder")
-    public String staffGetOrdergList(Integer indexpage, Integer hosermanid, HttpServletRequest request){
+    public String staffGetOrdergList(Integer indexpage, HttpServletRequest request){
 
 
         System.out.println("indexpage:" + indexpage);
-        System.out.println("hosermanid:" + hosermanid);
-        PageInfo pageInfo = staffOrderService.selectUserOrder(indexpage,hosermanid,1);
+        Integer hosermanid = 1;
+        Integer status = 2;
+        PageInfo pageInfo = staffOrderService.selectUserOrder(indexpage,hosermanid,status);
         request.setAttribute("pages",pageInfo);
         System.out.println(pageInfo.getList());
         return "/staff/staffGetOrder";
     }
 
+    //完成任务
+    @RequestMapping("filishOrder")
+    public String filishOrder(Integer id){
+        if(staffOrderService.filishOrder(id)){
+            return "redirect:/staff/staffGetOrder?indexpage=1";
+        }
+        return "redirect:/staff/staffGetOrder?indexpage=1&errey=0";
+
+    }
     //历史订单界面
     @RequestMapping("staffHistoryOrder")
-    public String staffHistoryOrder(Integer indexpage, Integer hosermanid, HttpServletRequest request){
-
-        PageInfo pageInfo = staffOrderService.selectUserHistoryOrder(indexpage,hosermanid,3);
+    public String staffHistoryOrder(Integer indexpage, HttpServletRequest request){
+        Integer hosermanid = 1;
+        Integer status = 3;
+        PageInfo pageInfo = staffOrderService.selectUserHistoryOrder(indexpage,hosermanid,status);
         request.setAttribute("pages",pageInfo);
         System.out.println(pageInfo.getList());
         return "/staff/staffHistoryOrder";
+    }
+
+    //查询订单
+    @RequestMapping("searchOrder")
+    public String searchOrder(String orderno, HttpServletRequest request){
+        PageInfo<Order> pageInfo = staffOrderService.searchOrderInfo(orderno);
+        request.setAttribute("pages",pageInfo);
+        return "/staff/staffHistoryOrder";
+
     }
 
 }

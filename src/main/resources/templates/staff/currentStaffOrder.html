@@ -219,48 +219,12 @@
                             <div id="box_border">
                                 <div id="box_top">搜索</div>
                                 <div id="box_center">
-                                    订单状态
-                                    <select name="fangyuanEntity.fyXqCode" id="fyXq" class="ui_select01" onchange="getFyDhListByFyXqCode();">
-                                        <option value=""
-                                        >--请选择--</option>
-                                        <option value="6">正在进行</option>
-                                        <option value="77">已完成</option>
-                                        <option value="83">已取消</option>
-                                    </select>
-
-                                    栋号
-                                    <select name="fangyuanEntity.fyDhCode" id="fyDh" class="ui_select01">
-                                        <option value="">--请选择--</option>
-                                    </select>
-                                    户型
-                                    <select name="fangyuanEntity.fyHxCode" id="fyHx" class="ui_select01">
-                                        <option value="">--请选择--</option>
-                                        <option value="76">一室一厅一卫</option>
-                                        <option value="10">两室一厅一卫</option>
-                                        <option value="14">三室一厅一卫</option>
-                                        <option value="71">三室两厅一卫</option>
-                                    </select>
-                                    状态
-                                    <select name="fangyuanEntity.fyStatus" id="fyStatus" class="ui_select01">
-                                        <option value="">--请选择--</option>
-                                        <option value="26">在建</option>
-                                        <option value="25">建成待租</option>
-                                        <option value="13">已配租</option>
-                                        <option value="12">已租赁</option>
-                                        <option value="24">腾退待租</option>
-                                        <option value="23">欠费</option>
-                                        <option value="27">其他</option>
-                                    </select>
-
-                                    座落&nbsp;&nbsp;<input type="text" id="fyZldz" name="fangyuanEntity.fyZldz" class="ui_input_txt02" />
+                                    <form action="" method="post">
+                                    <input style="width: 300px;height: 40px;" type="text" id="fyZldz" name="fangyuanEntity.fyZldz" class="ui_input_txt02" />
+                                    <input style="width: 80px;height: 40px;" type="submit" value="查询" class="btn btn-info"  />
+                                    </form>
                                 </div>
-                                <div id="box_bottom">
-                                    <input type="button" value="查询" class="btn btn-info" onclick="search();" />
-<!--                                    <input type="button" value="新增" class="btn btn-info" id="addBtn" />-->
-<!--                                    <input type="button" value="删除" class="btn btn-info" onclick="batchDel();" />-->
-<!--                                    <input type="button" value="导入" class="btn btn-info" id="importBtn" />-->
-<!--                                    <input type="button" value="导出" class="btn btn-info" onclick="exportExcel();" />-->
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -268,32 +232,30 @@
                         <div class="ui_tb">
                             <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
                                 <tr>
-                                    <th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" />
-                                    </th>
-                                    <th>订单号</th>
+<!--                                    <th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" /></th>-->
                                     <th>下单用户</th>
-                                    <th>订单开始时间</th>
+                                    <th>取件地址</th>
                                     <th>价格订单</th>
-                                    <th>状态</th>
+                                    <th>包裹数量</th>
                                     <th>收件地址</th>
                                     <th>操作</th>
-                                    <th>显示详情</th>
+                                    <th>查看详情</th>
                                 </tr>
 
 
                                 <tr th:each="order:${pages.list}">
 
-                                    <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>
-                                    <td th:text="${order.orderno}"></td>
+<!--                                    <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>-->
+
                                     <td th:text="${order.username}"></td>
-                                    <td th:text="${#dates.format(order.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${order.pickUpAddress}"></td>
                                     <td th:text="${order.totalAmount}"></td>
-                                    <td th:text="${order.status}"></td>
+                                    <td th:text="${order.commentNum}"></td>
                                     <td th:text="${order.targetAddress}"></td>
                                     <td>
-                                        <a th:href="@{'getOrder?orderid='+${order.orderid}}" class="queren">领取任务</a>
+                                        <a th:onclick="|javascript : get( '${order.id}')|" class="queren">领取任务</a>
                                     </td>
-                                    <td><button>点击显示详情</button></td>
+                                    <td><button>查看订单详情</button></td>
                                 </tr>
 
 
@@ -420,12 +382,12 @@
         }
     }
 
-    /** 删除 **/
-    function del(fyID){
+    /** 领取任务 **/
+    function get(fyID){
         // 非空判断
         if(fyID == '') return;
         if(confirm("您确定领取任务吗？")){
-            $("#submitForm").attr("action", "/xngzf/archives/delFangyuan.action?fyID=" + fyID).submit();
+            $("#submitForm").attr("action", "/staff/getOrder?id=" + fyID).submit();
         }
     }
 
