@@ -62,10 +62,6 @@ public class AdminController {
         return "/admin/admin-role-add";
     }
 
-    @RequestMapping("article_list")
-    public String article_list(){
-        return "/admin/article-list";
-    }
 
     @RequestMapping("change_password")
     public String change_password(){
@@ -107,6 +103,7 @@ public class AdminController {
     public String member_list(HttpServletRequest request, Integer indexpage, String serchname){
         PageInfo pageInfo = adminServiceimpl.selectUsers(indexpage, serchname);
         request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchname",serchname);
         return "/admin/member-list";
     }
 
@@ -121,6 +118,7 @@ public class AdminController {
     public String member_list_stop(HttpServletRequest request, Integer indexpage, String serchname){
         PageInfo pageInfo = adminServiceimpl.selectUsersStop(indexpage, serchname);
         request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchname",serchname);
         return "/admin/member-del";
     }
 
@@ -145,6 +143,80 @@ public class AdminController {
         adminServiceimpl.startUser(userid);
         return "redirect:/admin/member_list_stop";
     }
+
+    /**
+     * 查询骑手(状态为1正在使用的）
+     * @param request
+     * @param indexpage
+     * @param serchname
+     * @return
+     */
+    @RequestMapping("horseman_list")
+    public String horseman_list(HttpServletRequest request, Integer indexpage, String serchname){
+        PageInfo pageInfo = adminServiceimpl.selectHorseman(indexpage, serchname);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchname",serchname);
+        return "/admin/horseman-list";
+    }
+
+    /**
+     * 查询骑手(状态为-1被冻结的）
+     * @param request
+     * @param indexpage
+     * @param serchname
+     * @return
+     */
+    @RequestMapping("horseman_list_stop")
+    public String horseman_list_stop(HttpServletRequest request, Integer indexpage, String serchname){
+        PageInfo pageInfo = adminServiceimpl.selectHorsemanStop(indexpage, serchname);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchname",serchname);
+        return "/admin/horseman-del";
+    }
+
+    /**
+     * 冻结骑手
+     * @param horsemanid
+     * @return
+     */
+    @RequestMapping("horseman_list_frozenuser")
+    public String horseman_list_frozenuser(Integer horsemanid){
+        adminServiceimpl.forzenHorseman(horsemanid);
+        return "redirect:/admin/horseman_list";
+    }
+
+    /**
+     * 启用骑手
+     * @param horsemanid
+     * @return
+     */
+    @RequestMapping("horseman_list_startuser")
+    public String horseman_list_startuser(Integer horsemanid){
+        adminServiceimpl.startHorseman(horsemanid);
+        return "redirect:/admin/horseman_list_stop";
+    }
+
+    /**
+     * 显示申请骑手审核列表即所有状态的骑手
+     * @param request
+     * @param indexpage
+     * @param serchname
+     * @return
+     */
+    @RequestMapping("article_list")
+    public String article_list(HttpServletRequest request, Integer indexpage, String serchname){
+        PageInfo pageInfo = adminServiceimpl.selectAllHorseman(indexpage, serchname);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchname",serchname);
+        System.out.println(pageInfo);
+        return "/admin/article-list";
+    }
+    @RequestMapping("checked_apply")
+    public String checked_apply(Integer horsemanid,Byte status){
+        adminServiceimpl.checked_apply(horsemanid,status);
+        return "redirect:/admin/article_list";
+    }
+
 
     @RequestMapping("picture_add")
     public String picture_add(){

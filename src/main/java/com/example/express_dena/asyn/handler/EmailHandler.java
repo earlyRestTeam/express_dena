@@ -38,6 +38,14 @@ public class EmailHandler implements EventHandler {
             String code = codeCenter.genCode(mail);
             map.put("code",code);
             sendMail.sendHtmlMail("获取验证码","registerTemp",map,mail);
+        }else if ( key.equals("sendaccount")){
+            String mail = event.mapGet("mail");
+            map.put("account",event.mapGet("account"));
+            map.put("password",event.mapGet("password"));
+            sendMail.sendHtmlMail("恭喜注册成为骑手！","sendAccountTemp",map,mail);
+        }else if (key.equals("checkfail")){
+            String mail = event.mapGet("mail");
+            sendMail.sendHtmlMail("对不起申请失败！","checkfailTemp",map,mail);
         }
 
     }

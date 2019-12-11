@@ -2,10 +2,8 @@ package com.example.express_dena.services.impl;
 
 import com.example.express_dena.mapper.HorsemanMapper;
 import com.example.express_dena.mapper.UserMapper;
-import com.example.express_dena.pojo.Horseman;
-import com.example.express_dena.pojo.HorsemanExample;
-import com.example.express_dena.pojo.User;
-import com.example.express_dena.pojo.UserExample;
+import com.example.express_dena.mapper.WithdrawalsMapper;
+import com.example.express_dena.pojo.*;
 import com.example.express_dena.services.UserService;
 import com.example.express_dena.util.MD5Utils;
 import com.example.express_dena.util.StaticPool;
@@ -25,6 +23,8 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     @Autowired
     HorsemanMapper horsemanMapper;
+    @Autowired
+    WithdrawalsMapper withdrawalsMapper;
 
 
     @Override
@@ -173,6 +173,49 @@ public class UserServiceImpl implements UserService {
 
 
 
+        return res;
+    }
+
+    /**
+     * 提现操作
+     * @param horsemanId
+     * @param payNum
+     * @param count
+     * @return
+     */
+    @Override
+    public Map<String, String> tixian(int horsemanId,String payNum, String count) {
+        Map<String,String> res = new HashMap<>();
+        float deCount = Float.valueOf(count);
+
+        Horseman horseman = horsemanMapper.selectByPrimaryKey(horsemanId);
+        if(horseman == null){
+            res.put(StaticPool.ERROR,"用户不存在!");
+            return res;
+        }
+        Float balance = horseman.getBalance();
+        if(balance < deCount){
+            res.put(StaticPool.ERROR,"提现失败，提现金额 大于 余额!");
+        }else {
+            balance = balance - deCount;
+            horseman.setBalance(balance);
+            int flag1 = horsemanMapper.updateByPrimaryKey(horseman);
+            if(flag1 > 0){
+                Withdrawals withdrawals = new Withdrawals();
+                withdrawals.setAccounts(horseman.getAccount());
+                withdrawals.setHorsemanid(horsemanId);
+                withdrawals.setType(2);
+                withdrawals.setWithdrawalsBalance(deCount);
+                int flag2 = withdrawalsMapper.insert(withdrawals);
+                if(flag2 > 0){
+                    res.put(StaticPool.SUCCESS,"申请成功提现成功！");
+                }else {
+                    res.put(StaticPool.ERROR,"提现失败，提现金额 大于 余额!");
+                }
+            }else {
+                res.put(StaticPool.ERROR,"提现失败，提现金额 大于 余额!");
+            }
+        }
         return res;
     }
 

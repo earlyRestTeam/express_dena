@@ -20,12 +20,31 @@ public class UserOrderController {
     UserOrderService service;
 
 
-    @RequestMapping("selectOrderCurrent")
-    public String selectOrderCurrent(int userid, Integer indexpage, HttpServletRequest request){
+    @RequestMapping("currentUserOrder")
+    public String selectOrderCurrent(Integer indexpage, HttpServletRequest request){
+        int userid = 1;
         PageInfo info = service.selectOrderCurrent(userid,indexpage);
         request.setAttribute("page",info);
         return "/currentUserOrder.html";
-
     }
+
+    @RequestMapping("userHistoryOrder")
+    public String selectuserHistoryOrder(Integer indexpage, HttpServletRequest request){
+        int userid = 1;
+        PageInfo info = service.selectOrderCurrent(userid,indexpage);
+        request.setAttribute("page",info);
+        return "/userHistoryOrder";
+    }
+
+    @RequestMapping("submitOrder")
+    public String selectsubmitOrder(){
+        return "/submitOrder";
+    }
+
+    @RequestMapping("payOrder")
+    public String returnpayOrder(){
+        return "/payOrder";
+    }
+
 
 }

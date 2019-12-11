@@ -56,6 +56,8 @@ public interface UserService {
      */
     Map<String,String> recharge(float num);
 
+    Map<String,String> tixian(int horsemanId,String payNum,String count);
+
     Map<String,String> feedBack(String content,int orderid);
 
     Map<String,String> selectByIdAndName(String passwordd,String name);
