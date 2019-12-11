@@ -11,6 +11,7 @@ public class ExpressDenaApplication {
     public AliPayConfig aliPayConfig(){
         return new AliPayConfig();
     }
+
     public static void main(String[] args) {
         SpringApplication.run(ExpressDenaApplication.class, args);
     }
