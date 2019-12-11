@@ -9,6 +9,7 @@
     <result column="pick_up_code" jdbcType="VARCHAR" property="pickUpCode" />
     <result column="pick_up_address" jdbcType="VARCHAR" property="pickUpAddress" />
   </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -38,6 +39,7 @@
       </foreach>
     </where>
   </sql>
+
   <sql id="Update_By_Example_Where_Clause">
     <where>
       <foreach collection="example.oredCriteria" item="criteria" separator="or">
@@ -67,6 +69,7 @@
       </foreach>
     </where>
   </sql>
+
   <sql id="Base_Column_List">
     id, orderid, balance, kg, pick_up_code, pick_up_address
   </sql>
@@ -100,6 +103,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
   <insert id="insert" parameterType="com.example.express_dena.pojo.Orderdetail">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
@@ -109,6 +113,7 @@
     values (#{orderid,jdbcType=INTEGER}, #{balance,jdbcType=REAL}, #{kg,jdbcType=REAL}, 
       #{pickUpCode,jdbcType=VARCHAR}, #{pickUpAddress,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.example.express_dena.pojo.Orderdetail">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
@@ -149,12 +154,15 @@
       </if>
     </trim>
   </insert>
+
   <select id="countByExample" parameterType="com.example.express_dena.pojo.OrderdetailExample" resultType="java.lang.Long">
     select count(*) from orderdetail
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
+
   <update id="updateByExampleSelective" parameterType="map">
     update orderdetail
     <set>
@@ -181,6 +189,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+
   <update id="updateByExample" parameterType="map">
     update orderdetail
     set id = #{record.id,jdbcType=INTEGER},
@@ -193,6 +203,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.example.express_dena.pojo.Orderdetail">
     update orderdetail
     <set>
@@ -214,6 +226,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
   <update id="updateByPrimaryKey" parameterType="com.example.express_dena.pojo.Orderdetail">
     update orderdetail
     set orderid = #{orderid,jdbcType=INTEGER},
@@ -223,4 +237,21 @@
       pick_up_address = #{pickUpAddress,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="insertallDetails" parameterType="java.util.List">
+     insert into balance(orderid, balance,kg,pick_up_code,pick_up_address,
+     courier_company) values
+    <foreach collection="list" item="balance" separator="," close=";">
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        #{orderid,jdbcType=INTEGER},
+        #{balance,jdbcType=REAL},
+        #{kg,jdbcType=REAL},
+        #{pickUpCode,jdbcType=VARCHAR},
+        #{pickUpAddress,jdbcType=VARCHAR},
+        #{courierCompany,jdbcType=VARCHAR},
+        #{remark1,jdbcType=VARCHAR},
+        #{remark2,jdbcType=VARCHAR},
+    </trim>
+    </foreach>
+  </insert>
 </mapper>

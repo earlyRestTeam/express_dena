@@ -27,4 +27,6 @@ public interface OrderdetailMapper {
     int updateByPrimaryKeySelective(Orderdetail record);
 
     int updateByPrimaryKey(Orderdetail record);
+
+    int insertallDetails(List<Orderdetail> orderdetails);
 }
