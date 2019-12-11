@@ -1,6 +1,10 @@
 package com.example.express_dena.controller;
 
+import com.example.express_dena.pojo.User;
+import com.example.express_dena.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -9,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class PageController {
+    @Autowired
+    UserService userService;
 
     @GetMapping("about_us")
     public String about_us(){
@@ -55,7 +61,11 @@ public class PageController {
         return "/userApplication";
     }
     @GetMapping("userInfo")
-    public String userInfo(){
+    public String userInfo(Model m){
+        int id = 4;
+
+        User user = userService.selectByUserId(id);
+        m.addAttribute("user",user);
         return "/userInfo";
     }
     @GetMapping("wallet")

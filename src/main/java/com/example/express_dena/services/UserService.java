@@ -58,4 +58,7 @@ public interface UserService {
 
     Map<String,String> feedBack(String content,int orderid);
 
+    Map<String,String> selectByIdAndName(String passwordd,String name);
+
+    User selectByUserId(int id);
 }

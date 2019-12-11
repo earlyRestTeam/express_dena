@@ -88,6 +88,12 @@ class UserServiceImplTest {
         System.out.println("str = " + str);
         assertNotNull(str);
     }
+
+    @Test
+    void selectByIdAndName(){
+        Map<String, String> map = userService.selectByIdAndName("123", "杨绿绿");
+        assertNotNull(map);
+    }
 //    @Test
 //    void recharge() {
 //        int res = userService.insert();

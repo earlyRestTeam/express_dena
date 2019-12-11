@@ -108,12 +108,12 @@
                     <div class="card-body py-5">
                         <div class="form-group">
                             <label class="form-control-label">用户名</label>
-                            <input type="name" class="form-control">
+                            <input type="name" id="name" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label class="form-control-label">密码</label>
-                            <input type="password" class="form-control">
+                            <input type="password" id="password" class="form-control">
                         </div>
 
                         <div class="form-group">
@@ -123,23 +123,24 @@
 
                         <div class="form-group">
                             <label class="form-control-label">账号</label>
-                            <input type="email" class="form-control" placeholder="请输入正确的邮箱">
+                            <input type="email" id="email" class="form-control" placeholder="请输入正确的邮箱">
+                            <button  class="btn btn-success btn-block" onclick="getCode()">获取验证码</button>
                         </div>
 
                         <div class="form-group">
                             <label class="form-control-label">电话</label>
-                            <input type="phone" class="form-control" >
+                            <input type="phone" id="phone" class="form-control" >
                         </div>
 
                         <div class="form-group">
                             <label class="form-control-label">邮箱验证码</label>
-                            <input type="emailCode" class="form-control">
+                            <input type="emailCode" id="code" class="form-control">
                         </div>
 
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success btn-block">注册</button>
-                        <button type="submit" class="btn btn-success btn-block" onclick="location.href='login'">登陆</button>
+                        <button  class="btn btn-success btn-block" onclick="register()">注册</button>
+                        <button type="submit" class="btn btn-success btn-block" onclick="location.href='/login'">登陆</button>
                     </div>
                 </div>
             </div>
@@ -157,5 +158,63 @@
 <script src="vendors/jribbble/js/jribbble.min.js"></script>
 <!----------------------page Level Js-------------------------->
 <script src="js/custom.js"></script>
+<script>
+    function getCode() {
+        //一切正常后发送网络请求
+        var email = $("#email").val();
+        var data = {"email": email};
+        $.ajax({
+            type: 'POST',//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: '/getCode',//url
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据
+                if (result.code == 200) {
+                    alert("发送邮件成功!");
+                }
+                else {
+                    closeModel();
+                    alert(result.message);
+                };
+            },
+            error: function () {
+                closeModel();
+                alert("操作失败");
+            }
+        });
+    }
+</script>
+<script>
+    function register() {
+        //一切正常后发送网络请求
+        var name = $("#name").val();
+        var password = $("#password").val();
+        var email = $("#email").val();
+        var phone = $("#phone").val();
+        var code = $("#code").val();
+        var data = {"email": email,"password": password,"username": name,"phone": phone,"code":code};
+        $.ajax({
+            type: 'POST',//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: '/register',//url
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据
+                if (result.code == 200) {
+                    alert("注册成功!");
+                }
+                else {
+                    alert(result.message);
+                };
+            },
+            error: function () {
+                alert("操作失败");
+            }
+        });
+    }
+</script>
 
 </html>

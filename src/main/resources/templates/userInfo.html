@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -196,10 +196,10 @@
            <div class="main-info">
                <div class="main-info-left">
                    <div class="info-avatar">
-                       <img src="images/avatar.jpg">
+                       <img src="images/avatar.jpg" th:src="@{${user.avatar}}">
                    </div>
                    <div class="main-info-name">
-                       <p class="info-name">杨秀秀</p>
+                       <p class="info-name" th:text="${user.username}">杨秀秀</p>
                    </div>
                </div>
 
@@ -210,15 +210,15 @@
                   <table class="main-info-center-table">
                       <tr >
                           <td class="glyphicon glyphicon-user">账号:</td>
-                          <td class="main-info-center-content">15697404438</td>
+                          <td class="main-info-center-content" th:text="${user.account}">15697404438</td>
                       </tr>
                       <tr>
                           <td class="glyphicon glyphicon-envelope">邮箱:</td>
-                          <td class="main-info-center-content">2205348277@qq.com</td>
+                          <td class="main-info-center-content" th:text="${user.email}">2205348277@qq.com</td>
                       </tr>
                       <tr>
                           <td class="glyphicon glyphicon-phone-alt">联系电话:</td>
-                          <td class="main-info-center-content">15697404438</td>
+                          <td class="main-info-center-content" th:text="${user.phone}">15697404438</td>
                       </tr>
                       <tr>
                           <td class="glyphicon glyphicon-map-marker">默认地址；</td>
@@ -226,7 +226,7 @@
                       </tr>
                       <tr>
                           <td class="glyphicon glyphicon-time">注册时间:</td>
-                          <td class="main-info-center-content">2018-11-30 17:49:10</td>
+                          <td class="main-info-center-content"th:text="${#dates.format(user.createTime, 'yyyy-MM-dd')}">2018-11-30 17:49:10</td>
                       </tr>
                   </table>
                </div>

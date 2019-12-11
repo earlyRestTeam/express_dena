@@ -12,6 +12,7 @@ import com.example.express_dena.util.StaticPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,11 @@ public class UserServiceImpl implements UserService {
         example.or().andEmailEqualTo(user.getEmail());
 
         List<User> users = userMapper.selectByExample(example);
+
+        user.setAccount(user.getEmail());
+        user.setAvatar("images/avatar.jpg");
+        user.setCreateTime(new Date());
+
         if(users !=  null && users.size() > 0){
             res.put(StaticPool.ERROR,"用户名已存在，或邮箱已被注册！");
         }else {
@@ -182,6 +188,26 @@ public class UserServiceImpl implements UserService {
     public Map<String, String> feedBack(String content, int orderid) {
         Map<String,String> res = new HashMap<>();
         return res;
+    }
+
+    @Override
+    public Map<String, String> selectByIdAndName(String password, String name) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUsernameEqualTo(name);
+        criteria.andPasswordEqualTo(password);
+
+        List<User> users = userMapper.selectByExample(example);
+
+        System.out.println("users = " + users);
+
+        return new HashMap<>();
+    }
+
+    @Override
+    public User selectByUserId(int id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        return user;
     }
 
 
