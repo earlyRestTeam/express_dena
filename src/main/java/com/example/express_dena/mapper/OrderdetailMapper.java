@@ -28,5 +28,5 @@ public interface OrderdetailMapper {
 
     int updateByPrimaryKey(Orderdetail record);
 
-    int insertallDetails(List<Orderdetail> orderdetails);
+    int insertallDetails(List<Orderdetail> orderdetail);
 }

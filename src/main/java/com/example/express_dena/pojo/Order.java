@@ -18,8 +18,6 @@ public class Order implements Serializable {
 
     private Integer userid;
 
-    private String courierCompany;
-
     private String note;
 
     private String targetAddress;
@@ -94,14 +92,6 @@ public class Order implements Serializable {
 
     public void setUserid(Integer userid) {
         this.userid = userid;
-    }
-
-    public String getCourierCompany() {
-        return courierCompany;
-    }
-
-    public void setCourierCompany(String courierCompany) {
-        this.courierCompany = courierCompany;
     }
 
     public String getNote() {
@@ -189,7 +179,6 @@ public class Order implements Serializable {
         sb.append(", userTelephone=").append(userTelephone);
         sb.append(", totalAmount=").append(totalAmount);
         sb.append(", userid=").append(userid);
-        sb.append(", courierCompany=").append(courierCompany);
         sb.append(", note=").append(note);
         sb.append(", targetAddress=").append(targetAddress);
         sb.append(", commentNum=").append(commentNum);
