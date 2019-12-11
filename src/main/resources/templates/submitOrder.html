@@ -300,27 +300,27 @@
                 address: "配送地址不能为空",
                 verify: "验证码不能为空"
             },
+
             submitHandler: function (form) {
-                sendJson("post", "/checkVerifyCode", {"data": $("#inputVerify").val()}, false, function (res) {
-                    if (!res.status) {
-                        layer.msg(res.info,{icon:2});
-                    } else {
-                        sendJson("post", "/express", $("#expressForm").serialize(), false, function (res) {
-                            if (!res.status) {
-                                layer.msg(res.info,{icon:2});
-                            } else {
-                                window.location.href = res.data;
-                            }
-                        }, function () {
-                            layer.msg("未知错误",{icon:2});
-                        });
-                    }
-                }, function () {
-                    layer.msg("未知错误",{icon:2});
-                });
+                ajaxSubmit();
             }
         });
     });
+    function ajaxSubmit() {
+        $.ajax({
+            async : false,
+            cache : false,
+            type : 'POST',
+            data : $("#editForm").serialize(),
+            url : "payOrder",//请求的action路径
+            error : function() {//请求失败处理函数
+                alert('失败');
+            },
+            success : function(data) { //请求成功后处理函数。
+                alert(data);
+            }
+        });
+    }
 </script>
 </body>
 </html>

@@ -12,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,10 +52,14 @@ public class UserOrderServiceImpl implements UserOrderService {
     @Override
     public  PageInfo selectOrderCurrent(int userid, Integer indexpage) {
         OrderExample orderExample = new OrderExample();
-        int status = 1;
         OrderExample.Criteria criteria = orderExample.createCriteria();
+
         criteria.andUseridEqualTo(userid);
-        criteria.andStatusEqualTo(status);
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        list1.add(2);
+        criteria.andStatusIn(list1);
+
 
         indexpage = indexpage == null ? 1: indexpage;
 
@@ -72,9 +77,13 @@ public class UserOrderServiceImpl implements UserOrderService {
     public PageInfo selectHistoryOrder(int userid, Integer indexpage) {
 
         OrderExample orderExample = new OrderExample();
-        int status = 3;
-        orderExample.or().andUseridEqualTo(userid);
-        orderExample.or().andStatusEqualTo(status);
+        OrderExample.Criteria criteria = orderExample.createCriteria();
+        criteria.andUseridEqualTo(userid);
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(3);
+        list1.add(4);
+        criteria.andStatusIn(list1);
+        criteria.andShowuserstatusEqualTo(0);
 
         indexpage = indexpage == null ? 1: indexpage;
 
@@ -89,10 +98,18 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //删除已完成订单
     @Override
-    public Map<String, String> deleteOrderByID(int userid, int orderid) {
-
-
-        return null;
+    public Map<String, String> deleteOrderByID(int orderid) {
+        Map<String,String> res = new HashMap<>();
+        Order order1 = orderMapper.selectByPrimaryKey(orderid);
+        System.out.println(order1.toString());
+        order1.setShowuserstatus(1);
+        int result = orderMapper.updateByPrimaryKey(order1);
+        if(result>0){
+            res.put(StaticPool.SUCCESS,"删除成功");
+        }else{
+            res.put(StaticPool.ERROR,"删除失败");
+        }
+        return res;
     }
 
     //查询订单状态
@@ -130,8 +147,18 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //确认完成订单
     @Override
-    public Map<String, String> completeOrder(int Orderid) {
-        return null;
+    public Map<String, String> completeOrder(int orderid) {
+        Map<String,String> res = new HashMap<>();
+        Order order1 = orderMapper.selectByPrimaryKey(orderid);
+        System.out.println(order1.toString());
+        order1.setComfirmUserStatus(1);
+        int result = orderMapper.updateByPrimaryKey(order1);
+        if(result>0){
+            res.put(StaticPool.SUCCESS,"订单完成");
+        }else{
+            res.put(StaticPool.ERROR,"订单异常");
+        }
+        return res;
     }
 
     //评论

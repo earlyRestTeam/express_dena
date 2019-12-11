@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -272,99 +272,28 @@
                                     <th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" />
                                     </th>
                                     <th>订单号</th>
-                                    <th>下单用户</th>
-                                    <th>订单开始时间</th>
-                                    <th>价格订单</th>
-                                    <th>状态</th>
+                                    <th>接单员</th>
+                                    <th>开始时间</th>
+                                    <th>金额</th>
+                                    <th>包裹数量</th>
                                     <th>完成时间</th>
                                     <th>操作</th>
                                     <th>显示详情</th>
                                 </tr>
 
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
+                                <tr th:each="order:${page.list}">
+                                    <td><input type="checkbox" name="IDCheck" value="${order.orderid}" class="acb" /></td>
+                                    <td th:text="${order.orderno}"></td>
+                                    <td th:text="${order.hosermanName}"></td>
+                                    <td th:text="${order.createTime}"></td>
+                                    <td th:text="${order.totalAmount}"></td>
+                                    <td th:text="${order.commentNum}"></td>
+                                    <td th:text="${order.endTime}"></td>
                                     <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
+                                        <a href="javascript:del('14458632171244');" class="queren">删除订单</a>
                                     </td>
                                     <td><button>点击显示详情</button></td>
                                 </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458638753194" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458606278350" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458644830000" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458612828548" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458619251417" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
                             </table>
                         </div>
                         <div class="ui_tb_h30">
