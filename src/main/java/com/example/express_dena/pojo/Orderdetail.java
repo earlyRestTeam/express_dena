@@ -13,7 +13,11 @@ public class Orderdetail implements Serializable {
 
     private String pickUpCode;
 
-    private String pickUpAddress;
+    private String courierCompany;
+
+    private String remark1;
+
+    private String remark2;
 
     private static final long serialVersionUID = 1L;
 
@@ -57,12 +61,28 @@ public class Orderdetail implements Serializable {
         this.pickUpCode = pickUpCode;
     }
 
-    public String getPickUpAddress() {
-        return pickUpAddress;
+    public String getCourierCompany() {
+        return courierCompany;
     }
 
-    public void setPickUpAddress(String pickUpAddress) {
-        this.pickUpAddress = pickUpAddress;
+    public void setCourierCompany(String courierCompany) {
+        this.courierCompany = courierCompany;
+    }
+
+    public String getRemark1() {
+        return remark1;
+    }
+
+    public void setRemark1(String remark1) {
+        this.remark1 = remark1;
+    }
+
+    public String getRemark2() {
+        return remark2;
+    }
+
+    public void setRemark2(String remark2) {
+        this.remark2 = remark2;
     }
 
     @Override
@@ -76,7 +96,9 @@ public class Orderdetail implements Serializable {
         sb.append(", balance=").append(balance);
         sb.append(", kg=").append(kg);
         sb.append(", pickUpCode=").append(pickUpCode);
-        sb.append(", pickUpAddress=").append(pickUpAddress);
+        sb.append(", courierCompany=").append(courierCompany);
+        sb.append(", remark1=").append(remark1);
+        sb.append(", remark2=").append(remark2);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

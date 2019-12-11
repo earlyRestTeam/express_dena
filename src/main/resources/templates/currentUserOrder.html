@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -290,91 +290,15 @@
                                     <th>显示详情</th>
                                 </tr>
 
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>正在进行</td>
-                                    <td>2018-6-6</td>
+                                <tr th:each="order:${page.list}">
+                                    <td><input type="checkbox" name="IDCheck" value="${order.orderid}" class="acb" /></td>
+                                    <td th:text="${order.orderno}"></td>
+                                    <td th:text="${order.username}"></td>
+                                    <td th:text="${order.createTime}"></td>
+                                    <td th:text="${order.totalAmount}"></td>
+                                    <td th:text="${order.status}"></td>
+                                    <td th:text="${order.note}"></td>
                                     <td>
-                                        <a href="house_edit?fyID=14458632171244" class="edit">取消订单</a>
-                                        <a href="javascript:del('14458632171244');" class="queren">确认完成</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458638753194" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>未接单</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="house_edit?fyID=14458632171244" class="edit">取消订单</a>
-                                        <a href="javascript:del('14458632171244');" class="queren">确认完成</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458606278350" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>未接单</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="house_edit?fyID=14458632171244" class="edit">取消订单</a>
-                                        <a href="javascript:del('14458632171244');" class="queren">确认完成</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458644830000" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>未接单</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="house_edit?fyID=14458632171244" class="edit">取消订单</a>
-                                        <a href="javascript:del('14458632171244');" class="queren">确认完成</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458612828548" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>未接单</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="house_edit?fyID=14458632171244" class="edit">取消订单</a>
-                                        <a href="javascript:del('14458632171244');" class="queren">确认完成</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458619251417" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="house_edit?fyID=14458632171244" class="edit">取消订单</a>
                                         <a href="javascript:del('14458632171244');" class="queren">确认完成</a>
                                     </td>
                                     <td><button>点击显示详情</button></td>
@@ -385,9 +309,9 @@
                         <div class="ui_tb_h30">
                             <div class="ui_flt" style="height: 30px; line-height: 30px;">
                                 共有
-                                <span class="ui_txt_bold04">90</span>
+                                <span class="ui_txt_bold04"><p th:text="${page.pages}"></p></span>
                                 条记录，当前第
-                                <span class="ui_txt_bold04">1
+                                <span class="ui_txt_bold04"><p th:text="${page.pageNum}"></p>
 						/
 						9</span>
                                 页

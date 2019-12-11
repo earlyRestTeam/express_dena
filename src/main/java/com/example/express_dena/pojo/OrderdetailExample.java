@@ -414,73 +414,213 @@ public class OrderdetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressIsNull() {
-            addCriterion("pick_up_address is null");
+        public Criteria andCourierCompanyIsNull() {
+            addCriterion("courier_company is null");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressIsNotNull() {
-            addCriterion("pick_up_address is not null");
+        public Criteria andCourierCompanyIsNotNull() {
+            addCriterion("courier_company is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressEqualTo(String value) {
-            addCriterion("pick_up_address =", value, "pickUpAddress");
+        public Criteria andCourierCompanyEqualTo(String value) {
+            addCriterion("courier_company =", value, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressNotEqualTo(String value) {
-            addCriterion("pick_up_address <>", value, "pickUpAddress");
+        public Criteria andCourierCompanyNotEqualTo(String value) {
+            addCriterion("courier_company <>", value, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressGreaterThan(String value) {
-            addCriterion("pick_up_address >", value, "pickUpAddress");
+        public Criteria andCourierCompanyGreaterThan(String value) {
+            addCriterion("courier_company >", value, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressGreaterThanOrEqualTo(String value) {
-            addCriterion("pick_up_address >=", value, "pickUpAddress");
+        public Criteria andCourierCompanyGreaterThanOrEqualTo(String value) {
+            addCriterion("courier_company >=", value, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressLessThan(String value) {
-            addCriterion("pick_up_address <", value, "pickUpAddress");
+        public Criteria andCourierCompanyLessThan(String value) {
+            addCriterion("courier_company <", value, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressLessThanOrEqualTo(String value) {
-            addCriterion("pick_up_address <=", value, "pickUpAddress");
+        public Criteria andCourierCompanyLessThanOrEqualTo(String value) {
+            addCriterion("courier_company <=", value, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressLike(String value) {
-            addCriterion("pick_up_address like", value, "pickUpAddress");
+        public Criteria andCourierCompanyLike(String value) {
+            addCriterion("courier_company like", value, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressNotLike(String value) {
-            addCriterion("pick_up_address not like", value, "pickUpAddress");
+        public Criteria andCourierCompanyNotLike(String value) {
+            addCriterion("courier_company not like", value, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressIn(List<String> values) {
-            addCriterion("pick_up_address in", values, "pickUpAddress");
+        public Criteria andCourierCompanyIn(List<String> values) {
+            addCriterion("courier_company in", values, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressNotIn(List<String> values) {
-            addCriterion("pick_up_address not in", values, "pickUpAddress");
+        public Criteria andCourierCompanyNotIn(List<String> values) {
+            addCriterion("courier_company not in", values, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressBetween(String value1, String value2) {
-            addCriterion("pick_up_address between", value1, value2, "pickUpAddress");
+        public Criteria andCourierCompanyBetween(String value1, String value2) {
+            addCriterion("courier_company between", value1, value2, "courierCompany");
             return (Criteria) this;
         }
 
-        public Criteria andPickUpAddressNotBetween(String value1, String value2) {
-            addCriterion("pick_up_address not between", value1, value2, "pickUpAddress");
+        public Criteria andCourierCompanyNotBetween(String value1, String value2) {
+            addCriterion("courier_company not between", value1, value2, "courierCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1IsNull() {
+            addCriterion("remark1 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1IsNotNull() {
+            addCriterion("remark1 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1EqualTo(String value) {
+            addCriterion("remark1 =", value, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1NotEqualTo(String value) {
+            addCriterion("remark1 <>", value, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1GreaterThan(String value) {
+            addCriterion("remark1 >", value, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1GreaterThanOrEqualTo(String value) {
+            addCriterion("remark1 >=", value, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1LessThan(String value) {
+            addCriterion("remark1 <", value, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1LessThanOrEqualTo(String value) {
+            addCriterion("remark1 <=", value, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1Like(String value) {
+            addCriterion("remark1 like", value, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1NotLike(String value) {
+            addCriterion("remark1 not like", value, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1In(List<String> values) {
+            addCriterion("remark1 in", values, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1NotIn(List<String> values) {
+            addCriterion("remark1 not in", values, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1Between(String value1, String value2) {
+            addCriterion("remark1 between", value1, value2, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark1NotBetween(String value1, String value2) {
+            addCriterion("remark1 not between", value1, value2, "remark1");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2IsNull() {
+            addCriterion("remark2 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2IsNotNull() {
+            addCriterion("remark2 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2EqualTo(String value) {
+            addCriterion("remark2 =", value, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2NotEqualTo(String value) {
+            addCriterion("remark2 <>", value, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2GreaterThan(String value) {
+            addCriterion("remark2 >", value, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2GreaterThanOrEqualTo(String value) {
+            addCriterion("remark2 >=", value, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2LessThan(String value) {
+            addCriterion("remark2 <", value, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2LessThanOrEqualTo(String value) {
+            addCriterion("remark2 <=", value, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2Like(String value) {
+            addCriterion("remark2 like", value, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2NotLike(String value) {
+            addCriterion("remark2 not like", value, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2In(List<String> values) {
+            addCriterion("remark2 in", values, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2NotIn(List<String> values) {
+            addCriterion("remark2 not in", values, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2Between(String value1, String value2) {
+            addCriterion("remark2 between", value1, value2, "remark2");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemark2NotBetween(String value1, String value2) {
+            addCriterion("remark2 not between", value1, value2, "remark2");
             return (Criteria) this;
         }
     }

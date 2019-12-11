@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.express_dena.mapper.OrderdetailMapper">
-  <resultMap id="BaseResultMap" type="com.example.express_dena.pojo.Orderdetail">
+<mapper namespace="com.example.express_dena.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.example.express_dena.pojo.Message">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="orderid" jdbcType="INTEGER" property="orderid" />
-    <result column="balance" jdbcType="REAL" property="balance" />
-    <result column="kg" jdbcType="REAL" property="kg" />
-    <result column="pick_up_code" jdbcType="VARCHAR" property="pickUpCode" />
-    <result column="courier_company" jdbcType="VARCHAR" property="courierCompany" />
+    <result column="receiverid" jdbcType="INTEGER" property="receiverid" />
+    <result column="receiver_type" jdbcType="INTEGER" property="receiverType" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="remark1" jdbcType="VARCHAR" property="remark1" />
-    <result column="remark2" jdbcType="VARCHAR" property="remark2" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,15 +70,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, orderid, balance, kg, pick_up_code, courier_company, remark1, remark2
+    id, receiverid, receiver_type, status, content, send_time, remark, remark1
   </sql>
-  <select id="selectByExample" parameterType="com.example.express_dena.pojo.OrderdetailExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.example.express_dena.pojo.MessageExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from orderdetail
+    from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,114 +89,114 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from orderdetail
+    from message
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from orderdetail
+    delete from message
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.example.express_dena.pojo.OrderdetailExample">
-    delete from orderdetail
+  <delete id="deleteByExample" parameterType="com.example.express_dena.pojo.MessageExample">
+    delete from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.express_dena.pojo.Orderdetail">
+  <insert id="insert" parameterType="com.example.express_dena.pojo.Message">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into orderdetail (orderid, balance, kg, 
-      pick_up_code, courier_company, remark1, 
-      remark2)
-    values (#{orderid,jdbcType=INTEGER}, #{balance,jdbcType=REAL}, #{kg,jdbcType=REAL}, 
-      #{pickUpCode,jdbcType=VARCHAR}, #{courierCompany,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
-      #{remark2,jdbcType=VARCHAR})
+    insert into message (receiverid, receiver_type, status, 
+      content, send_time, remark, 
+      remark1)
+    values (#{receiverid,jdbcType=INTEGER}, #{receiverType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{remark1,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.express_dena.pojo.Orderdetail">
+  <insert id="insertSelective" parameterType="com.example.express_dena.pojo.Message">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into orderdetail
+    insert into message
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="orderid != null">
-        orderid,
+      <if test="receiverid != null">
+        receiverid,
       </if>
-      <if test="balance != null">
-        balance,
+      <if test="receiverType != null">
+        receiver_type,
       </if>
-      <if test="kg != null">
-        kg,
+      <if test="status != null">
+        status,
       </if>
-      <if test="pickUpCode != null">
-        pick_up_code,
+      <if test="content != null">
+        content,
       </if>
-      <if test="courierCompany != null">
-        courier_company,
+      <if test="sendTime != null">
+        send_time,
+      </if>
+      <if test="remark != null">
+        remark,
       </if>
       <if test="remark1 != null">
         remark1,
       </if>
-      <if test="remark2 != null">
-        remark2,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="orderid != null">
-        #{orderid,jdbcType=INTEGER},
+      <if test="receiverid != null">
+        #{receiverid,jdbcType=INTEGER},
       </if>
-      <if test="balance != null">
-        #{balance,jdbcType=REAL},
+      <if test="receiverType != null">
+        #{receiverType,jdbcType=INTEGER},
       </if>
-      <if test="kg != null">
-        #{kg,jdbcType=REAL},
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
-      <if test="pickUpCode != null">
-        #{pickUpCode,jdbcType=VARCHAR},
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
       </if>
-      <if test="courierCompany != null">
-        #{courierCompany,jdbcType=VARCHAR},
+      <if test="sendTime != null">
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
       </if>
       <if test="remark1 != null">
         #{remark1,jdbcType=VARCHAR},
       </if>
-      <if test="remark2 != null">
-        #{remark2,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.example.express_dena.pojo.OrderdetailExample" resultType="java.lang.Long">
-    select count(*) from orderdetail
+  <select id="countByExample" parameterType="com.example.express_dena.pojo.MessageExample" resultType="java.lang.Long">
+    select count(*) from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update orderdetail
+    update message
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.orderid != null">
-        orderid = #{record.orderid,jdbcType=INTEGER},
+      <if test="record.receiverid != null">
+        receiverid = #{record.receiverid,jdbcType=INTEGER},
       </if>
-      <if test="record.balance != null">
-        balance = #{record.balance,jdbcType=REAL},
+      <if test="record.receiverType != null">
+        receiver_type = #{record.receiverType,jdbcType=INTEGER},
       </if>
-      <if test="record.kg != null">
-        kg = #{record.kg,jdbcType=REAL},
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.pickUpCode != null">
-        pick_up_code = #{record.pickUpCode,jdbcType=VARCHAR},
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.courierCompany != null">
-        courier_company = #{record.courierCompany,jdbcType=VARCHAR},
+      <if test="record.sendTime != null">
+        send_time = #{record.sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
       </if>
       <if test="record.remark1 != null">
         remark1 = #{record.remark1,jdbcType=VARCHAR},
-      </if>
-      <if test="record.remark2 != null">
-        remark2 = #{record.remark2,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -204,68 +204,55 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update orderdetail
+    update message
     set id = #{record.id,jdbcType=INTEGER},
-      orderid = #{record.orderid,jdbcType=INTEGER},
-      balance = #{record.balance,jdbcType=REAL},
-      kg = #{record.kg,jdbcType=REAL},
-      pick_up_code = #{record.pickUpCode,jdbcType=VARCHAR},
-      courier_company = #{record.courierCompany,jdbcType=VARCHAR},
-      remark1 = #{record.remark1,jdbcType=VARCHAR},
-      remark2 = #{record.remark2,jdbcType=VARCHAR}
+      receiverid = #{record.receiverid,jdbcType=INTEGER},
+      receiver_type = #{record.receiverType,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      send_time = #{record.sendTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      remark1 = #{record.remark1,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.express_dena.pojo.Orderdetail">
-    update orderdetail
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.express_dena.pojo.Message">
+    update message
     <set>
-      <if test="orderid != null">
-        orderid = #{orderid,jdbcType=INTEGER},
+      <if test="receiverid != null">
+        receiverid = #{receiverid,jdbcType=INTEGER},
       </if>
-      <if test="balance != null">
-        balance = #{balance,jdbcType=REAL},
+      <if test="receiverType != null">
+        receiver_type = #{receiverType,jdbcType=INTEGER},
       </if>
-      <if test="kg != null">
-        kg = #{kg,jdbcType=REAL},
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="pickUpCode != null">
-        pick_up_code = #{pickUpCode,jdbcType=VARCHAR},
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="courierCompany != null">
-        courier_company = #{courierCompany,jdbcType=VARCHAR},
+      <if test="sendTime != null">
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="remark1 != null">
         remark1 = #{remark1,jdbcType=VARCHAR},
       </if>
-      <if test="remark2 != null">
-        remark2 = #{remark2,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.express_dena.pojo.Orderdetail">
-    update orderdetail
-    set orderid = #{orderid,jdbcType=INTEGER},
-      balance = #{balance,jdbcType=REAL},
-      kg = #{kg,jdbcType=REAL},
-      pick_up_code = #{pickUpCode,jdbcType=VARCHAR},
-      courier_company = #{courierCompany,jdbcType=VARCHAR},
-      remark1 = #{remark1,jdbcType=VARCHAR},
-      remark2 = #{remark2,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.example.express_dena.pojo.Message">
+    update message
+    set receiverid = #{receiverid,jdbcType=INTEGER},
+      receiver_type = #{receiverType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <insert id="insertallDetails" parameterType="java.util.List">
-    insert into orderdetail(orderid, balance, kg,
-    pick_up_code,courier_company) values
-    <foreach collection="list" index="index" item="item" separator=",">
-      (#{item.orderid,jdbcType=INTEGER},
-      #{item.balance,jdbcType=REAL},
-      #{item.kg,jdbcType=REAL},
-      #{item.pickUpCode,jdbcType=VARCHAR},
-      #{item.courierCompany,jdbcType=VARCHAR})
-    </foreach>
-  </insert>
-
 </mapper>
