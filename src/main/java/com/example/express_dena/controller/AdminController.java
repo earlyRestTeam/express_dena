@@ -1,13 +1,21 @@
 package com.example.express_dena.controller;
 
 
+import com.example.express_dena.services.impl.AdminServiceimpl;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    @Autowired
+    AdminServiceimpl adminServiceimpl;
+
     @RequestMapping("404error")
     public String error404(){
         return "/admin/404";
@@ -82,9 +90,55 @@ public class AdminController {
         return "/admin/member-del";
     }
 
+
+    /**
+     * 查询用户(状态为1正在使用的）
+     * @param request
+     * @param indexpage
+     * @param serchname
+     * @return
+     */
     @RequestMapping("member_list")
-    public String member_list(){
+    public String member_list(HttpServletRequest request, Integer indexpage, String serchname){
+        PageInfo pageInfo = adminServiceimpl.selectUsers(indexpage, serchname);
+        request.setAttribute("pages",pageInfo);
         return "/admin/member-list";
+    }
+
+    /**
+     * 查询用户(状态为-1被冻结的）
+     * @param request
+     * @param indexpage
+     * @param serchname
+     * @return
+     */
+    @RequestMapping("member_list_stop")
+    public String member_list_stop(HttpServletRequest request, Integer indexpage, String serchname){
+        PageInfo pageInfo = adminServiceimpl.selectUsersStop(indexpage, serchname);
+        request.setAttribute("pages",pageInfo);
+        return "/admin/member-del";
+    }
+
+    /**
+     * 冻结用户
+     * @param userid
+     * @return
+     */
+    @RequestMapping("member_list_frozenuser")
+    public String member_list_frozenuser(Integer userid){
+        adminServiceimpl.forzenUser(userid);
+        return "redirect:/admin/member_list";
+    }
+
+    /**
+     * 启用用户
+     * @param userid
+     * @return
+     */
+    @RequestMapping("member_list_startuser")
+    public String member_list_startuser(Integer userid){
+        adminServiceimpl.startUser(userid);
+        return "redirect:/admin/member_list_stop";
     }
 
     @RequestMapping("picture_add")
