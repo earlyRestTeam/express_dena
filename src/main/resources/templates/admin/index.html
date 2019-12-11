@@ -69,65 +69,77 @@
 </header>
 <aside class="Hui-aside">
 	<div class="menu_dropdown bk_2">
+        <dl id="menu-member">
+            <dt><i class="Hui-iconfont">&#xe60d;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="member_list" data-title="会员列表" href="javascript:;">会员列表</a></li>
+                    <li><a data-href="member_del" data-title="删除的会员" href="javascript:;">删除的会员</a></li>
+                </ul>
+            </dd>
+        </dl>
 		<dl id="menu-article">
-			<dt><i class="Hui-iconfont">&#xe616;</i> 资讯管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">&#xe616;</i> 审核骑手<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="article-list" data-title="审核管理" href="javascript:void(0)">审核管理</a></li>
+					<li><a data-href="article_list" data-title="审核管理" href="javascript:void(0)">审核管理</a></li>
 			</ul>
 		</dd>
 	</dl>
+        <dl id="menu-system">
+            <dt><i class="Hui-iconfont">&#xe62e;</i> 骑手管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="system_base" data-title="骑手列表" href="javascript:void(0)">骑手列表</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <dl id="menu-comments">
+            <dt><i class="Hui-iconfont">&#xe622;</i> 评论管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:;">评论列表</a></li>
+                </ul>
+            </dd>
+        </dl>
 		<dl id="menu-picture">
-			<dt><i class="Hui-iconfont">&#xe613;</i> 图片管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">&#xe613;</i> 公告管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="picture-list" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
+					<li><a data-href="picture_list" data-title="公告管理" href="javascript:void(0)">公告管理</a></li>
 			</ul>
 		</dd>
-	</dl>
-		<dl id="menu-comments">
-			<dt><i class="Hui-iconfont">&#xe622;</i> 评论管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+	    </dl>
+        <dl id="menu-tongji">
+            <dt><i class="Hui-iconfont">&#xe61a;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="charts-1" data-title="订单列表" href="javascript:void(0)">折线图</a></li>
+                    <li><a data-href="charts-2" data-title="时间轴折线图" href="javascript:void(0)">时间轴折线图</a></li>
+                </ul>
+            </dd>
+        </dl>
+
+		<dl id="menu-address">
+			<dt><i class="Hui-iconfont">&#xe62d;</i> 地址分级管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:;">评论列表</a></li>
+					<li><a data-href="admin_role" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+					<li><a data-href="admin_permission" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
 			</ul>
 		</dd>
-	</dl>
-		<dl id="menu-member">
-			<dt><i class="Hui-iconfont">&#xe60d;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a data-href="member-list" data-title="会员列表" href="javascript:;">会员列表</a></li>
-					<li><a data-href="member-del" data-title="删除的会员" href="javascript:;">删除的会员</a></li>
-			</ul>
-		</dd>
-	</dl>
-		<dl id="menu-admin">
-			<dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a data-href="admin-role" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-					<li><a data-href="admin-permission" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
-			</ul>
-		</dd>
-	</dl>
-		<dl id="menu-system">
-			<dt><i class="Hui-iconfont">&#xe62e;</i> 骑手管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a data-href="system-base" data-title="骑手列表" href="javascript:void(0)">骑手列表</a></li>
-					<li><a data-href="system-category" data-title="栏目管理" href="javascript:void(0)">审核骑手申请</a></li>
-			</ul>
-		</dd>
-	</dl>
-		<dl id="menu-tongji">
-			<dt><i class="Hui-iconfont">&#xe61a;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a data-href="charts-1" data-title="订单列表" href="javascript:void(0)">折线图</a></li>
-					<li><a data-href="charts-2" data-title="时间轴折线图" href="javascript:void(0)">时间轴折线图</a></li>
-				</ul>
-			</dd>
+	    </dl>
+        <dl id="menu-advertising">
+            <dt><i class="Hui-iconfont">&#xe62d;</i> 广告管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a data-href="admin_role" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+                    <li><a data-href="admin_permission" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+                </ul>
+            </dd>
+        </dl>
+
+
     </div>
 </aside>
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
