@@ -12,10 +12,7 @@ import com.example.express_dena.util.StaticPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author :Yang Jiahong
@@ -151,14 +148,15 @@ public class UserServiceImpl implements UserService {
         HorsemanExample.Criteria criteria = example.createCriteria();
         criteria.andIdCardEqualTo(horseman.getIdCard());
 
+
         List<Horseman> horsemens = horsemanMapper.selectByExample(example);
+
         if( horsemens != null && horsemens.size() > 0){
             res.put(StaticPool.ERROR,"修改失败！该身份证已被注册！");
         }else {
-
             horseman.setStatus(Byte.valueOf("0"));
             horsemanMapper.insert(horseman);
-            res.put(StaticPool.SUCCESS,"申请成功！");
+            res.put(StaticPool.SUCCESS,"申请成功！等待审核！");
         }
 
         return res;
