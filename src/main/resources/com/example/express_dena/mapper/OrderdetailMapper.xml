@@ -8,6 +8,9 @@
     <result column="kg" jdbcType="REAL" property="kg" />
     <result column="pick_up_code" jdbcType="VARCHAR" property="pickUpCode" />
     <result column="pick_up_address" jdbcType="VARCHAR" property="pickUpAddress" />
+    <result column="courier_company" jdbcType="VARCHAR" property="courierCompany" />
+    <result column="remark1" jdbcType="VARCHAR" property="remark1" />
+    <result column="remark2" jdbcType="VARCHAR" property="remark2" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, orderid, balance, kg, pick_up_code, pick_up_address
+    id, orderid, balance, kg, pick_up_code, pick_up_address, courier_company, remark1, 
+    remark2
   </sql>
   <select id="selectByExample" parameterType="com.example.express_dena.pojo.OrderdetailExample" resultMap="BaseResultMap">
     select
@@ -105,9 +109,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into orderdetail (orderid, balance, kg, 
-      pick_up_code, pick_up_address)
+      pick_up_code, pick_up_address, courier_company, 
+      remark1, remark2)
     values (#{orderid,jdbcType=INTEGER}, #{balance,jdbcType=REAL}, #{kg,jdbcType=REAL}, 
-      #{pickUpCode,jdbcType=VARCHAR}, #{pickUpAddress,jdbcType=VARCHAR})
+      #{pickUpCode,jdbcType=VARCHAR}, #{pickUpAddress,jdbcType=VARCHAR}, #{courierCompany,jdbcType=VARCHAR}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.express_dena.pojo.Orderdetail">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -130,6 +136,15 @@
       <if test="pickUpAddress != null">
         pick_up_address,
       </if>
+      <if test="courierCompany != null">
+        courier_company,
+      </if>
+      <if test="remark1 != null">
+        remark1,
+      </if>
+      <if test="remark2 != null">
+        remark2,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="orderid != null">
@@ -146,6 +161,15 @@
       </if>
       <if test="pickUpAddress != null">
         #{pickUpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="courierCompany != null">
+        #{courierCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        #{remark2,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -176,6 +200,15 @@
       <if test="record.pickUpAddress != null">
         pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR},
       </if>
+      <if test="record.courierCompany != null">
+        courier_company = #{record.courierCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark1 != null">
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark2 != null">
+        remark2 = #{record.remark2,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -188,7 +221,10 @@
       balance = #{record.balance,jdbcType=REAL},
       kg = #{record.kg,jdbcType=REAL},
       pick_up_code = #{record.pickUpCode,jdbcType=VARCHAR},
-      pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR}
+      pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR},
+      courier_company = #{record.courierCompany,jdbcType=VARCHAR},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      remark2 = #{record.remark2,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -211,6 +247,15 @@
       <if test="pickUpAddress != null">
         pick_up_address = #{pickUpAddress,jdbcType=VARCHAR},
       </if>
+      <if test="courierCompany != null">
+        courier_company = #{courierCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="remark1 != null">
+        remark1 = #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null">
+        remark2 = #{remark2,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -220,7 +265,10 @@
       balance = #{balance,jdbcType=REAL},
       kg = #{kg,jdbcType=REAL},
       pick_up_code = #{pickUpCode,jdbcType=VARCHAR},
-      pick_up_address = #{pickUpAddress,jdbcType=VARCHAR}
+      pick_up_address = #{pickUpAddress,jdbcType=VARCHAR},
+      courier_company = #{courierCompany,jdbcType=VARCHAR},
+      remark1 = #{remark1,jdbcType=VARCHAR},
+      remark2 = #{remark2,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

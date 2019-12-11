@@ -9,7 +9,6 @@
     <result column="user_telephone" jdbcType="VARCHAR" property="userTelephone" />
     <result column="total_amount" jdbcType="REAL" property="totalAmount" />
     <result column="userid" jdbcType="INTEGER" property="userid" />
-    <result column="courier_company" jdbcType="VARCHAR" property="courierCompany" />
     <result column="note" jdbcType="VARCHAR" property="note" />
     <result column="target_address" jdbcType="VARCHAR" property="targetAddress" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
@@ -79,9 +78,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    orderid, orderno, status, username, user_telephone, total_amount, userid, courier_company, 
-    note, target_address, comment_num, create_time, hosermanid, hosermain_phone, hoserman_name, 
-    end_time, remark1
+    orderid, orderno, status, username, user_telephone, total_amount, userid, note, target_address,
+    comment_num, create_time, hosermanid, hosermain_phone, hoserman_name, end_time, remark1
   </sql>
   <select id="selectByExample" parameterType="com.example.express_dena.pojo.OrderExample" resultMap="BaseResultMap">
     select
@@ -89,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,37 +96,37 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     where orderid = #{orderid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
+    delete from `order`
     where orderid = #{orderid,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.example.express_dena.pojo.OrderExample">
-    delete from order
+    delete from `order`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.express_dena.pojo.Order">
-    insert into order (orderid, orderno, status, 
-      username, user_telephone, total_amount, 
-      userid, courier_company, note, 
-      target_address, comment_num, create_time, 
-      hosermanid, hosermain_phone, hoserman_name, 
-      end_time, remark1)
-    values (#{orderid,jdbcType=INTEGER}, #{orderno,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{username,jdbcType=VARCHAR}, #{userTelephone,jdbcType=VARCHAR}, #{totalAmount,jdbcType=REAL}, 
-      #{userid,jdbcType=INTEGER}, #{courierCompany,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
-      #{targetAddress,jdbcType=VARCHAR}, #{commentNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{hosermanid,jdbcType=INTEGER}, #{hosermainPhone,jdbcType=VARCHAR}, #{hosermanName,jdbcType=VARCHAR}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{remark1,jdbcType=VARCHAR})
+    insert into `order` (orderid, orderno, status,
+      username, user_telephone, total_amount,
+      userid, note, target_address,
+      comment_num, create_time, hosermanid,
+      hosermain_phone, hoserman_name, end_time,
+      remark1)
+    values (#{orderid,jdbcType=INTEGER}, #{orderno,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{username,jdbcType=VARCHAR}, #{userTelephone,jdbcType=VARCHAR}, #{totalAmount,jdbcType=REAL},
+      #{userid,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, #{targetAddress,jdbcType=VARCHAR},
+      #{commentNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{hosermanid,jdbcType=INTEGER},
+      #{hosermainPhone,jdbcType=VARCHAR}, #{hosermanName,jdbcType=VARCHAR}, #{endTime,jdbcType=TIMESTAMP},
+      #{remark1,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.express_dena.pojo.Order">
-    insert into order
+    insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderid != null">
         orderid,
@@ -150,9 +148,6 @@
       </if>
       <if test="userid != null">
         userid,
-      </if>
-      <if test="courierCompany != null">
-        courier_company,
       </if>
       <if test="note != null">
         note,
@@ -204,9 +199,6 @@
       <if test="userid != null">
         #{userid,jdbcType=INTEGER},
       </if>
-      <if test="courierCompany != null">
-        #{courierCompany,jdbcType=VARCHAR},
-      </if>
       <if test="note != null">
         #{note,jdbcType=VARCHAR},
       </if>
@@ -236,14 +228,16 @@
       </if>
     </trim>
   </insert>
+
   <select id="countByExample" parameterType="com.example.express_dena.pojo.OrderExample" resultType="java.lang.Long">
-    select count(*) from order
+    select count(*) from `order`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
   <update id="updateByExampleSelective" parameterType="map">
-    update order
+    update `order`
     <set>
       <if test="record.orderid != null">
         orderid = #{record.orderid,jdbcType=INTEGER},
@@ -265,9 +259,6 @@
       </if>
       <if test="record.userid != null">
         userid = #{record.userid,jdbcType=INTEGER},
-      </if>
-      <if test="record.courierCompany != null">
-        courier_company = #{record.courierCompany,jdbcType=VARCHAR},
       </if>
       <if test="record.note != null">
         note = #{record.note,jdbcType=VARCHAR},
@@ -302,7 +293,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update order
+    update `order`
     set orderid = #{record.orderid,jdbcType=INTEGER},
       orderno = #{record.orderno,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
@@ -310,7 +301,6 @@
       user_telephone = #{record.userTelephone,jdbcType=VARCHAR},
       total_amount = #{record.totalAmount,jdbcType=REAL},
       userid = #{record.userid,jdbcType=INTEGER},
-      courier_company = #{record.courierCompany,jdbcType=VARCHAR},
       note = #{record.note,jdbcType=VARCHAR},
       target_address = #{record.targetAddress,jdbcType=VARCHAR},
       comment_num = #{record.commentNum,jdbcType=INTEGER},
@@ -325,7 +315,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.example.express_dena.pojo.Order">
-    update order
+    update `order`
     <set>
       <if test="orderno != null">
         orderno = #{orderno,jdbcType=VARCHAR},
@@ -344,9 +334,6 @@
       </if>
       <if test="userid != null">
         userid = #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="courierCompany != null">
-        courier_company = #{courierCompany,jdbcType=VARCHAR},
       </if>
       <if test="note != null">
         note = #{note,jdbcType=VARCHAR},
@@ -379,14 +366,13 @@
     where orderid = #{orderid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.express_dena.pojo.Order">
-    update order
+    update `order`
     set orderno = #{orderno,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       username = #{username,jdbcType=VARCHAR},
       user_telephone = #{userTelephone,jdbcType=VARCHAR},
       total_amount = #{totalAmount,jdbcType=REAL},
       userid = #{userid,jdbcType=INTEGER},
-      courier_company = #{courierCompany,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR},
       target_address = #{targetAddress,jdbcType=VARCHAR},
       comment_num = #{commentNum,jdbcType=INTEGER},
