@@ -28,6 +28,8 @@ public class EmailHandler implements EventHandler {
     @Override
     public void doHandler(Event event) {
         Map map = new HashMap<>();
+        //key 是标记 是什么类型的 空 默认是 注册的验证码
+        //其余的 要你们 自己 加
         String key = event.mapGet("key");
         if( key == null ){
             String mail = event.mapGet("mail");

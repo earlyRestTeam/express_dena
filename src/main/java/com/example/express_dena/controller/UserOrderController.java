@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author :Yang Jiahong
  * @date :2019/12/11 16:03
  */
-@RequestMapping("/staff")
 @Controller
 public class UserOrderController {
 
@@ -25,7 +24,7 @@ public class UserOrderController {
     public String selectOrderCurrent(int userid, Integer indexpage, HttpServletRequest request){
         PageInfo info = service.selectOrderCurrent(userid,indexpage);
         request.setAttribute("page",info);
-        return "/staff/currentStaffOrder";
+        return "/currentUserOrder.html";
 
     }
 

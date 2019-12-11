@@ -32,8 +32,20 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //提交订单
     @Override
-    public Map<String, String> submitOrder(int userid, Order order, List<Orderdetail> orderdetails) {
-        return null;
+    public Map<String, String> submitOrder(Order order, List<Orderdetail> orderdetails) {
+        Map<String,String> map = new HashMap<>();
+        int orderdetailsResult = orderdetailMapper.insertallDetails(orderdetails);
+        if(orderdetailsResult>0){
+            System.out.println("物件成功");
+        }
+        int orderResult = orderMapper.insert(order);
+        if(orderdetailsResult>0 && orderResult > 0){
+
+            map.put(StaticPool.SUCCESS,"发布失败");
+        }else{
+            map.put(StaticPool.ERROR ,"发布成功");
+        }
+        return map;
     }
 
     //查询当前订单

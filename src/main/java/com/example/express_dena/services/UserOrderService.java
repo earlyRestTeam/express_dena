@@ -17,7 +17,7 @@ import java.util.Map;
 public interface UserOrderService {
 
     //发布订单
-    public Map<String,String> submitOrder(int userid,Order order, List<Orderdetail> orderdetails);
+    public Map<String,String> submitOrder(Order order, List<Orderdetail> orderdetails);
 
     //查询当前订单
     public PageInfo selectOrderCurrent(int userid,Integer indexpage);

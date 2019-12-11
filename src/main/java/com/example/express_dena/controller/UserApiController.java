@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.express_dena.asyn.Event;
 import com.example.express_dena.asyn.EventProductor;
 import com.example.express_dena.asyn.EventType;
+import com.example.express_dena.pojo.Horseman;
 import com.example.express_dena.pojo.User;
 import com.example.express_dena.services.CodeCenter;
 import com.example.express_dena.services.UserService;
@@ -137,6 +138,28 @@ public class UserApiController {
 
         return result;
     }
+    @PostMapping("/becomeToHorseman")
+    public APIResult becomeToHorseman(@RequestBody Horseman horseman){
 
+        APIResult result = null;
+
+        if(StringUtils.isEmpty(horseman.getUsername()) ||
+                StringUtils.isEmpty(horseman.getIdCard()) ||
+                StringUtils.isEmpty(horseman.getEmail()) ||
+                StringUtils.isEmpty(horseman.getIdCardPicBack()) ||
+                StringUtils.isEmpty(horseman.getIdCardPicPre()) ||
+                StringUtils.isEmpty(horseman.getPhone())){
+
+            result =  APIResult.genFailApiResponse("PARAMS ERROR!");
+            return result;
+        }
+        Map<String, String> res = userService.applicationStaff(horseman);
+        if( res.get(StaticPool.ERROR) != null ){
+            result = APIResult.genFailApiResponse(res.get(StaticPool.ERROR));
+        }else {
+            result = APIResult.genSuccessApiResponse(res.get(StaticPool.SUCCESS));
+        }
+        return result;
+    }
 
 }

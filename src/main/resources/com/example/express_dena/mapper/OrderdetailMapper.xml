@@ -259,6 +259,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.example.express_dena.pojo.Orderdetail">
     update orderdetail
     set orderid = #{orderid,jdbcType=INTEGER},
@@ -271,4 +272,18 @@
       remark2 = #{remark2,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="insertallDetails" parameterType="java.util.List">
+        insert into orderdetail(id,orderid, balance, kg,
+      pick_up_code, pick_up_address, courier_company) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.id,jdbcType=INTEGER},
+            #{item.orderid,jdbcType=INTEGER},
+            #{item.balance,jdbcType=REAL},
+            #{item.kg,jdbcType=REAL},
+            #{item.pickUpCode,jdbcType=VARCHAR},
+            #{item.pickUpAddress,jdbcType=VARCHAR},
+            #{item.courierCompany,jdbcType=VARCHAR},
+        </foreach>
+    </insert>
 </mapper>
