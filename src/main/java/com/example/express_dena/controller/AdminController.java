@@ -1,18 +1,23 @@
 package com.example.express_dena.controller;
 
 
-import com.example.express_dena.services.impl.AdminServiceimpl;
+import com.example.express_dena.services.impl.ManagerOrderServiceImpl;
 import com.github.pagehelper.PageInfo;
+import com.example.express_dena.services.impl.AdminServiceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    @Resource
+    ManagerOrderServiceImpl orderService;
+
     @Autowired
     AdminServiceimpl adminServiceimpl;
 
@@ -198,6 +203,21 @@ public class AdminController {
         return "/admin/welcome";
     }
 
+    @RequestMapping("address_list")
+    public String address_list(){
+        return "/admin/address-list";
+    }
 
+    @RequestMapping("adversing_list")
+    public String adversing_list(){
+        return "/admin/adversing-list";
+    }
 
+    @RequestMapping("order_list")
+    public String order_list(Integer indexpage, HttpServletRequest request){
+        PageInfo info = orderService.selectOrder(indexpage, null, null, null, null, null, null, null, null);
+        request.setAttribute("orders",info);
+
+        return "/admin/order-list";
+    }
 }
