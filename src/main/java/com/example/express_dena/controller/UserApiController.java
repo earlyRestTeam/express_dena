@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -161,5 +160,25 @@ public class UserApiController {
         }
         return result;
     }
+    @PostMapping("/user/tixian")
+    public APIResult tixian(@RequestBody JSONObject jsonObject){
 
+        APIResult result = null;
+
+        String payNum = (String) jsonObject.get("payNum");
+        String count = (String) jsonObject.get("count");
+
+        if(StringUtils.isEmpty(payNum) || StringUtils.isEmpty(count)){
+            result =  APIResult.genFailApiResponse("PARAMS ERROR!");
+            return result;
+        }
+        Map<String, String> res = userService.tixian(1, payNum, count);
+
+        if( res.get(StaticPool.ERROR) != null ){
+            result = APIResult.genFailApiResponse(res.get(StaticPool.ERROR));
+        }else {
+            result = APIResult.genSuccessApiResponse(res.get(StaticPool.SUCCESS));
+        }
+        return result;
+    }
 }

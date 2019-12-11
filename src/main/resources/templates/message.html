@@ -1,23 +1,40 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Carbon - Admin Template</title>
-    <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="vendors/font-awesome/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendors/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <!----------------Global css------------------->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap-table.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
 
-    <!--wallet-->
-    <link rel="stylesheet" href="css/wallet.css">
+    <!--orderuser-->
+    <link href="/css/authority/basic_layout.css" rel="stylesheet" type="text/css">
+    <link href="/css/authority/common_style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/style/authority/jquery.fancybox-1.3.4.css" media="screen"></link>
+
+
 </head>
 <body>
-
+<style>
+    .delete{
+        font: bold 11px Arial;
+        text-decoration: none;
+        background-color: red;
+        color: red;
+        padding: 2px 6px 2px 6px;
+        border-top: 1px solid #CCCCCC;
+        border-right: 1px solid #CCCCCC;
+        border-bottom: 1px solid #CCCCCC;
+        border-left: 1px solid #CCCCCC;
+    }
+</style>
 <!-------------------Preloader---------------->
 <div class="preloader" style="position:fixed;
     width:100%;
@@ -128,7 +145,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="layouts-fixed-header" class="nav-link">
+                                <a href="wallet" class="nav-link">
                                     <i class="icon icon-target"></i> 我的钱包
                                 </a>
                             </li>
@@ -194,66 +211,76 @@
 
 <!-------------contenr start--------->
         <div class="content">
-            <div class="wallet">
-                <h4 class="wallet-p">账户余额</h4>
-                <p class="wallet-m" >￥<span id="banlance">18</span></p>
-                <h4 class="wallet-p">提现方式</h4>
-                <label class="wallet-method">
-                    <input name="支付宝" type="radio" value="" />支付宝 </label><br>
-                <input class="wallet-txt" id="payNum" type="text" placeholder="请输入支付宝账户">
-                <h4 class="wallet-p" >提现金额</h4>
-                <input class="wallet-txt" id="count" type="number" placeholder="请填写提现金额"><br>
-                <button class="wallet-btn" onclick="tixian()">确认提现</button>
-            </div>
+            <form id="submitForm" name="submitForm" action="" method="post">
+                <input type="hidden" name="allIDCheck" value="" id="allIDCheck"/>
+                <input type="hidden" name="fangyuanEntity.fyXqName" value="" id="fyXqName"/>
+                <div id="container">
+                    <div class="ui_content">
+                        <div class="ui_tb">
+                            <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+                                <tr>
+                                    <th>消息内容</th>
+                                    <th>时间</th>
+                                </tr>
+                                <tr th:each="message : ${pageResult.list}">
+                                    <td th:text="${message.content}">df122002</td>
+                                    <td th:value="${#dates.format(message.sendTime, 'yyyy-MM-dd')}">杨秀秀</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="ui_tb_h30">
+                            <div class="ui_flt" style="height: 30px; line-height: 30px;">
+                                共有
+                                <span class="ui_txt_bold04" th:text="${pageResult.size}">90</span>
+                                条记录，当前第
+                                <span class="ui_txt_bold04" th:text="${pageResult.pageNum+1}+'/'+${pageResult.pages}">1
+						/
+						9</span>
+                                页
+                            </div>
+                            <div class="ui_frt">
+                                <!--    如果是第一页，则只显示下一页、尾页 -->
+
+                                <input type="button" value="首页" class="ui_input_btn01" />
+                                <a  th:href="@{'/user/message?index='+${pageResult.prePage}}"  class="ui_input_btn01" >上一页</a>
+                                <a  th:href="@{'/user/message?index='+${pageResult.nextPage}}"  class="ui_input_btn01" >下一页</a>
+                                <input type="button" value="尾页" class="ui_input_btn01" />
+
+
+
+                                <!--     如果是最后一页，则只显示首页、上一页 -->
+
+                                转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
+                                <input type="button" class="ui_input_btn01" value="跳转" onclick="jumpInputPage(9);" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
 <!-------------contenr end--------->
     </div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/chart.js/chart.min.js"></script>
-<script src="js/chart.js"></script>
-<script src="js/carbon.js"></script>
-<script src="js/demo.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/chart.js/chart.min.js"></script>
+<script src="/js/chart.js"></script>
+<script src="/js/carbon.js"></script>
+<script src="/js/demo.js"></script>
         <!------------------Copy rights End------------------>
-<script src="js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 <!----------------------page Level Js-------------------------->
-<script src="js/custom.js"></script>
-<script>
-    function tixian(){
-        //一切正常后发送网络请求
-        var banlance = $("#banlance").text();
-        var payNum = $("#payNum").val();
-        var count = $("#count").val();
-        if (count > banlance) {
-            alert("提现金额 大于 余额！");
-            return;
-        }
-        var data = {"payNum": payNum, "count": count};
+<script src="/js/custom.js"></script>
+<script src="/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="/js/bootstrap-table.min.js"></script>
 
-        $.ajax({
-            type: 'POST',//方法类型
-            dataType: "json",//预期服务器返回的数据类型
-            url: 'user/tixian',//url
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(data),
-            success: function (result) {
-                console.log(result);//打印服务端返回的数据
-                if (result.code == 200) {
-                    $("#banlance").text(banlance-count);
-                    alert("提现申请成功，工作人员会在 24小时内 进行处理!");
-                } else {
-                    alert(result.message);
-                }
-                ;
-            },
-            error: function () {
-                closeModel();
-                alert("操作失败");
-            }
-        });
-    }
-</script>
+<!--orderuser-->
+<script type="text/javascript" src="/js/artDialog/artDialog.js?skin=default"></script>
+<script type="text/javascript" src="/js/authority/commonAll.js"></script>
+<script type="text/javascript" src="/js/fancybox/jquery.fancybox-1.3.4.js"></script>
+<script type="text/javascript" src="/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+
 </body>
 </html>
 
