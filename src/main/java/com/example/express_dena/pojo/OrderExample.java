@@ -105,63 +105,63 @@ public class OrderExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andOrderidIsNull() {
-            addCriterion("orderid is null");
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidIsNotNull() {
-            addCriterion("orderid is not null");
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidEqualTo(Integer value) {
-            addCriterion("orderid =", value, "orderid");
+        public Criteria andIdEqualTo(Integer value) {
+            addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidNotEqualTo(Integer value) {
-            addCriterion("orderid <>", value, "orderid");
+        public Criteria andIdNotEqualTo(Integer value) {
+            addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidGreaterThan(Integer value) {
-            addCriterion("orderid >", value, "orderid");
+        public Criteria andIdGreaterThan(Integer value) {
+            addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("orderid >=", value, "orderid");
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidLessThan(Integer value) {
-            addCriterion("orderid <", value, "orderid");
+        public Criteria andIdLessThan(Integer value) {
+            addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidLessThanOrEqualTo(Integer value) {
-            addCriterion("orderid <=", value, "orderid");
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
+            addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidIn(List<Integer> values) {
-            addCriterion("orderid in", values, "orderid");
+        public Criteria andIdIn(List<Integer> values) {
+            addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidNotIn(List<Integer> values) {
-            addCriterion("orderid not in", values, "orderid");
+        public Criteria andIdNotIn(List<Integer> values) {
+            addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidBetween(Integer value1, Integer value2) {
-            addCriterion("orderid between", value1, value2, "orderid");
+        public Criteria andIdBetween(Integer value1, Integer value2) {
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidNotBetween(Integer value1, Integer value2) {
-            addCriterion("orderid not between", value1, value2, "orderid");
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -625,6 +625,76 @@ public class OrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andPickUpAddressIsNull() {
+            addCriterion("pick_up_address is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressIsNotNull() {
+            addCriterion("pick_up_address is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressEqualTo(String value) {
+            addCriterion("pick_up_address =", value, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressNotEqualTo(String value) {
+            addCriterion("pick_up_address <>", value, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressGreaterThan(String value) {
+            addCriterion("pick_up_address >", value, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressGreaterThanOrEqualTo(String value) {
+            addCriterion("pick_up_address >=", value, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressLessThan(String value) {
+            addCriterion("pick_up_address <", value, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressLessThanOrEqualTo(String value) {
+            addCriterion("pick_up_address <=", value, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressLike(String value) {
+            addCriterion("pick_up_address like", value, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressNotLike(String value) {
+            addCriterion("pick_up_address not like", value, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressIn(List<String> values) {
+            addCriterion("pick_up_address in", values, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressNotIn(List<String> values) {
+            addCriterion("pick_up_address not in", values, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressBetween(String value1, String value2) {
+            addCriterion("pick_up_address between", value1, value2, "pickUpAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpAddressNotBetween(String value1, String value2) {
+            addCriterion("pick_up_address not between", value1, value2, "pickUpAddress");
+            return (Criteria) this;
+        }
+
         public Criteria andTargetAddressIsNull() {
             addCriterion("target_address is null");
             return (Criteria) this;
@@ -1012,6 +1082,246 @@ public class OrderExample {
 
         public Criteria andHosermanNameNotBetween(String value1, String value2) {
             addCriterion("hoserman_name not between", value1, value2, "hosermanName");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusIsNull() {
+            addCriterion("show_hoseman_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusIsNotNull() {
+            addCriterion("show_hoseman_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusEqualTo(Integer value) {
+            addCriterion("show_hoseman_status =", value, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusNotEqualTo(Integer value) {
+            addCriterion("show_hoseman_status <>", value, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusGreaterThan(Integer value) {
+            addCriterion("show_hoseman_status >", value, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("show_hoseman_status >=", value, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusLessThan(Integer value) {
+            addCriterion("show_hoseman_status <", value, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("show_hoseman_status <=", value, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusIn(List<Integer> values) {
+            addCriterion("show_hoseman_status in", values, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusNotIn(List<Integer> values) {
+            addCriterion("show_hoseman_status not in", values, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusBetween(Integer value1, Integer value2) {
+            addCriterion("show_hoseman_status between", value1, value2, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowHosemanStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("show_hoseman_status not between", value1, value2, "showHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusIsNull() {
+            addCriterion("showUserstatus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusIsNotNull() {
+            addCriterion("showUserstatus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusEqualTo(Integer value) {
+            addCriterion("showUserstatus =", value, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusNotEqualTo(Integer value) {
+            addCriterion("showUserstatus <>", value, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusGreaterThan(Integer value) {
+            addCriterion("showUserstatus >", value, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("showUserstatus >=", value, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusLessThan(Integer value) {
+            addCriterion("showUserstatus <", value, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusLessThanOrEqualTo(Integer value) {
+            addCriterion("showUserstatus <=", value, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusIn(List<Integer> values) {
+            addCriterion("showUserstatus in", values, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusNotIn(List<Integer> values) {
+            addCriterion("showUserstatus not in", values, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusBetween(Integer value1, Integer value2) {
+            addCriterion("showUserstatus between", value1, value2, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowuserstatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("showUserstatus not between", value1, value2, "showuserstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusIsNull() {
+            addCriterion("comfirm_user_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusIsNotNull() {
+            addCriterion("comfirm_user_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusEqualTo(Integer value) {
+            addCriterion("comfirm_user_status =", value, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusNotEqualTo(Integer value) {
+            addCriterion("comfirm_user_status <>", value, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusGreaterThan(Integer value) {
+            addCriterion("comfirm_user_status >", value, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("comfirm_user_status >=", value, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusLessThan(Integer value) {
+            addCriterion("comfirm_user_status <", value, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("comfirm_user_status <=", value, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusIn(List<Integer> values) {
+            addCriterion("comfirm_user_status in", values, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusNotIn(List<Integer> values) {
+            addCriterion("comfirm_user_status not in", values, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusBetween(Integer value1, Integer value2) {
+            addCriterion("comfirm_user_status between", value1, value2, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmUserStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("comfirm_user_status not between", value1, value2, "comfirmUserStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusIsNull() {
+            addCriterion("comfirm_hoseman_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusIsNotNull() {
+            addCriterion("comfirm_hoseman_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusEqualTo(Integer value) {
+            addCriterion("comfirm_hoseman_status =", value, "comfirmHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusNotEqualTo(Integer value) {
+            addCriterion("comfirm_hoseman_status <>", value, "comfirmHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusGreaterThan(Integer value) {
+            addCriterion("comfirm_hoseman_status >", value, "comfirmHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("comfirm_hoseman_status >=", value, "comfirmHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusLessThan(Integer value) {
+            addCriterion("comfirm_hoseman_status <", value, "comfirmHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("comfirm_hoseman_status <=", value, "comfirmHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusIn(List<Integer> values) {
+            addCriterion("comfirm_hoseman_status in", values, "comfirmHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusNotIn(List<Integer> values) {
+            addCriterion("comfirm_hoseman_status not in", values, "comfirmHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusBetween(Integer value1, Integer value2) {
+            addCriterion("comfirm_hoseman_status between", value1, value2, "comfirmHosemanStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andComfirmHosemanStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("comfirm_hoseman_status not between", value1, value2, "comfirmHosemanStatus");
             return (Criteria) this;
         }
 
