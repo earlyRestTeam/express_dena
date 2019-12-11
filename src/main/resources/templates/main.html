@@ -96,6 +96,42 @@
 
 <!-------------main start--------->
     <div class="main-container">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="color: black">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: black">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel" style="color: black">
+                            模态框（Modal）标题
+                        </h4>
+                    </div>
+                        <img id="headUrl" src="images/avatar.jpg" style="width: 80px;height: 80px">
+                        <input type="file" id="file" >
+                        <button onclick="upload()">确定</button>
+                        <input hidden id="userHeadUrl">
+                        <div class="form-group">
+                            <label for="inputUsername">username</label>
+                            <input type="username" class="form-control" id="inputUsername" aria-describedby="emailHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="InputPhone">phone</label>
+                            <input class="form-control" id="InputPhone">
+                        </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="change()">
+                            提交更改
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
@@ -196,15 +232,16 @@
             <div class="main-info">
                 <div class="main-info-left">
                     <div class="info-avatar">
-                        <img src="images/avatar.jpg">
+                        <img id="showHead" src="images/avatar.jpg">
                     </div>
                     <div class="main-info-name">
-                        <p class="info-name">杨秀秀</p>
+                        <p class="info-name" id="showName">杨秀秀</p>
                     </div>
                 </div>
 
                 <div class="main-info-center">
-                    <div class="main-info-center-modify">
+
+                    <div class="main-info-center-modify" onclick="jsOpenModal()">
                         <i class="glyphicon glyphicon-pencil">点击修改</i>
                     </div>
                     <table class="main-info-center-table">
@@ -218,7 +255,7 @@
                         </tr>
                         <tr>
                             <td class="glyphicon glyphicon-phone-alt">联系电话:</td>
-                            <td class="main-info-center-content">15697404438</td>
+                            <td class="main-info-center-content" id="showPhone">15697404438</td>
                         </tr>
                         <tr>
                             <td class="glyphicon glyphicon-map-marker">默认地址；</td>
@@ -255,6 +292,125 @@
 <script src="js/bootstrap.min.js"></script>
 <!----------------------page Level Js-------------------------->
 <script src="js/custom.js"></script>
+<script type="text/javascript">
+    function jsOpenModal() {
+        var showHead = $('#showHead').attr("src");
+        $("headUrl").attr("src",showHead);
+        var showName = $("#showName").text();
+        $("#inputUsername").val(showName);
+        var showPhone = $("#showPhone").text();
+        $("#InputPhone").val(showPhone);
+        $('#myModal').modal('show');
+    }
+    function  closeModel(){
+        $('#myModal').modal('hide');
+    }
+</script>
+<script>
+    $('#file').change(function(e) {
+        var _URL = window.URL || window.webkitURL;
+        var file, img;
+        if ((file = this.files[0])) {
+            img = new Image();
+            img.onload = function() {
+                $('#headUrl').attr('src', this.src);
+            };
+            img.src = _URL.createObjectURL(file);
+        }
+    })
+</script>
+<script>
+    function upload() {
+        var formData = new FormData();
+        var file = document.getElementById("file").files[0];
+        formData.append("file", file);
+        $.ajax({
+            url:"/upload",
+            type:"POST",
+            data:formData,
+            processData : false,
+            contentType : false,
+            dataType : 'json',
+            async : false,
+            success : function (result) {
+                console.log(result);
+                if(result.code == 200){
+                    $('#headUrl').attr("src",result.message);
+                }else {
+                    alert("error!");
+                }
+            }
+        });
+    }
+</script>
+<script>
+    function upload() {
+        var formData = new FormData();
+        var file = document.getElementById("file").files[0];
+        formData.append("file", file);
+        $.ajax({
+            url:"/upload",
+            type:"POST",
+            data:formData,
+            processData : false,
+            contentType : false,
+            dataType : 'json',
+            async : false,
+            success : function (result) {
+                console.log(result);
+                if(result.code == 200){
+                    $('#headUrl').attr("src",result.message);
+                }else {
+                    alert("error!");
+                }
+            }
+        });
+    }
+</script>
+<script>
+
+    function change() {
+        //一切正常后发送网络请求
+        var headUrl = $("#headUrl").attr("src");
+        var userName = $("#inputUsername").val();
+        var phone = $("#InputPhone").val();
+        var data = {"avatar": headUrl, "username": userName,"phone": phone};
+        $.ajax({
+            type: 'POST',//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: 'user/update',//url
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据
+                if (result.code == 200) {
+                    var showHead = $("#headUrl").attr("src");
+                    console.log(showHead);
+                     $('#showHead').attr("src",showHead);
+
+                    var showName = $("#inputUsername").val();
+                    console.log(showName);
+                    $("#showName").text(showName);
+
+                    var showPhone = $("#InputPhone").val();
+                    console.log(showPhone);
+                    $("#showPhone").text(showPhone);
+                    closeModel();
+                    alert("修改成功!");
+                }
+                else {
+                    closeModel();
+                    alert(result.message);
+                }
+                ;
+            },
+            error: function () {
+                closeModel();
+                alert("操作失败");
+            }
+        });
+    }
+</script>
 </body>
 </html>
 

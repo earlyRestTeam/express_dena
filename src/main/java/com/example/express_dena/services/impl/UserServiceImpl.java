@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService {
         String password = MD5Utils.StringInMd5("123");
         u.setPassword(password);
 
-        int id = userMapper.insert(u);
-        return id;
+
+        return userMapper.insert(u);
     }
 
     @Override
@@ -70,8 +70,10 @@ public class UserServiceImpl implements UserService {
 
         int id = user.getId();
         User user1 = userMapper.selectByPrimaryKey(id);
-        user1.setAvatar(user.getAvatar());
+        user1.setUsername(user.getUsername());
         user1.setPhone(user.getPhone());
+        user1.setAvatar(user.getAvatar());
+
 
         int ans = userMapper.updateByPrimaryKey(user1);
         if(ans > 0 )
@@ -89,7 +91,6 @@ public class UserServiceImpl implements UserService {
         if(user == null)
             res.put(StaticPool.ERROR,"修改失败！此用户不存在！");
         else {
-            System.out.println("user = " + user);
             if( user.getPassword().equals(MD5Utils.StringInMd5(oldPassword)) ){
                 String password = MD5Utils.StringInMd5(newPassword);
                 user.setPassword(password);
@@ -157,6 +158,11 @@ public class UserServiceImpl implements UserService {
         return res;
     }
 
+    /**
+     * 充值
+     * @param num
+     * @return
+     */
     @Override
     public Map<String, String> recharge(float num) {
         Map<String,String> res = new HashMap<>();
@@ -166,6 +172,12 @@ public class UserServiceImpl implements UserService {
         return res;
     }
 
+    /**
+     * 评价 订单xxx
+     * @param content
+     * @param orderid
+     * @return
+     */
     @Override
     public Map<String, String> feedBack(String content, int orderid) {
         Map<String,String> res = new HashMap<>();
