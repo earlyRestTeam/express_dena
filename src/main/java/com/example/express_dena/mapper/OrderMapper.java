@@ -3,6 +3,8 @@ package com.example.express_dena.mapper;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.OrderExample;
 import java.util.List;
+
+import com.example.express_dena.pojo.Orderdetail;
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderMapper {
@@ -10,7 +12,7 @@ public interface OrderMapper {
 
     int deleteByExample(OrderExample example);
 
-    int deleteByPrimaryKey(Integer orderid);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Order record);
 
@@ -18,7 +20,7 @@ public interface OrderMapper {
 
     List<Order> selectByExample(OrderExample example);
 
-    Order selectByPrimaryKey(Integer orderid);
+    Order selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
 
@@ -27,4 +29,5 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
 }

@@ -1,5 +1,6 @@
 package com.example.express_dena.mapper;
 
+import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.Orderdetail;
 import com.example.express_dena.pojo.OrderdetailExample;
 import java.util.List;
@@ -28,5 +29,5 @@ public interface OrderdetailMapper {
 
     int updateByPrimaryKey(Orderdetail record);
 
-    int insertallDetails(List<Orderdetail> orderdetail);
+    int insertallDetails(List<Orderdetail> orderdetails);
 }

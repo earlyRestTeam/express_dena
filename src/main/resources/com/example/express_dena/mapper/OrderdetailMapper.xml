@@ -7,7 +7,6 @@
     <result column="balance" jdbcType="REAL" property="balance" />
     <result column="kg" jdbcType="REAL" property="kg" />
     <result column="pick_up_code" jdbcType="VARCHAR" property="pickUpCode" />
-    <result column="pick_up_address" jdbcType="VARCHAR" property="pickUpAddress" />
     <result column="courier_company" jdbcType="VARCHAR" property="courierCompany" />
     <result column="remark1" jdbcType="VARCHAR" property="remark1" />
     <result column="remark2" jdbcType="VARCHAR" property="remark2" />
@@ -71,8 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, orderid, balance, kg, pick_up_code, pick_up_address, courier_company, remark1, 
-    remark2
+    id, orderid, balance, kg, pick_up_code, courier_company, remark1, remark2
   </sql>
   <select id="selectByExample" parameterType="com.example.express_dena.pojo.OrderdetailExample" resultMap="BaseResultMap">
     select
@@ -109,11 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into orderdetail (orderid, balance, kg, 
-      pick_up_code, pick_up_address, courier_company, 
-      remark1, remark2)
+      pick_up_code, courier_company, remark1, 
+      remark2)
     values (#{orderid,jdbcType=INTEGER}, #{balance,jdbcType=REAL}, #{kg,jdbcType=REAL}, 
-      #{pickUpCode,jdbcType=VARCHAR}, #{pickUpAddress,jdbcType=VARCHAR}, #{courierCompany,jdbcType=VARCHAR}, 
-      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR})
+      #{pickUpCode,jdbcType=VARCHAR}, #{courierCompany,jdbcType=VARCHAR}, #{remark1,jdbcType=VARCHAR}, 
+      #{remark2,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.express_dena.pojo.Orderdetail">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -132,9 +130,6 @@
       </if>
       <if test="pickUpCode != null">
         pick_up_code,
-      </if>
-      <if test="pickUpAddress != null">
-        pick_up_address,
       </if>
       <if test="courierCompany != null">
         courier_company,
@@ -158,9 +153,6 @@
       </if>
       <if test="pickUpCode != null">
         #{pickUpCode,jdbcType=VARCHAR},
-      </if>
-      <if test="pickUpAddress != null">
-        #{pickUpAddress,jdbcType=VARCHAR},
       </if>
       <if test="courierCompany != null">
         #{courierCompany,jdbcType=VARCHAR},
@@ -197,9 +189,6 @@
       <if test="record.pickUpCode != null">
         pick_up_code = #{record.pickUpCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.pickUpAddress != null">
-        pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR},
-      </if>
       <if test="record.courierCompany != null">
         courier_company = #{record.courierCompany,jdbcType=VARCHAR},
       </if>
@@ -221,7 +210,6 @@
       balance = #{record.balance,jdbcType=REAL},
       kg = #{record.kg,jdbcType=REAL},
       pick_up_code = #{record.pickUpCode,jdbcType=VARCHAR},
-      pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR},
       courier_company = #{record.courierCompany,jdbcType=VARCHAR},
       remark1 = #{record.remark1,jdbcType=VARCHAR},
       remark2 = #{record.remark2,jdbcType=VARCHAR}
@@ -244,9 +232,6 @@
       <if test="pickUpCode != null">
         pick_up_code = #{pickUpCode,jdbcType=VARCHAR},
       </if>
-      <if test="pickUpAddress != null">
-        pick_up_address = #{pickUpAddress,jdbcType=VARCHAR},
-      </if>
       <if test="courierCompany != null">
         courier_company = #{courierCompany,jdbcType=VARCHAR},
       </if>
@@ -259,14 +244,12 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-
   <update id="updateByPrimaryKey" parameterType="com.example.express_dena.pojo.Orderdetail">
     update orderdetail
     set orderid = #{orderid,jdbcType=INTEGER},
       balance = #{balance,jdbcType=REAL},
       kg = #{kg,jdbcType=REAL},
       pick_up_code = #{pickUpCode,jdbcType=VARCHAR},
-      pick_up_address = #{pickUpAddress,jdbcType=VARCHAR},
       courier_company = #{courierCompany,jdbcType=VARCHAR},
       remark1 = #{remark1,jdbcType=VARCHAR},
       remark2 = #{remark2,jdbcType=VARCHAR}
@@ -274,16 +257,15 @@
   </update>
 
   <insert id="insertallDetails" parameterType="java.util.List">
-        insert into orderdetail(id,orderid, balance, kg,
-      pick_up_code, pick_up_address, courier_company) values
-        <foreach collection="list" index="index" item="item" separator=",">
-            (#{item.id,jdbcType=INTEGER},
-            #{item.orderid,jdbcType=INTEGER},
-            #{item.balance,jdbcType=REAL},
-            #{item.kg,jdbcType=REAL},
-            #{item.pickUpCode,jdbcType=VARCHAR},
-            #{item.pickUpAddress,jdbcType=VARCHAR},
-            #{item.courierCompany,jdbcType=VARCHAR},
-        </foreach>
-    </insert>
+    insert into orderdetail(orderid, balance, kg,
+    pick_up_code,courier_company) values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.orderid,jdbcType=INTEGER},
+      #{item.balance,jdbcType=REAL},
+      #{item.kg,jdbcType=REAL},
+      #{item.pickUpCode,jdbcType=VARCHAR},
+      #{item.courierCompany,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
 </mapper>

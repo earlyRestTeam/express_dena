@@ -2,21 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.express_dena.mapper.OrderMapper">
   <resultMap id="BaseResultMap" type="com.example.express_dena.pojo.Order">
-    <id column="orderid" jdbcType="INTEGER" property="orderid" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="orderno" jdbcType="VARCHAR" property="orderno" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="user_telephone" jdbcType="VARCHAR" property="userTelephone" />
     <result column="total_amount" jdbcType="REAL" property="totalAmount" />
     <result column="userid" jdbcType="INTEGER" property="userid" />
-    <result column="courier_company" jdbcType="VARCHAR" property="courierCompany" />
     <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="pick_up_address" jdbcType="VARCHAR" property="pickUpAddress" />
     <result column="target_address" jdbcType="VARCHAR" property="targetAddress" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="hosermanid" jdbcType="INTEGER" property="hosermanid" />
     <result column="hosermain_phone" jdbcType="VARCHAR" property="hosermainPhone" />
     <result column="hoserman_name" jdbcType="VARCHAR" property="hosermanName" />
+    <result column="show_hoseman_status" jdbcType="INTEGER" property="showHosemanStatus" />
+    <result column="showUserstatus" jdbcType="INTEGER" property="showuserstatus" />
+    <result column="comfirm_user_status" jdbcType="INTEGER" property="comfirmUserStatus" />
+    <result column="comfirm_hoseman_status" jdbcType="INTEGER" property="comfirmHosemanStatus" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="remark1" jdbcType="VARCHAR" property="remark1" />
   </resultMap>
@@ -79,8 +83,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    orderid, orderno, status, username, user_telephone, total_amount, userid, courier_company, 
-    note, target_address, comment_num, create_time, hosermanid, hosermain_phone, hoserman_name, 
+    id, orderno, status, username, user_telephone, total_amount, userid, note, pick_up_address, 
+    target_address, comment_num, create_time, hosermanid, hosermain_phone, hoserman_name, 
+    show_hoseman_status, showUserstatus, comfirm_user_status, comfirm_hoseman_status, 
     end_time, remark1
   </sql>
   <select id="selectByExample" parameterType="com.example.express_dena.pojo.OrderExample" resultMap="BaseResultMap">
@@ -89,7 +94,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,39 +105,44 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
-    where orderid = #{orderid,jdbcType=INTEGER}
+    from `order`
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
-    where orderid = #{orderid,jdbcType=INTEGER}
+    delete from `order`
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.example.express_dena.pojo.OrderExample">
-    delete from order
+    delete from `order`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.express_dena.pojo.Order">
-    insert into order (orderid, orderno, status, 
-      username, user_telephone, total_amount, 
-      userid, courier_company, note, 
-      target_address, comment_num, create_time, 
-      hosermanid, hosermain_phone, hoserman_name, 
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `order` (orderno, status, username,
+      user_telephone, total_amount, userid, 
+      note, pick_up_address, target_address, 
+      comment_num, create_time, hosermanid, 
+      hosermain_phone, hoserman_name, show_hoseman_status, 
+      showUserstatus, comfirm_user_status, comfirm_hoseman_status, 
       end_time, remark1)
-    values (#{orderid,jdbcType=INTEGER}, #{orderno,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{username,jdbcType=VARCHAR}, #{userTelephone,jdbcType=VARCHAR}, #{totalAmount,jdbcType=REAL}, 
-      #{userid,jdbcType=INTEGER}, #{courierCompany,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
-      #{targetAddress,jdbcType=VARCHAR}, #{commentNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{hosermanid,jdbcType=INTEGER}, #{hosermainPhone,jdbcType=VARCHAR}, #{hosermanName,jdbcType=VARCHAR}, 
+    values (#{orderno,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{userTelephone,jdbcType=VARCHAR}, #{totalAmount,jdbcType=REAL}, #{userid,jdbcType=INTEGER}, 
+      #{note,jdbcType=VARCHAR}, #{pickUpAddress,jdbcType=VARCHAR}, #{targetAddress,jdbcType=VARCHAR}, 
+      #{commentNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{hosermanid,jdbcType=INTEGER}, 
+      #{hosermainPhone,jdbcType=VARCHAR}, #{hosermanName,jdbcType=VARCHAR}, #{showHosemanStatus,jdbcType=INTEGER}, 
+      #{showuserstatus,jdbcType=INTEGER}, #{comfirmUserStatus,jdbcType=INTEGER}, #{comfirmHosemanStatus,jdbcType=INTEGER}, 
       #{endTime,jdbcType=TIMESTAMP}, #{remark1,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.express_dena.pojo.Order">
-    insert into order
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="orderid != null">
-        orderid,
-      </if>
       <if test="orderno != null">
         orderno,
       </if>
@@ -151,11 +161,11 @@
       <if test="userid != null">
         userid,
       </if>
-      <if test="courierCompany != null">
-        courier_company,
-      </if>
       <if test="note != null">
         note,
+      </if>
+      <if test="pickUpAddress != null">
+        pick_up_address,
       </if>
       <if test="targetAddress != null">
         target_address,
@@ -175,6 +185,18 @@
       <if test="hosermanName != null">
         hoserman_name,
       </if>
+      <if test="showHosemanStatus != null">
+        show_hoseman_status,
+      </if>
+      <if test="showuserstatus != null">
+        showUserstatus,
+      </if>
+      <if test="comfirmUserStatus != null">
+        comfirm_user_status,
+      </if>
+      <if test="comfirmHosemanStatus != null">
+        comfirm_hoseman_status,
+      </if>
       <if test="endTime != null">
         end_time,
       </if>
@@ -183,9 +205,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="orderid != null">
-        #{orderid,jdbcType=INTEGER},
-      </if>
       <if test="orderno != null">
         #{orderno,jdbcType=VARCHAR},
       </if>
@@ -204,11 +223,11 @@
       <if test="userid != null">
         #{userid,jdbcType=INTEGER},
       </if>
-      <if test="courierCompany != null">
-        #{courierCompany,jdbcType=VARCHAR},
-      </if>
       <if test="note != null">
         #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="pickUpAddress != null">
+        #{pickUpAddress,jdbcType=VARCHAR},
       </if>
       <if test="targetAddress != null">
         #{targetAddress,jdbcType=VARCHAR},
@@ -228,6 +247,18 @@
       <if test="hosermanName != null">
         #{hosermanName,jdbcType=VARCHAR},
       </if>
+      <if test="showHosemanStatus != null">
+        #{showHosemanStatus,jdbcType=INTEGER},
+      </if>
+      <if test="showuserstatus != null">
+        #{showuserstatus,jdbcType=INTEGER},
+      </if>
+      <if test="comfirmUserStatus != null">
+        #{comfirmUserStatus,jdbcType=INTEGER},
+      </if>
+      <if test="comfirmHosemanStatus != null">
+        #{comfirmHosemanStatus,jdbcType=INTEGER},
+      </if>
       <if test="endTime != null">
         #{endTime,jdbcType=TIMESTAMP},
       </if>
@@ -237,16 +268,16 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.example.express_dena.pojo.OrderExample" resultType="java.lang.Long">
-    select count(*) from order
+    select count(*) from `order`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update order
+    update `order`
     <set>
-      <if test="record.orderid != null">
-        orderid = #{record.orderid,jdbcType=INTEGER},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.orderno != null">
         orderno = #{record.orderno,jdbcType=VARCHAR},
@@ -266,11 +297,11 @@
       <if test="record.userid != null">
         userid = #{record.userid,jdbcType=INTEGER},
       </if>
-      <if test="record.courierCompany != null">
-        courier_company = #{record.courierCompany,jdbcType=VARCHAR},
-      </if>
       <if test="record.note != null">
         note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pickUpAddress != null">
+        pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR},
       </if>
       <if test="record.targetAddress != null">
         target_address = #{record.targetAddress,jdbcType=VARCHAR},
@@ -290,6 +321,18 @@
       <if test="record.hosermanName != null">
         hoserman_name = #{record.hosermanName,jdbcType=VARCHAR},
       </if>
+      <if test="record.showHosemanStatus != null">
+        show_hoseman_status = #{record.showHosemanStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.showuserstatus != null">
+        showUserstatus = #{record.showuserstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.comfirmUserStatus != null">
+        comfirm_user_status = #{record.comfirmUserStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.comfirmHosemanStatus != null">
+        comfirm_hoseman_status = #{record.comfirmHosemanStatus,jdbcType=INTEGER},
+      </if>
       <if test="record.endTime != null">
         end_time = #{record.endTime,jdbcType=TIMESTAMP},
       </if>
@@ -302,22 +345,26 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update order
-    set orderid = #{record.orderid,jdbcType=INTEGER},
+    update `order`
+    set id = #{record.id,jdbcType=INTEGER},
       orderno = #{record.orderno,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
       user_telephone = #{record.userTelephone,jdbcType=VARCHAR},
       total_amount = #{record.totalAmount,jdbcType=REAL},
       userid = #{record.userid,jdbcType=INTEGER},
-      courier_company = #{record.courierCompany,jdbcType=VARCHAR},
       note = #{record.note,jdbcType=VARCHAR},
+      pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR},
       target_address = #{record.targetAddress,jdbcType=VARCHAR},
       comment_num = #{record.commentNum,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       hosermanid = #{record.hosermanid,jdbcType=INTEGER},
       hosermain_phone = #{record.hosermainPhone,jdbcType=VARCHAR},
       hoserman_name = #{record.hosermanName,jdbcType=VARCHAR},
+      show_hoseman_status = #{record.showHosemanStatus,jdbcType=INTEGER},
+      showUserstatus = #{record.showuserstatus,jdbcType=INTEGER},
+      comfirm_user_status = #{record.comfirmUserStatus,jdbcType=INTEGER},
+      comfirm_hoseman_status = #{record.comfirmHosemanStatus,jdbcType=INTEGER},
       end_time = #{record.endTime,jdbcType=TIMESTAMP},
       remark1 = #{record.remark1,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -325,7 +372,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.example.express_dena.pojo.Order">
-    update order
+    update `order`
     <set>
       <if test="orderno != null">
         orderno = #{orderno,jdbcType=VARCHAR},
@@ -345,11 +392,11 @@
       <if test="userid != null">
         userid = #{userid,jdbcType=INTEGER},
       </if>
-      <if test="courierCompany != null">
-        courier_company = #{courierCompany,jdbcType=VARCHAR},
-      </if>
       <if test="note != null">
         note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="pickUpAddress != null">
+        pick_up_address = #{pickUpAddress,jdbcType=VARCHAR},
       </if>
       <if test="targetAddress != null">
         target_address = #{targetAddress,jdbcType=VARCHAR},
@@ -369,6 +416,18 @@
       <if test="hosermanName != null">
         hoserman_name = #{hosermanName,jdbcType=VARCHAR},
       </if>
+      <if test="showHosemanStatus != null">
+        show_hoseman_status = #{showHosemanStatus,jdbcType=INTEGER},
+      </if>
+      <if test="showuserstatus != null">
+        showUserstatus = #{showuserstatus,jdbcType=INTEGER},
+      </if>
+      <if test="comfirmUserStatus != null">
+        comfirm_user_status = #{comfirmUserStatus,jdbcType=INTEGER},
+      </if>
+      <if test="comfirmHosemanStatus != null">
+        comfirm_hoseman_status = #{comfirmHosemanStatus,jdbcType=INTEGER},
+      </if>
       <if test="endTime != null">
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
@@ -376,26 +435,30 @@
         remark1 = #{remark1,jdbcType=VARCHAR},
       </if>
     </set>
-    where orderid = #{orderid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.express_dena.pojo.Order">
-    update order
+    update `order`
     set orderno = #{orderno,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       username = #{username,jdbcType=VARCHAR},
       user_telephone = #{userTelephone,jdbcType=VARCHAR},
       total_amount = #{totalAmount,jdbcType=REAL},
       userid = #{userid,jdbcType=INTEGER},
-      courier_company = #{courierCompany,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR},
+      pick_up_address = #{pickUpAddress,jdbcType=VARCHAR},
       target_address = #{targetAddress,jdbcType=VARCHAR},
       comment_num = #{commentNum,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       hosermanid = #{hosermanid,jdbcType=INTEGER},
       hosermain_phone = #{hosermainPhone,jdbcType=VARCHAR},
       hoserman_name = #{hosermanName,jdbcType=VARCHAR},
+      show_hoseman_status = #{showHosemanStatus,jdbcType=INTEGER},
+      showUserstatus = #{showuserstatus,jdbcType=INTEGER},
+      comfirm_user_status = #{comfirmUserStatus,jdbcType=INTEGER},
+      comfirm_hoseman_status = #{comfirmHosemanStatus,jdbcType=INTEGER},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       remark1 = #{remark1,jdbcType=VARCHAR}
-    where orderid = #{orderid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -7,7 +7,6 @@ import com.example.express_dena.pojo.OrderExample;
 import com.example.express_dena.pojo.Orderdetail;
 import com.example.express_dena.services.UserOrderService;
 import com.example.express_dena.util.StaticPool;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +99,7 @@ public class UserOrderServiceImpl implements UserOrderService {
     @Override
     public int selectStatus(int orderid) {
         OrderExample example = new OrderExample();
-        example.or().andOrderidEqualTo(orderid);
+//        example.or().andOrderidEqualTo(orderid);
         Order order = (Order) orderMapper.selectByExample(example);
         int status = order.getStatus();
         return status;

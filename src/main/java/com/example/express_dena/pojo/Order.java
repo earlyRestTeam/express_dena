@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Order implements Serializable {
-    private Integer orderid;
+    private Integer id;
 
     private String orderno;
 
@@ -20,6 +20,8 @@ public class Order implements Serializable {
 
     private String note;
 
+    private String pickUpAddress;
+
     private String targetAddress;
 
     private Integer commentNum;
@@ -32,18 +34,26 @@ public class Order implements Serializable {
 
     private String hosermanName;
 
+    private Integer showHosemanStatus;
+
+    private Integer showuserstatus;
+
+    private Integer comfirmUserStatus;
+
+    private Integer comfirmHosemanStatus;
+
     private Date endTime;
 
     private String remark1;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getOrderid() {
-        return orderid;
+    public Integer getId() {
+        return id;
     }
 
-    public void setOrderid(Integer orderid) {
-        this.orderid = orderid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getOrderno() {
@@ -102,6 +112,14 @@ public class Order implements Serializable {
         this.note = note;
     }
 
+    public String getPickUpAddress() {
+        return pickUpAddress;
+    }
+
+    public void setPickUpAddress(String pickUpAddress) {
+        this.pickUpAddress = pickUpAddress;
+    }
+
     public String getTargetAddress() {
         return targetAddress;
     }
@@ -150,6 +168,38 @@ public class Order implements Serializable {
         this.hosermanName = hosermanName;
     }
 
+    public Integer getShowHosemanStatus() {
+        return showHosemanStatus;
+    }
+
+    public void setShowHosemanStatus(Integer showHosemanStatus) {
+        this.showHosemanStatus = showHosemanStatus;
+    }
+
+    public Integer getShowuserstatus() {
+        return showuserstatus;
+    }
+
+    public void setShowuserstatus(Integer showuserstatus) {
+        this.showuserstatus = showuserstatus;
+    }
+
+    public Integer getComfirmUserStatus() {
+        return comfirmUserStatus;
+    }
+
+    public void setComfirmUserStatus(Integer comfirmUserStatus) {
+        this.comfirmUserStatus = comfirmUserStatus;
+    }
+
+    public Integer getComfirmHosemanStatus() {
+        return comfirmHosemanStatus;
+    }
+
+    public void setComfirmHosemanStatus(Integer comfirmHosemanStatus) {
+        this.comfirmHosemanStatus = comfirmHosemanStatus;
+    }
+
     public Date getEndTime() {
         return endTime;
     }
@@ -172,7 +222,7 @@ public class Order implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", orderid=").append(orderid);
+        sb.append(", id=").append(id);
         sb.append(", orderno=").append(orderno);
         sb.append(", status=").append(status);
         sb.append(", username=").append(username);
@@ -180,12 +230,17 @@ public class Order implements Serializable {
         sb.append(", totalAmount=").append(totalAmount);
         sb.append(", userid=").append(userid);
         sb.append(", note=").append(note);
+        sb.append(", pickUpAddress=").append(pickUpAddress);
         sb.append(", targetAddress=").append(targetAddress);
         sb.append(", commentNum=").append(commentNum);
         sb.append(", createTime=").append(createTime);
         sb.append(", hosermanid=").append(hosermanid);
         sb.append(", hosermainPhone=").append(hosermainPhone);
         sb.append(", hosermanName=").append(hosermanName);
+        sb.append(", showHosemanStatus=").append(showHosemanStatus);
+        sb.append(", showuserstatus=").append(showuserstatus);
+        sb.append(", comfirmUserStatus=").append(comfirmUserStatus);
+        sb.append(", comfirmHosemanStatus=").append(comfirmHosemanStatus);
         sb.append(", endTime=").append(endTime);
         sb.append(", remark1=").append(remark1);
         sb.append(", serialVersionUID=").append(serialVersionUID);

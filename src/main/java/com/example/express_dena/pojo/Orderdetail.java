@@ -13,8 +13,6 @@ public class Orderdetail implements Serializable {
 
     private String pickUpCode;
 
-    private String pickUpAddress;
-
     private String courierCompany;
 
     private String remark1;
@@ -63,14 +61,6 @@ public class Orderdetail implements Serializable {
         this.pickUpCode = pickUpCode;
     }
 
-    public String getPickUpAddress() {
-        return pickUpAddress;
-    }
-
-    public void setPickUpAddress(String pickUpAddress) {
-        this.pickUpAddress = pickUpAddress;
-    }
-
     public String getCourierCompany() {
         return courierCompany;
     }
@@ -106,7 +96,6 @@ public class Orderdetail implements Serializable {
         sb.append(", balance=").append(balance);
         sb.append(", kg=").append(kg);
         sb.append(", pickUpCode=").append(pickUpCode);
-        sb.append(", pickUpAddress=").append(pickUpAddress);
         sb.append(", courierCompany=").append(courierCompany);
         sb.append(", remark1=").append(remark1);
         sb.append(", remark2=").append(remark2);
