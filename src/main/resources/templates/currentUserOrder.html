@@ -292,7 +292,7 @@
 
                                 <tr th:each="order:${page.list}">
                                     <td><input type="checkbox" name="IDCheck" value="${order.orderid}" class="acb" /></td>
-                                    <td th:text="${order.orderid}"></td>
+                                    <td th:text="${order.orderno}"></td>
                                     <td th:text="${order.username}"></td>
                                     <td th:text="${order.createTime}"></td>
                                     <td th:text="${order.totalAmount}"></td>
