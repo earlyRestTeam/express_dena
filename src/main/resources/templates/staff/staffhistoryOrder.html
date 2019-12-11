@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -159,19 +159,19 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="/staff/staff/currentStaffOrder class="nav-link">
+                                <a href="/staff/currentStaffOrder" class="nav-link">
                                     <i class="icon icon-energy"></i> 接单大厅
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="/staff/staff/currentStaffOrder" class="nav-link">
+                                <a href="/staff/currentStaffOrder" class="nav-link">
                                     <i class="icon icon-energy"></i> 我的订单
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="/staff/staff/staffHistoryOrder" class="nav-link">
+                                <a href="/staff/staffHistoryOrder" class="nav-link">
                                     <i class="icon icon-energy"></i> 历史订单
                                 </a>
                             </li>
@@ -267,89 +267,21 @@
                                     <th>显示详情</th>
                                 </tr>
 
-                                <tr>
+                                <tr th:each="order:${pages.list}">
                                     <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
+                                    <td th:text="${order.orderno}"></td>
+                                    <td th:text="${order.username}"></td>
+                                    <td th:text="${#dates.format(order.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${order.totalAmount}"></td>
+                                    <td th:text="${order.status}"></td>
+                                    <td th:text="${#dates.format(order.endTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+
                                     <td>
                                         <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
                                     </td>
                                     <td><button>点击显示详情</button></td>
                                 </tr>
 
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458638753194" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458606278350" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458644830000" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458612828548" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox" name="IDCheck" value="14458619251417" class="acb" /></td>
-                                    <td>df122002</td>
-                                    <td>杨秀秀</td>
-                                    <td>2018-6-5</td>
-                                    <td>￥5</td>
-                                    <td>已完成</td>
-                                    <td>2018-6-6</td>
-                                    <td>
-                                        <a href="javascript:del('14458632171244');" class="delete">点击删除</a>
-                                    </td>
-                                    <td><button>点击显示详情</button></td>
-                                </tr>
 
                             </table>
                         </div>
@@ -366,12 +298,10 @@
                             <div class="ui_frt">
                                 <!--    如果是第一页，则只显示下一页、尾页 -->
 
-                                <input type="button" value="首页" class="ui_input_btn01" />
-                                <input type="button" value="上一页" class="ui_input_btn01" />
-                                <input type="button" value="下一页" class="ui_input_btn01"
-                                       onclick="jumpNormalPage(2);" />
-                                <input type="button" value="尾页" class="ui_input_btn01"
-                                       onclick="jumpNormalPage(9);" />
+                                <input onclick="jumpNormalPage(1);"  type="button" value="首页" class="ui_input_btn01" />
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.prePage}')|" type="button" value="上一页" class="ui_input_btn01" />
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.nextPage}')|" type="button" value="下一页" class="ui_input_btn01"/>
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.endRow}')|" type="button" value="尾页" class="ui_input_btn01"/>
                                 <!--     如果是最后一页，则只显示首页、上一页 -->
                                 转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
                                 <input type="button" class="ui_input_btn01" value="跳转" onclick="jumpInputPage(9);" />
@@ -516,7 +446,7 @@
 
     /** 普通跳转 **/
     function jumpNormalPage(page){
-        $("#submitForm").attr("action", "house_list?page=" + page).submit();
+        $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + page).submit();
     }
 
     /** 输入页跳转 **/
@@ -529,11 +459,11 @@
                 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
                 pageNum = 1;
             }
-            $("#submitForm").attr("action", "house_list?page=" + pageNum).submit();
+            $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + pageNum).submit();
         }else{
             // “跳转页数”为空
             art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-            $("#submitForm").attr("action", "house_list?page=" + 1).submit();
+            $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + 1).submit();
         }
     }
 </script>

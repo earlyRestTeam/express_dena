@@ -280,7 +280,6 @@
                                     <th>显示详情</th>
                                 </tr>
 
-
                                 <tr th:each="order:${pages.list}">
 
                                     <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>
@@ -291,7 +290,7 @@
                                     <td th:text="${order.status}"></td>
                                     <td th:text="${order.targetAddress}"></td>
                                     <td>
-                                        <a th:href="@{'getOrder?orderid='+${order.orderid}}" class="queren">领取任务</a>
+                                        <a href="javascript:del('14458632171244');" class="queren">完成任务</a>
                                     </td>
                                     <td><button>点击显示详情</button></td>
                                 </tr>
@@ -316,7 +315,6 @@
                                 <input th:onclick="|javascript : jumpNormalPage( '${pages.prePage}')|" type="button" value="上一页" class="ui_input_btn01" />
                                 <input th:onclick="|javascript : jumpNormalPage( '${pages.nextPage}')|" type="button" value="下一页" class="ui_input_btn01"/>
                                 <input th:onclick="|javascript : jumpNormalPage( '${pages.endRow}')|" type="button" value="尾页" class="ui_input_btn01"/>
-
 
 
                                 <!--     如果是最后一页，则只显示首页、上一页 -->
@@ -464,7 +462,7 @@
 
     /** 普通跳转 **/
     function jumpNormalPage(page){
-        $("#submitForm").attr("action", "currentStaffOrder?indexpage=" + page).submit();
+        $("#submitForm").attr("action", "staffGetOrder?indexpage=" + page).submit();
     }
 
     /** 输入页跳转 **/
@@ -477,11 +475,11 @@
                 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
                 pageNum = 1;
             }
-            $("#submitForm").attr("action", "currentStaffOrder?indexpage=" + pageNum).submit();
+            $("#submitForm").attr("action", "staffGetOrder?indexpage=" + pageNum).submit();
         }else{
             // “跳转页数”为空
             art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-            $("#submitForm").attr("action", "currentStaffOrder?indexpage=" + 1).submit();
+            $("#submitForm").attr("action", "staffGetOrder?indexpage=" + 1).submit();
         }
     }
 </script>

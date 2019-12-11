@@ -41,12 +41,6 @@ public class StaffController {
         return "/staff/staffinfo";
     }
 
-    //历史订单界面
-    @RequestMapping("staffHistoryOrder")
-    public String staffHistoryOrder(){
-
-        return "/staff/staffHistoryOrder";
-    }
 
     //更改密码界面
     @RequestMapping("staffchangePwd")
@@ -54,16 +48,8 @@ public class StaffController {
         return "/staff/staffchangePwd";
     }
 
-    //当订单详情页面
-    @RequestMapping("detailsOrder")
-    public String detailsOrder(){
-        return "/staff/detailsOrder";
-    }
 
-    //当前订单跳转1
-    @RequestMapping("currentStaffOrder")
-    public String currentStaffOrder(){
-        return "/staff/currentStaffOrder";
-    }
+
+
 
 }
