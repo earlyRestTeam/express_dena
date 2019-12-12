@@ -1,5 +1,6 @@
 package com.example.express_dena.services;
 
+import com.example.express_dena.pojo.Admin;
 import com.example.express_dena.pojo.Comment;
 import com.example.express_dena.pojo.User;
 import com.github.pagehelper.PageInfo;

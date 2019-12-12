@@ -27,14 +27,17 @@ public class LoginSuccessHandler implements
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         String url = null;
+
         for (GrantedAuthority g : authorities){
             if( g.getAuthority().equals("ROLE_admin") ){
-                url = "/admin/center";
+                url = "/admin/index";
                 break;
+            }else if(g.getAuthority().equals("ROLE_staff")){
+                url = "/staff/staffmain";
             }
         }
         if(url == null)
-            url = "/user/center";
+            url = "/user/main";
         response.sendRedirect(url);
     }
 

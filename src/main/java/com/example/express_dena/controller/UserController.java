@@ -43,7 +43,7 @@ public class UserController {
     }
     @GetMapping("main")
     public String main(){
-        return "/main";
+        return "redirect:userInfo";
     }
     @GetMapping("userApplication")
     public String userApplication(){

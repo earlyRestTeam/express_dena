@@ -1,21 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Carbon - Admin Template</title>
-    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="/vendors/font-awesome/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
 
     <!----------------Global css------------------->
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/custom.css">
 
     <!--pay Order-->
-    <link rel="stylesheet" href="/css/express.css">
+    <link rel="stylesheet" href="css/express.css">
 
 </head>
 <body>
@@ -215,31 +214,39 @@
                                     <div class="form-group">
                                         <label for="expressName" class="col-sm-2 control-label">姓名</label>
                                         <div class="col-sm-10">
-                                            <p class="form-control-static" id="expressName">杨秀秀</p>
+                                            <p class="form-control-static" id="expressName" th:text="${order.username}"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="expressTel" class="col-sm-2 control-label">联系电话</label>
                                         <div class="col-sm-10">
-                                            <p class="form-control-static" id="expressTel">15697881</p>
+                                            <p class="form-control-static" id="expressTel" th:text="${order.userTelephone}"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="expressAddress" class="col-sm-2 control-label">配送地址</label>
+                                        <label for="expressAddress" class="col-sm-2 control-label">取件地址</label>
                                         <div class="col-sm-10">
-                                            <p class="form-control-static" id="expressAddress">湖南理工大学</p>
+                                            <p class="form-control-static" id="expressAddress" th:text="${order.pickUpAddress}"></p>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
-                                        <label for="expressMessage" class="col-sm-2 control-label">取件短信</label>
+                                        <label for="expressAddress" class="col-sm-2 control-label">送达地址</label>
                                         <div class="col-sm-10">
-                                            <p class="form-control-static" id="expressMessage">bf-515</p>
+                                            <p class="form-control-static" id="expresstargetAddress" th:text="${order.targetAddress}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" th:each="orderdetails:${orderdetails}">
+                                        <label for="expressMessage" class="col-sm-2 control-label">取件编码</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static qujian" id="expressMessage"
+                                               th:text="${orderdetails.pickUpCode}"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="expressRemark" class="col-sm-2 control-label">备注</label>
                                         <div class="col-sm-10">
-                                            <p class="form-control-static" id="expressRemark">帮我带杯奶茶</p>
+                                            <p class="form-control-static" id="expressRemark" th:text="${order.note}">帮我带杯奶茶</p>
                                         </div>
                                     </div>
                                 </form>
@@ -251,18 +258,20 @@
                                 </blockquote>
                                 <h4>预估价格： <span class="red-span" lang="totalPrice">0.00</span> 元</h4>
                                 <form class="form-horizontal" id="packageForm">
+                                    <div class="form-group"  th:each="orderdetails:${orderdetails}" >
+                                       <label class="col-sm-3 control-label">预估重量（单位：KG）</label>
+                                       <div class="col-sm-9">
+                                          <input type="number" class="form-control KG" id="kg" name="price" onchange="updatePrice()" onkeyup="updatePrice()">
+                                      </div>
+                                    </div>
                                 </form>
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="button" class="btn btn-info" onclick="addPackage()">添加包裹</button>
-                                    <button type="button" class="btn btn-info" onclick="deletePackage()">删除包裹</button>
-                                </div>
                             </div>
                         </div>
 
                         <div class="col-sm-12 pt10">
                             <h4>支付方式（在线方式至少付款0.01元）</h4>
-                            <form class="form-inline col-sm-4" id="alipayForm" action="/payment/alipay" method="post">
-                                <input type="hidden" id="alipayMoney" name="money">
+                            <form class="form-inline col-sm-4" id="alipayForm" action="topay" method="get">
+                                <input type="hidden" id="alipayMoney" name="totalAmount">
                                 <button class="btn btn-info" type="button" onclick="alipay()">支付宝支付</button>
                             </form>
                             <form class="form-inline col-sm-4" id="wechatForm" action="/payment/wechat" method="post">
@@ -280,40 +289,21 @@
     </div>
 
 
-<script src="/js/jquery.min.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/chart.js/chart.min.js"></script>
-<script src="/js/chart.js"></script>
-<script src="/js/carbon.js"></script>
-<script src="/js/demo.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/carbon.js"></script>
+<script src="js/demo.js"></script>
         <!------------------Copy rights End------------------>
-<script src="/js/bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <!----------------------page Level Js-------------------------->
-<script src="/js/custom.js"></script>
+<script src="js/custom.js"></script>
 
 <!--pay Order-->
-<script src="/js/submitOrder/jquery3.3.1.min.js"></script>
-<script src="/js/submitOrder/layer/layer.js"></script>
-<script src="/js/submitOrder/http.js"></script>
+<script src="js/submitOrder/jquery3.3.1.min.js"></script>
+<script src="js/submitOrder/layer/layer.js"></script>
+<script src="js/submitOrder/http.js"></script>
 <script>
     var express,total=0;
-    $(function () {
-        sendJson("get", "/payment/express", {}, false, function (res) {
-            if (!res.status) {
-                layer.msg(res.info,{icon:2});
-            } else {
-                express = res.data;
-                $("#expressName").text(express.name);
-                $("#expressTel").text(express.tel);
-                $("#expressAddress").text(express.address);
-                $("#expressMessage").text(express.message);
-                $("#expressRemark").text(express.remark);
-            }
-        }, function () {
-            layer.msg("未知错误",{icon:2});
-        });
-    });
-
     // 更新价格
     function updatePrice() {
         total = 0;
@@ -345,30 +335,6 @@
         });
     }
 
-    function addPackage() {
-        var html = '<div class="form-group">\n' +
-            '                            <label class="col-sm-3 control-label">预估重量（单位：KG）</label>\n' +
-            '                            <div class="col-sm-9">\n' +
-            '                                <input type="number" class="form-control" name="price" onchange="updatePrice()" onkeyup="updatePrice()">\n' +
-            '                            </div>\n' +
-            '                        </div>';
-        $("#packageForm").append(html);
-    }
-
-    function deletePackage() {
-        $("#packageForm").children().last().remove();
-        updatePrice();
-    }
-
-    // 判断订单是否存在
-    function checkExpressValid() {
-        if(express == null) {
-            layer.msg("订单已失效，请刷新页面。如无法解决，请重新下单",{icon:2});
-            return false;
-        }
-        return true;
-    }
-
     function OfflinePay() {
         layer.confirm("您选择了线下支付方式，请准备好现金。是否确认下单？", {
             btn: ['确定','取消']
@@ -389,13 +355,58 @@
     }
 
     function alipay() {
-        if(checkExpressValid()) {
             if(total === 0)
                 total = 0.01;
-            $("#alipayMoney").val(total);
-            $("#alipayForm").submit();
+            var totalAmount = total;
+        var username = $("#expressName").text();
+        var userTelephone = $("#expressTel").text();
+        var pickUpAddress = $("#expressAddress").text();
+        var note = $("#expressRemark").text();
+        var targetAddress = $("#expresstargetAddress").text();
+        var kg = $("#kg").val();
+        alert(targetAddress);
+
+        var message=new Array();//声明一个新的数组
+        var qujian = document.getElementsByClassName("qujian")
+        for (var k of qujian){
+            message.push(k.innerHTML)
         }
+        var kg = new Array();//声明一个新的数组
+        var KG = document.getElementsByClassName("KG")
+        for (var g of KG) {
+            kg.push(g.value)
+        }
+
+        console.log(message);
+        $.ajax({
+            url:"insertorder",
+            data:JSON.stringify({
+                totalAmount:totalAmount,
+                username:username,
+                pickUpAddress:pickUpAddress,
+                userTelephone:userTelephone,
+                message:message,
+                note: note,
+                targetAddress:targetAddress,
+                kg:kg}),
+            contentType: 'application/json; charset=UTF-8',
+            traditional:true,
+            type:"post",
+            dataType:"json",
+            success:function(result){
+                console.log(result)
+                if (result.data.flag>0){
+                    var totalAmount = result.data.totalAmount;
+                    var orderno = result.data.orderno;
+                    window.location.href="topay?orderno="+orderno+"&totalAmount="+totalAmount;
+                } else{
+                    alert("订单异常")
+                }
+            }
+        })
+
     }
+
 
 </script>
 </body>

@@ -10,6 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 /**
@@ -21,8 +24,10 @@ public class ImageUploadController {
 
     @PostMapping("upload")
     @ResponseBody
-    public APIResult upload(HttpServletRequest request, MultipartFile file){
-        String realPath = this.getClass().getClassLoader().getResource("static").getFile().toString()+File.separator+"upload"+File.separator;
+    public APIResult upload(HttpServletRequest request, MultipartFile file) throws UnsupportedEncodingException {
+        String file1 = URLDecoder.decode(this.getClass().getClassLoader().getResource("static").getFile(),"utf8");
+        String realPath = file1+File.separator+"upload"+File.separator;
+
         System.out.println("realPath = " + realPath);
         String name = UUID.randomUUID().toString().replaceAll("-", "");
         String originalFilename = file.getOriginalFilename();
