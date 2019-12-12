@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Carbon - Admin Template</title>
-    <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="vendors/font-awesome/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="css/styles1.css">
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendors/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/styles1.css">
 </head>
 <body>
 <div class="page-wrapper flex-row align-items-center">
@@ -15,24 +15,30 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card p-4">
+                    <form action="/login" method="post">
                     <div class="card-header text-center text-uppercase h4 font-weight-light">
                         Login
                     </div>
 
                     <div class="card-body py-5">
+                        <div th:if="${param.error}" class="form-group">
+                            <label class="form-control-label">错误:</label>
+                            <span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></span>
+                        </div>
+                        <input hidden name="type" th:value="${type}">
                         <div class="form-group">
                             <label class="form-control-label">Email</label>
-                            <input type="email" class="form-control">
+                            <input type="email" name="username" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label class="form-control-label">Password</label>
-                            <input type="password" class="form-control">
+                            <input type="password" name="password" class="form-control">
                         </div>
 
                         <div class="custom-control custom-checkbox mt-4">
                             <input type="checkbox" class="custom-control-input" id="login">
-                            <label class="custom-control-label" for="login">Check this custom checkbox</label>
+                            <label class="custom-control-label" for="login">记住我</label>
                         </div>
                     </div>
 
@@ -43,10 +49,11 @@
                             </div>
 
                             <div class="col-6">
-                                <a href="#" class="btn btn-link">Forgot password?</a>
+                                <a href="/findBack" class="btn btn-link">Forgot password?</a>
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

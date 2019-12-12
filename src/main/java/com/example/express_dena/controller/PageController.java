@@ -29,21 +29,9 @@ public class PageController {
     public String about_us(){
         return "/about_us";
     }
-    @GetMapping("changePwd")
-    public String changePwd(){
-        return "/changePwd";
-    }
     @GetMapping({"index","/"})
     public String index(){
         return "/index";
-    }
-    @GetMapping("login")
-    public String login(){
-        return "/login";
-    }
-    @GetMapping("main")
-    public String main(){
-        return "/main";
     }
     @GetMapping("register")
     public String register(){
@@ -52,28 +40,5 @@ public class PageController {
     @GetMapping("services")
     public String services(){
         return "/services";
-    }
-    @GetMapping("userApplication")
-    public String userApplication(){
-        return "/userApplication";
-    }
-    @GetMapping("userInfo")
-    public String userInfo(Model m){
-        int id = 4;
-
-        User user = userService.selectByUserId(id);
-        m.addAttribute("user",user);
-        return "/userInfo";
-    }
-    @GetMapping("wallet")
-    public String wallet(){
-        return "/wallet";
-    }
-    @GetMapping("/user/message")
-    public String message(@RequestParam(value = "index",defaultValue = "1")int index
-            ,@RequestParam(value = "size",defaultValue = "8")int size,Model model){
-        PageInfo<Message> pageInfo = messageService.queryMessage(1,1,index,size);
-        model.addAttribute("pageResult",pageInfo);
-        return "/message";
     }
 }

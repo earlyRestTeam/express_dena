@@ -1,5 +1,6 @@
 package com.example.express_dena.services;
 
+import com.example.express_dena.pojo.Admin;
 import com.example.express_dena.pojo.User;
 import com.github.pagehelper.PageInfo;
 
@@ -82,4 +83,6 @@ public interface AdminService {
      * @return
      */
     boolean checked_apply(Integer horsemanid,Byte status);
+
+    Admin loadByAccount(String account);
 }

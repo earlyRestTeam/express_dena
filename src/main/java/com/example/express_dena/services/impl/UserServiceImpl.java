@@ -4,6 +4,7 @@ import com.example.express_dena.mapper.HorsemanMapper;
 import com.example.express_dena.mapper.UserMapper;
 import com.example.express_dena.mapper.WithdrawalsMapper;
 import com.example.express_dena.pojo.*;
+import com.example.express_dena.services.CodeCenter;
 import com.example.express_dena.services.UserService;
 import com.example.express_dena.util.MD5Utils;
 import com.example.express_dena.util.StaticPool;
@@ -25,6 +26,8 @@ public class UserServiceImpl implements UserService {
     HorsemanMapper horsemanMapper;
     @Autowired
     WithdrawalsMapper withdrawalsMapper;
+    @Autowired
+    CodeCenter codeCenter;
 
 
     @Override
@@ -126,7 +129,7 @@ public class UserServiceImpl implements UserService {
         }
 
         //code 正确 此处为模拟
-        if(code != null){
+        if(code.equals(codeCenter.getCode(emailCode))){
             User u = users.get(0);
             String password = MD5Utils.StringInMd5(newPassword);
             u.setPassword(password);
@@ -243,6 +246,21 @@ public class UserServiceImpl implements UserService {
         System.out.println("users = " + users);
 
         return new HashMap<>();
+    }
+
+    @Override
+    public User selectByUserName(String userName) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andAccountEqualTo(userName);
+
+        List<User> users = userMapper.selectByExample(example);
+        if(users == null)
+            return null;
+        else if(users.isEmpty())
+            return null;
+        else
+            return users.get(0);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.express_dena.services;
 import com.example.express_dena.pojo.Horseman;
 import com.example.express_dena.pojo.User;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -61,6 +62,8 @@ public interface UserService {
     Map<String,String> feedBack(String content,int orderid);
 
     Map<String,String> selectByIdAndName(String passwordd,String name);
+
+    User selectByUserName(String userName);
 
     User selectByUserId(int id);
 }

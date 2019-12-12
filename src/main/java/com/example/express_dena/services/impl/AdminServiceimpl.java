@@ -3,12 +3,10 @@ package com.example.express_dena.services.impl;
 import com.example.express_dena.asyn.Event;
 import com.example.express_dena.asyn.EventProductor;
 import com.example.express_dena.asyn.EventType;
+import com.example.express_dena.mapper.AdminMapper;
 import com.example.express_dena.mapper.HorsemanMapper;
 import com.example.express_dena.mapper.UserMapper;
-import com.example.express_dena.pojo.Horseman;
-import com.example.express_dena.pojo.HorsemanExample;
-import com.example.express_dena.pojo.User;
-import com.example.express_dena.pojo.UserExample;
+import com.example.express_dena.pojo.*;
 import com.example.express_dena.services.AdminService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -31,6 +29,8 @@ public class AdminServiceimpl implements AdminService {
     HorsemanMapper horsemanMapper;
     @Autowired
     EventProductor eventProductor;
+    @Autowired
+    AdminMapper adminMapper;
 
 
     /**
@@ -253,6 +253,20 @@ public class AdminServiceimpl implements AdminService {
         }
         return horsemanMapper.updateByPrimaryKey(horseman)>0;
 
+    }
+
+    @Override
+    public Admin loadByAccount(String account) {
+        AdminExample example = new AdminExample();
+        example.createCriteria().andAccountEqualTo(account);
+
+        List<Admin> admins = adminMapper.selectByExample(example);
+        if(admins == null)
+            return null;
+        else if(admins.isEmpty())
+            return null;
+        else
+            return admins.get(0);
     }
 
 }

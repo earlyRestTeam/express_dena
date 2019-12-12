@@ -167,4 +167,12 @@ public class UserOrderServiceImpl implements UserOrderService {
         return null;
     }
 
+    @Override
+    public int selectOrderCountByUseridAndOrderStatus(int userid, int status) {
+        OrderExample example = new OrderExample();
+        example.createCriteria().andUseridEqualTo(userid).andStatusEqualTo(status);
+        List<Order> list = orderMapper.selectByExample(example);
+        return list == null ? 0 : list.size();
+    }
+
 }

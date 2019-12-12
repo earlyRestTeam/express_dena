@@ -5,14 +5,18 @@ package com.example.express_dena.config;
 import com.example.express_dena.security.LoginFailureHandler;
 import com.example.express_dena.security.LoginSuccessHandler;
 import com.example.express_dena.security.LoginUrlEntryPoint;
+import com.example.express_dena.security.MyUsernamePasswordAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @author 王志坚
@@ -35,13 +39,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeRequests()
-                .anyRequest().permitAll()
-//                .antMatchers("/admin/login").permitAll()    //管理员 登陆 入口
-//                .antMatchers("/user/login").permitAll() //用户 登陆 入口
-//                .antMatchers("/static/**").permitAll()  //静态资源 访问
-//                .antMatchers("/admin/**").hasRole("admin")  //后台 控制 界面
-//                .antMatchers("/user/**").hasAnyRole("user","admin") //用户 界面
-//                .antMatchers("/api/**").hasAnyRole("user","admin")  //api接口
+//                .anyRequest().permitAll()
+                .antMatchers("/**/login").permitAll()    //管理员 登陆 入口
+                .antMatchers("/static/**").permitAll()  //静态资源 访问
+                .antMatchers("/admin/**").hasRole("admin")  //后台 控制 界面
+                .antMatchers("/staff/**").hasAnyRole("staff","admin") //用户 界面
+                .antMatchers("/user/**").hasAnyRole("user","admin") //用户 界面
+                .antMatchers("/api/**").hasAnyRole("user","admin","staff")  //api接口
                 .and()
                 .formLogin()    //表单 登陆
                 .loginPage("/index")// 自定义登录页面
@@ -59,10 +63,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(loginUrlEntryPoint())
                 .accessDeniedPage("/403");
 
+        http.addFilter(myUsernamePasswordAuthenticationFilter());
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
     }
 
+
+
+    @Bean
+    public MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter() throws Exception {
+        MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter = new MyUsernamePasswordAuthenticationFilter();
+        myUsernamePasswordAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
+        return myUsernamePasswordAuthenticationFilter;
+    }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        AuthenticationManager manager = super.authenticationManagerBean();
+        return manager;
+    }
     @Bean
     public LoginUrlEntryPoint loginUrlEntryPoint(){
         return new LoginUrlEntryPoint("/user/login");

@@ -25,11 +25,13 @@ public class LoginUrlEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
     private String lastPoint;
 
+
     public LoginUrlEntryPoint(String loginFormUrl) {
         super(loginFormUrl);
         //初始化 urlMapping
-        urlMapping.put("/admin/**","/admin/loginPage");
+        urlMapping.put("/admin/**","/admin/login");
         urlMapping.put("/user/**","/user/login");
+        urlMapping.put("/staff/**","/staff/login");
     }
 
     /**
@@ -61,4 +63,6 @@ public class LoginUrlEntryPoint extends LoginUrlAuthenticationEntryPoint {
     public void setLastPoint(String lastPoint) {
         this.lastPoint = lastPoint;
     }
+
+
 }

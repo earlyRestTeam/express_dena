@@ -2,9 +2,11 @@ package com.example.express_dena.controller;
 
 
 import com.example.express_dena.services.impl.AdminServiceimpl;
+import com.example.express_dena.util.StaticPool;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,11 @@ public class AdminController {
     @Autowired
     AdminServiceimpl adminServiceimpl;
 
+    @RequestMapping("/login")
+    public String login(Model model){
+        model.addAttribute("type", StaticPool.ADMIN);
+        return "/login";
+    }
     @RequestMapping("404error")
     public String error404(){
         return "/admin/404";

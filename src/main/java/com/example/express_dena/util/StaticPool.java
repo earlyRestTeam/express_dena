@@ -4,7 +4,18 @@ package com.example.express_dena.util;
  * @author 王志坚
  * @createTime 2019.12.10.21:43
  */
-public class StaticPool {
-    public static String ERROR = "error";
-    public static String SUCCESS = "success";
+public interface StaticPool {
+     String ERROR = "error";
+     String SUCCESS = "success";
+
+
+    String ADMIN = "admin";
+   String STAFF = "staff";
+    String USER = "user";
+
+    int USER_ENTITY = 1;
+    int STAFF_ENTITY = 2;
+
+    int ORDER_SUCCESS = 1;
+    int ORDER_NOT_RECIVE = 2;
 }

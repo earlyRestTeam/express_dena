@@ -6,6 +6,7 @@ import com.example.express_dena.asyn.EventProductor;
 import com.example.express_dena.asyn.EventType;
 import com.example.express_dena.pojo.Horseman;
 import com.example.express_dena.pojo.User;
+import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.CodeCenter;
 import com.example.express_dena.services.UserService;
 import com.example.express_dena.util.APIResult;
@@ -32,6 +33,8 @@ public class UserApiController {
     EventProductor eventProductor;
     @Autowired
     CodeCenter codeCenter;
+    @Autowired
+    LoginEntityHelper loginEntityHelper;
 
     @PostMapping("/user/update")
     public APIResult updateUserInfo(@RequestBody  User u, HttpServletRequest request){
@@ -39,7 +42,11 @@ public class UserApiController {
 //        HttpSession session = request.getSession();
 //        User user = (User)session.getAttribute("user");
 //        u.setId(u.getId());
-        u.setId(1);
+        User u2 = loginEntityHelper.getEntityByClass(User.class);
+        if ( u2 == null )
+            throw new RuntimeException("error");
+
+        u.setId(u2.getId());
         APIResult result = null;
         Map<String, String> res = userService.updateUserInfo(u);
         if( res.get(StaticPool.ERROR) != null ){
@@ -56,6 +63,10 @@ public class UserApiController {
 //        User user = (User)session.getAttribute("user");
 //        u.setId(u.getId());
 
+        User u2 = loginEntityHelper.getEntityByClass(User.class);
+        if ( u2 == null )
+            throw new RuntimeException("error");
+
         APIResult result = null;
 
         String oldPassword = (String) jsonObject.get("oldPassword");
@@ -66,8 +77,27 @@ public class UserApiController {
             return result;
         }
 
-        Map<String, String> res = userService.changePassword(1, oldPassword, newPassword);
+        Map<String, String> res = userService.changePassword(u2.getId(), oldPassword, newPassword);
 
+        if( res.get(StaticPool.ERROR) != null ){
+            result = APIResult.genFailApiResponse(res.get(StaticPool.ERROR));
+        }else {
+            result = APIResult.genSuccessApiResponse(res.get(StaticPool.SUCCESS));
+        }
+        return result;
+    }
+    @PostMapping("/findBack")
+    public APIResult findBack(@RequestBody JSONObject jsonObject){
+        APIResult result = null;
+        String email = (String) jsonObject.get("email");
+        String password = (String) jsonObject.get("password");
+        String code = (String) jsonObject.get("code");
+        if(StringUtils.isEmpty(email) || StringUtils.isEmpty(password)
+                || StringUtils.isEmpty(code)){
+            result =  APIResult.genFailApiResponse("PARAMS ERROR!");
+            return result;
+        }
+        Map<String, String> res = userService.forgetPassword(email, password, email, code);
         if( res.get(StaticPool.ERROR) != null ){
             result = APIResult.genFailApiResponse(res.get(StaticPool.ERROR));
         }else {
@@ -78,8 +108,13 @@ public class UserApiController {
 
     @PostMapping("/getCode")
     public APIResult getCode(@RequestBody JSONObject jsonObject){
-        APIResult result = null;
         String email = (String) jsonObject.get("email");
+        String key = (String) jsonObject.get("key");
+        return getCode(email,key);
+    }
+    private APIResult getCode(String email,String key){
+        APIResult result = null;
+
 
         if(StringUtils.isEmpty(email)){
             result =  APIResult.genFailApiResponse("PARAMS ERROR!");
@@ -88,13 +123,14 @@ public class UserApiController {
         Event e = new Event();
         e.setEventType(EventType.SEND_MAIL);
         e.mapSet("mail",email);
+        e.mapSet("key",key);
         Boolean success = eventProductor.pushEvent(e);
         if( !success ){
             result = APIResult.genFailApiResponse("发送失败");
         }else {
             result = APIResult.genSuccessApiResponse("发送成功");
         }
-    return result;
+        return result;
     }
     @PostMapping("register")
     public APIResult register(@RequestBody JSONObject jsonObject){
@@ -160,8 +196,12 @@ public class UserApiController {
         }
         return result;
     }
-    @PostMapping("/user/tixian")
+    @PostMapping("/staff/tixian")
     public APIResult tixian(@RequestBody JSONObject jsonObject){
+
+        Horseman u2 = loginEntityHelper.getEntityByClass(Horseman.class);
+        if ( u2 == null )
+            throw new RuntimeException("error");
 
         APIResult result = null;
 
@@ -172,7 +212,7 @@ public class UserApiController {
             result =  APIResult.genFailApiResponse("PARAMS ERROR!");
             return result;
         }
-        Map<String, String> res = userService.tixian(1, payNum, count);
+        Map<String, String> res = userService.tixian(u2.getId(), payNum, count);
 
         if( res.get(StaticPool.ERROR) != null ){
             result = APIResult.genFailApiResponse(res.get(StaticPool.ERROR));

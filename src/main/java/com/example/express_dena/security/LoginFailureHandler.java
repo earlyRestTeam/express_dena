@@ -30,7 +30,7 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
         if(url == null)
             url = loginUrlEntryPoint.getLoginFormUrl();
 
-        url += "?error="+exception.getMessage();
+        url += "?error=true";
         super.setDefaultFailureUrl(url);
         super.onAuthenticationFailure(request,response,exception);
 
