@@ -62,10 +62,13 @@ public class StaffOrderControlle {
     //完成任务
     @RequestMapping("filishOrder")
     public String filishOrder(Integer id){
-        if(staffOrderService.filishOrder(id)){
-            return "redirect:/staff/staffGetOrder?indexpage=1";
+        System.out.println("finishOrderid:" + id);
+        Integer hosermanid = 1;
+        Integer status = 2;
+        if(staffOrderService.filishOrder(id,hosermanid,status)){
+            return "redirect:/staff/staffGetOrder";
         }
-        return "redirect:/staff/staffGetOrder?indexpage=1&errey=0";
+        return "redirect:/staff/staffGetOrder?error=0";
 
     }
     //历史订单界面
@@ -73,19 +76,54 @@ public class StaffOrderControlle {
     public String staffHistoryOrder(Integer indexpage, HttpServletRequest request){
         Integer hosermanid = 1;
         Integer status = 3;
-        PageInfo pageInfo = staffOrderService.selectUserHistoryOrder(indexpage,hosermanid,status);
+        Integer showHosemanStatus = 0;
+        PageInfo pageInfo = staffOrderService.selectUserHistoryOrder(indexpage,hosermanid,status,showHosemanStatus);
         request.setAttribute("pages",pageInfo);
-        System.out.println(pageInfo.getList());
+        System.out.println(pageInfo);
         return "/staff/staffHistoryOrder";
     }
 
-    //查询订单
-    @RequestMapping("searchOrder")
-    public String searchOrder(String orderno, HttpServletRequest request){
-        PageInfo<Order> pageInfo = staffOrderService.searchOrderInfo(orderno);
+    //查询未领取订单
+    @RequestMapping("searchNoGetOrder")
+    public String searchNoGetOrder(Integer indexpage,String orderno, HttpServletRequest request){
+        System.out.println("orderno" + orderno);
+        Integer status = 1;
+        PageInfo<Order> pageInfo = staffOrderService.searchNoGetOrderInfo(indexpage,orderno,status);
         request.setAttribute("pages",pageInfo);
-        return "/staff/staffHistoryOrder";
-
+        return "/staff/currentStaffOrder";
     }
 
+    //搜索已领取订单
+    @RequestMapping("searchGetOrder")
+    public String searchGetOrder(Integer indexpage,String orderno, HttpServletRequest request){
+        System.out.println("搜索orderno:" + orderno);
+        Integer status = 2;
+        Integer hosermanid = 1;
+        PageInfo<Order> pageInfo = staffOrderService.searchGetOrderInfo(indexpage,orderno,hosermanid,status);
+        request.setAttribute("pages",pageInfo);
+        return "/staff/staffGetOrder";
+    }
+    //搜索历史订单
+    @RequestMapping("searchHistoryOrder")
+    public String searchHistoryOrder(Integer indexpage,String orderno, HttpServletRequest request){
+        System.out.println("orderno" + orderno);
+        Integer hosermanid = 1;
+        Integer status = 3;
+        Integer showHosemanStatus = 0;
+        PageInfo<Order> pageInfo = staffOrderService.searchHistoryOrder(indexpage,hosermanid,orderno,status,showHosemanStatus);
+        request.setAttribute("pages",pageInfo);
+        return "/staff/staffhistoryOrder";
+    }
+    //删除历史订单
+    @RequestMapping("deleteHistoryOrder")
+    public String deletehHistoryOrder(Integer id){
+        System.out.println("删除:" + id);
+        Integer hosermanid = 1;
+        Integer status = 3;
+        Integer showHosemanStatus = 0;
+        if(staffOrderService.deleteStaffOrder(id,hosermanid,status,showHosemanStatus)){
+            return "redirect:/staff/staffHistoryOrder";
+        }
+        return "redirect:/staff/staffHistoryOrder?error=0";
+    }
 }

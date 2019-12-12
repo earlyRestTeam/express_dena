@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carbon - Admin Template</title>
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendors/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/styles1.css">
+</head>
+<body>
+<div class="page-wrapper flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card p-4">
+                    <div class="card-header text-center text-uppercase h4 font-weight-light">
+                        找回密码
+                    </div>
+
+                    <div class="card-body py-5">
+                        <div class="form-group">
+                            <label class="form-control-label">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="输入账号或email">
+                            <input type="button" value="获取验证码" onclick="getCode()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">验证码</label>
+                            <input type="email" class="form-control" id="code" placeholder="输入发送到邮箱的新密码！">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">输入新密码</label>
+                            <input type="password" id="password" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="button" onclick="findBack()" class="btn btn-primary px-5">找回</input>
+                            </div>
+
+                            <div class="col-6">
+                                <a href="/login" class="btn btn-link">去登陆</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script>
+    function getCode() {
+        //一切正常后发送网络请求
+        var email = $("#email").val();
+        var key = "findBack";
+        var data = {"email": email,"key":key};
+        $.ajax({
+            type: 'POST',//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: '/getCode',//url
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据
+                if (result.code == 200) {
+                    alert("发送邮件成功!");
+                }
+                else {
+                    closeModel();
+                    alert(result.message);
+                };
+            },
+            error: function () {
+                closeModel();
+                alert("操作失败");
+            }
+        });
+    }
+</script>
+<script>
+    function findBack() {
+        //一切正常后发送网络请求
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var code = $("#code").val();
+        var data = {"email": email,"password": password,"code":code};
+        $.ajax({
+            type: 'POST',//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: '/findBack',//url
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据
+                if (result.code == 200) {
+                    alert("找回成功!");
+                }
+                else {
+                    alert(result.message);
+                };
+            },
+            error: function () {
+                alert("操作失败");
+            }
+        });
+    }
+</script>
+</html>

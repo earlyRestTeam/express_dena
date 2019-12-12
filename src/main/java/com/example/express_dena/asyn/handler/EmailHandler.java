@@ -46,6 +46,13 @@ public class EmailHandler implements EventHandler {
         }else if (key.equals("checkfail")){
             String mail = event.mapGet("mail");
             sendMail.sendHtmlMail("对不起申请失败！","checkfailTemp",map,mail);
+        }else if(key.equals("findBack")){
+            String mail = event.mapGet("mail");
+            if(mail == null)
+                return;
+            String code = codeCenter.genCode(mail);
+            map.put("code",code);
+            sendMail.sendHtmlMail("获取验证码","findBackTemp",map,mail);
         }
 
     }

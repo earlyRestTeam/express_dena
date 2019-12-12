@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Carbon - Admin Template</title>
-    <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="vendors/font-awesome/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendors/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <!----------------Global css------------------->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/custom.css">
-    <link rel="stylesheet" href="css/userInfo.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/userInfo.css">
 </head>
 <body>
 
@@ -49,7 +49,7 @@
             </div>
             <div class="col-xs-5 col-md-6 text-right">
               <span class="signin" data-toggle="modal" data-target="#myModal">
-                    <a class="hidden-xs" href="login">登陆</a>
+                    <a class="hidden-xs" href="/user/login">登陆</a>
                     <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
                 </span>
 
@@ -232,10 +232,10 @@
             <div class="main-info">
                 <div class="main-info-left">
                     <div class="info-avatar">
-                        <img id="showHead" src="images/avatar.jpg">
+                        <img th:src="@{${user.avatar}}" id="showHead" src="images/avatar.jpg">
                     </div>
                     <div class="main-info-name">
-                        <p class="info-name" id="showName">杨秀秀</p>
+                        <p class="info-name" th:text="${user.username}" id="showName">杨秀秀</p>
                     </div>
                 </div>
 
@@ -247,23 +247,19 @@
                     <table class="main-info-center-table">
                         <tr >
                             <td class="glyphicon glyphicon-user">账号:</td>
-                            <td class="main-info-center-content">15697404438</td>
+                            <td th:text="${user.account}" class="main-info-center-content">15697404438</td>
                         </tr>
                         <tr>
                             <td class="glyphicon glyphicon-envelope">邮箱:</td>
-                            <td class="main-info-center-content">2205348277@qq.com</td>
+                            <td th:text="${user.account}" class="main-info-center-content">2205348277@qq.com</td>
                         </tr>
                         <tr>
                             <td class="glyphicon glyphicon-phone-alt">联系电话:</td>
-                            <td class="main-info-center-content" id="showPhone">15697404438</td>
-                        </tr>
-                        <tr>
-                            <td class="glyphicon glyphicon-map-marker">默认地址；</td>
-                            <td class="main-info-center-content">湖南理工学院</td>
+                            <td th:text="${user.phone}" class="main-info-center-content" id="showPhone">15697404438</td>
                         </tr>
                         <tr>
                             <td class="glyphicon glyphicon-time">注册时间:</td>
-                            <td class="main-info-center-content">2018-11-30 17:49:10</td>
+                            <td th:text="${#dates.format(user.createTime, 'yyyy-MM-dd')}" class="main-info-center-content">2018-11-30 17:49:10</td>
                         </tr>
                     </table>
                 </div>
@@ -273,7 +269,7 @@
                 <div class="main-info-right">
                     <div class="main-info-right-up">
                         <p class="title">订单成交数:</p>
-                        <p class="main-info-right-content">50笔</p>
+                        <p class="main-info-right-content" th:text="${count}">50笔</p>
                     </div>
                     <div class="main-info-right-xian"></div>
                 </div>
@@ -282,16 +278,16 @@
 <!-------------contenr end--------->
     </div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/chart.js/chart.min.js"></script>
-<script src="js/chart.js"></script>
-<script src="js/carbon.js"></script>
-<script src="js/demo.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/chart.js/chart.min.js"></script>
+<script src="/js/chart.js"></script>
+<script src="/js/carbon.js"></script>
+<script src="/js/demo.js"></script>
         <!------------------Copy rights End------------------>
-<script src="js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 <!----------------------page Level Js-------------------------->
-<script src="js/custom.js"></script>
+<script src="/js/custom.js"></script>
 <script type="text/javascript">
     function jsOpenModal() {
         var showHead = $('#showHead').attr("src");
@@ -378,7 +374,7 @@
         $.ajax({
             type: 'POST',//方法类型
             dataType: "json",//预期服务器返回的数据类型
-            url: 'user/update',//url
+            url: '/user/update',//url
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             success: function (result) {

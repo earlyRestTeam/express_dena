@@ -31,7 +31,7 @@
             <button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
         </form>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> </span> <span class="r">共有数据：<strong th:text="${pages.size}"></strong> 条</span> </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l">共有数据：<strong th:text="${pages.size}"></strong> 条</span> </div>
 	<div class="mt-20">
 	<table class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
@@ -67,7 +67,7 @@
             <td th:text="${u.idCardPicPre}"></td>
             <td th:text="${#dates.format(u.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td class="td-status"><span class="label label-danger radius">已停用</span></td>
-            <td class="td-manage"><a style="text-decoration:none" onClick="confirm('确定启用？')" th:href="'horseman_list_startuser?userid='+${u.id}" title="还原"><i class="Hui-iconfont">&#xe66b;</i></a></td>
+            <td class="td-manage"><a style="text-decoration:none" th:onclick="'article_shenhe('+${u.id}+')'" title="还原"><i class="Hui-iconfont">&#xe66b;</i></a></td>
         </tr>
         <tr style="height: 50px;">
             <td style="text-align: center" colspan="14">
@@ -96,6 +96,16 @@
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script> 
 <script type="text/javascript">
 
+
+    function article_shenhe(id){
+        layer.confirm('启用？', {
+                btn: ['确定','取消'],
+                shade: false,
+                closeBtn: 0
+            },
+            function(){
+                self.location = "horseman_list_startuser?horsemanid="+id
+            })}
 /*用户-还原*/
 function member_huanyuan(obj,id){
 	layer.confirm('确认要还原吗？',function(index){

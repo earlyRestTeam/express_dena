@@ -4,7 +4,6 @@ import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.OrderExample;
 import com.example.express_dena.pojo.Orderdetail;
 import com.github.pagehelper.PageInfo;
-import com.sun.deploy.panel.ITreeNode;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +41,14 @@ public interface UserOrderService {
 
     //评论
     public Map<String,String> comments(int userid,String contenr,int orderid,int hosemanid);
+
+    /**
+     * 查找 指定用户 指定状态 的 数量
+     * @param userid
+     * @param status
+     * @return
+     */
+    int selectOrderCountByUseridAndOrderStatus(int userid,int status);
 
 
 

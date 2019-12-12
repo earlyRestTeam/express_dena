@@ -106,18 +106,14 @@
 
                 </button>
                 <a class="navbar-brand" href="index">
-                    <img src="/staff/images/3.png" class="img-responsive" alt="company-logo">
+                    <img src="../images/3.png" class="img-responsive" alt="company-logo">
                 </a>
             </div>
             <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
                 <ul class="nav navbar-nav">
-                    <li class="list2"><a href="/staff/index" class="hvr-underline-from-center">主页</a></li>
-                    <li class="list2"><a href="/staff/staff/staffmain" class="hvr-underline-from-center">个人中心</a></li>
-                    <li class="list2"><a href="/staff/about_us" class="hvr-underline-from-center">关于我们</a></li>
-                    <li class="list2"><a href="/staff/blog" class="hvr-underline-from-center">博客</a></li>
-                    <li class="list2"><a href="/staff/careers" class="hvr-underline-from-center">职业</a></li>
-                    <li class="list2"><a href="/staff/products" class="hvr-underline-from-center">产品</a></li>
-                    <li class="list2"><a href="/staff/contact_us" class="hvr-underline-from-center">联系我们</a></li>
+                    <li class="list2"><a href="../index" class="hvr-underline-from-center">主页</a></li>
+                    <li class="list2"><a href="/staff/staffmain" class="hvr-underline-from-center">个人中心</a></li>
+
                 </ul>
             </div>
 
@@ -131,11 +127,11 @@
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
-                    <li class="nav-title">Navigation</li>
+                    <li class="nav-title">风火轮</li>
 
                     <li class="nav-item">
-                        <a href="main" class="nav-link active">
-                            <i class="icon icon-speedometer"></i> Dashboard
+                        <a href="/staff/staffmain" class="nav-link active">
+                            <i class="icon icon-speedometer"></i> 首页
                         </a>
                     </li>
 
@@ -146,19 +142,19 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="/staff/staff/staffInfo" class="nav-link">
+                                <a href="/staff/staffinfo" class="nav-link">
                                     <i class="icon icon-target"></i> 我的信息
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="/staff/staff/staffchangePwd" class="nav-link">
+                                <a href="/staff/staffchangePwd" class="nav-link">
                                     <i class="icon icon-target"></i> 修改密码
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="/staff/staff/staffwallet" class="nav-link">
+                                <a href="/staff/staffwallet" class="nav-link">
                                     <i class="icon icon-target"></i> 我的钱包
                                 </a>
                             </li>
@@ -210,19 +206,21 @@
 
 <!-------------contenr start--------->
         <div class="content">
-            <form id="submitForm" name="submitForm" action="" method="post">
+<!--            <form id="submitForm" name="submitForm" action="" method="post">-->
                 <input type="hidden" name="allIDCheck" value="" id="allIDCheck"/>
                 <input type="hidden" name="fangyuanEntity.fyXqName" value="" id="fyXqName"/>
                 <div id="container">
                     <div class="ui_content">
                         <div class="ui_text_indent">
                             <div id="box_border">
-                                <div id="box_top">搜索</div>
+                                <div id="box_top"><a href="/staff/staffGetOrder" style="color: #fff;">我的订单</a></div>
                                 <div id="box_center">
-                                    <input style="width: 300px;height: 40px;" type="text" id="fyZldz" name="fangyuanEntity.fyZldz" class="ui_input_txt02" />
-                                    <div id="box_bottom" style="display: inline-block">
-                                        <input style="width: 80px;height: 40px;" type="button" value="查询" class="btn btn-info" onclick="search();" />
-                                    </div>
+                                    <form action="/staff/searchGetOrder" method="get">
+                                        <input style="width: 300px;height: 40px;" type="text" id="fyZldz" name="orderno" class="ui_input_txt02" />
+                                        <div id="box_bottom" style="display: inline-block">
+                                            <input style="width: 80px;height: 40px;" type="submit" value="查询" class="btn btn-info"  />
+                                        </div>
+                                    </form>
                                 </div>
 
                             </div>
@@ -243,7 +241,8 @@
                                     <th>查看详情</th>
                                 </tr>
 
-                                <tr th:each="order:${pages.list}">
+
+                                <tr th:each="order:${pages.list}" >
 
 <!--                                    <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>-->
                                     <td th:text="${order.orderno}"></td>
@@ -253,7 +252,8 @@
                                     <td th:text="${order.commentNum}"></td>
                                     <td th:text="${order.targetAddress}"></td>
                                     <td>
-                                        <a th:onclick="|javascript : filish( '${order.id}')|" class="queren">完成任务</a>
+<!--                                        <a th:href="@{'/staff/filishOrder?id='+ ${order.id}}" class="queren">完成任务</a>-->
+                                        <a  th:onclick="|javascript : filish( '${order.id}')|" class="queren">完成任务</a>
                                     </td>
                                     <td><button>查看订单详情</button></td>
                                 </tr>
@@ -263,12 +263,9 @@
                         </div>
                         <div class="ui_tb_h30">
                             <div class="ui_flt" style="height: 30px; line-height: 30px;">
-                                共有
-                                <span class="ui_txt_bold04">90</span>
-                                条记录，当前第
-                                <span class="ui_txt_bold04">1
-						/
-						9</span>
+                                共有<span class="ui_txt_bold04" th:text="${pages.total}"></span>
+                                条记录，当前第<span class="ui_txt_bold04" th:text="${pages.pageNum}"></span>
+                                /<span class="ui_txt_bold04" th:text="${pages.pages}"></span>
                                 页
                             </div>
                             <div class="ui_frt">
@@ -277,18 +274,19 @@
                                 <input onclick="jumpNormalPage(1);"  type="button" value="首页" class="ui_input_btn01" />
                                 <input th:onclick="|javascript : jumpNormalPage( '${pages.prePage}')|" type="button" value="上一页" class="ui_input_btn01" />
                                 <input th:onclick="|javascript : jumpNormalPage( '${pages.nextPage}')|" type="button" value="下一页" class="ui_input_btn01"/>
-                                <input th:onclick="|javascript : jumpNormalPage( '${pages.endRow}')|" type="button" value="尾页" class="ui_input_btn01"/>
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.pages}')|" type="button" value="尾页" class="ui_input_btn01"/>
 
 
                                 <!--     如果是最后一页，则只显示首页、上一页 -->
 
                                 转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
-                                <input type="button" class="ui_input_btn01" value="跳转" onclick="jumpInputPage(9);" />
+                                <input th:onclick="|javascript : jumpInputPage('${pages.pages}')|" type="button" class="ui_input_btn01" value="跳转" />
+                                <input id="pages" type="hidden" th:value="${pages.pages}"/>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+<!--            </form>-->
         </div>
 <!-------------contenr end--------->
     </div>
@@ -381,12 +379,13 @@
         }
     }
 
-    /** 删除 **/
+    /** 完成任务 **/
     function filish(orderid){
         // 非空判断
         if(orderid == '') return;
         if(confirm("您确定提交完成任务吗？")){
-            $("#submitForm").attr("action", "/staff/filishOrder?id=" + orderid).submit();
+            window.location.href="/staff/filishOrder?id=" + orderid;
+            // $("#finishOrder").attr("action", "/staff/filishOrder?id=" + orderid).submit();
         }
     }
 
@@ -437,7 +436,14 @@
 
     /** 普通跳转 **/
     function jumpNormalPage(page){
-        $("#submitForm").attr("action", "staffGetOrder?indexpage=" + page).submit();
+        var totaPage = parseInt($("#pages").val());
+        if(page==0 | page==totaPage){
+
+        }else {
+            window.location.href="/staff/staffGetOrder?indexpage=" + page;
+        }
+
+        // $("#submitForm").attr("action", "staffGetOrder?indexpage=" + page).submit();
     }
 
     /** 输入页跳转 **/
@@ -450,11 +456,13 @@
                 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
                 pageNum = 1;
             }
-            $("#submitForm").attr("action", "staffGetOrder?indexpage=" + pageNum).submit();
+            window.location.href="/staff/staffGetOrder?indexpage=" + pageNum;
+            // $("#submitForm").attr("action", "staffGetOrder?indexpage=" + pageNum).submit();
         }else{
             // “跳转页数”为空
             art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-            $("#submitForm").attr("action", "staffGetOrder?indexpage=" + 1).submit();
+            // $("#submitForm").attr("action", "staffGetOrder?indexpage=" + 1).submit();
+            window.location.href="/staff/staffGetOrder?indexpage=" + 1;
         }
     }
 </script>

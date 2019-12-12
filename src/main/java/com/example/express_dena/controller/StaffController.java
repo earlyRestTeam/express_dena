@@ -1,6 +1,8 @@
 package com.example.express_dena.controller;
 
+import com.example.express_dena.util.StaticPool;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -13,7 +15,8 @@ public class StaffController {
 
     //登录页面跳转
     @RequestMapping("login")
-    public String stafflogin(){
+    public String stafflogin(Model m){
+        m.addAttribute("type", StaticPool.STAFF);
         return "/login";
     }
 
