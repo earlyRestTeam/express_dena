@@ -5,6 +5,8 @@ import com.example.express_dena.mapper.OrderdetailMapper;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.OrderExample;
 import com.example.express_dena.pojo.Orderdetail;
+import com.example.express_dena.pojo.User;
+import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.UserOrderService;
 import com.example.express_dena.util.StaticPool;
 import com.github.pagehelper.PageHelper;
@@ -12,10 +14,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author :Yang Jiahong
@@ -34,13 +33,46 @@ public class UserOrderServiceImpl implements UserOrderService {
     @Override
     public Map<String, String> submitOrder(Order order, List<Orderdetail> orderdetails) {
         Map<String,String> map = new HashMap<>();
-        int orderdetailsResult = orderdetailMapper.insertallDetails(orderdetails);
-        if(orderdetailsResult>0){
-            System.out.println("物件成功");
-        }
-        int orderResult = orderMapper.insert(order);
-        if(orderdetailsResult>0 && orderResult > 0){
+        order.setCreateTime(new Date());            //设置订单创建时间
+        order.setStatus(1);                         //设置订单初始状态1 未接单
+        order.setShowuserstatus(0);                 //设置用户可见初始状态0 （未删除历史订单）
+        order.setShowHosemanStatus(0);              //设置骑手可见初始状态0 （未删除历史订单）
+        order.setComfirmUserStatus(0);              //设置用户确认完成
+        order.setComfirmHosemanStatus(0);          //设置骑手确认完成
+        order.setCommentNum(orderdetails.size());  //快递包裹个数
 
+        LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
+        User user = new User();
+        if(loginEntityHelper.getEntityByClass(User.class) != null){
+            user = loginEntityHelper.getEntityByClass(User.class);
+        }
+        if(user.getUsername()!=null){
+            order.setUsername(user.getUsername());
+        }else{
+            order.setUsername("杨秀秀");
+        }
+        if(user.getId()!=null){
+            order.setUserid(user.getId());
+        }else{
+            order.setUserid(1);
+        }
+        int result = orderMapper.insert(order);
+
+        List<Order> orderid = new ArrayList<>();
+        OrderExample orderExample = new OrderExample();
+        OrderExample.Criteria criteria = orderExample.createCriteria();
+        criteria.andOrdernoEqualTo(order.getOrderno());
+        if(result >0){
+            orderid = orderMapper.selectByExample(orderExample);
+        }
+
+        for (int i = 0; i < orderdetails.size(); i++) {
+            orderdetails.get(i).setOrderid(orderid.get(0).getId());
+        }
+
+        int orderdetailsResult = orderdetailMapper.insertallDetails(orderdetails);
+
+        if(orderdetailsResult>0 && result > 0){
             map.put(StaticPool.SUCCESS,"发布失败");
         }else{
             map.put(StaticPool.ERROR ,"发布成功");
