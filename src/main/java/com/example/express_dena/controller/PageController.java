@@ -33,14 +33,6 @@ public class PageController {
     public String changePwd(){
         return "/changePwd";
     }
-    @GetMapping("currentUserOrder")
-    public String currentUserOrder(){
-        return "/currentUserOrder";
-    }
-    @GetMapping("detailsOrder")
-    public String detailsOrder(){
-        return "/detailsOrder";
-    }
     @GetMapping({"index","/"})
     public String index(){
         return "/index";
@@ -61,10 +53,6 @@ public class PageController {
     public String services(){
         return "/services";
     }
-    @GetMapping("submitOrder")
-    public String submitOrder(){
-        return "/submitOrder";
-    }
     @GetMapping("userApplication")
     public String userApplication(){
         return "/userApplication";
@@ -80,10 +68,6 @@ public class PageController {
     @GetMapping("wallet")
     public String wallet(){
         return "/wallet";
-    }
-    @GetMapping("userHistoryOrder")
-    public String userHistoryOrder(){
-        return "/userHistoryOrder";
     }
     @GetMapping("/user/message")
     public String message(@RequestParam(value = "index",defaultValue = "1")int index
