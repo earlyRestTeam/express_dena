@@ -28,6 +28,8 @@ public interface IStaffOrderService {
     PageInfo<Order> searchHistoryOrder(Integer indexpage, Integer hosermanid, String orderno, Integer status, Integer showHosemanStatus);
     //删除历史订单
     boolean deleteStaffOrder(Integer orderid,Integer hosermanid,Integer status,Integer showHosemanStatus);
+    //查看完成的订单数
+    long selectFinishOrderNum(Integer indexpage, Integer hosermanid,Integer status);
 
 }
 

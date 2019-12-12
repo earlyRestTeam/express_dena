@@ -1,6 +1,8 @@
 package com.example.express_dena.controller;
 
+import com.example.express_dena.pojo.Horseman;
 import com.example.express_dena.pojo.Order;
+import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.impl.StaffOrderService;
 import com.github.pagehelper.PageInfo;
 
@@ -17,6 +19,8 @@ public class StaffOrderControlle {
 
     @Autowired
     StaffOrderService staffOrderService;
+    @Autowired
+    LoginEntityHelper loginEntityHelper;
     //平台订单
     @RequestMapping("currentStaffOrder")
     public String currentStaffOrder(Integer indexpage, HttpServletRequest request){
@@ -41,17 +45,23 @@ public class StaffOrderControlle {
 
         boolean b = staffOrderService.pickupUserOrder(id);
         System.out.println("领取任务:" + b);
+        if (b){
+            return "redirect:/staff/staffGetOrder?indexpage=1";
+        }else {
+            throw new RuntimeException("error");
+        }
 
-        return "redirect:/staff/staffGetOrder?indexpage=1";
     }
 
     //领取的订单列表
     @RequestMapping("staffGetOrder")
     public String staffGetOrdergList(Integer indexpage, HttpServletRequest request){
-
-
+        Horseman horseman = loginEntityHelper.getEntityByClass(Horseman.class);
+        if(horseman==null){
+            throw new RuntimeException("error");
+        }
         System.out.println("indexpage:" + indexpage);
-        Integer hosermanid = 1;
+        Integer hosermanid = horseman.getId();
         Integer status = 2;
         PageInfo pageInfo = staffOrderService.selectUserOrder(indexpage,hosermanid,status);
         request.setAttribute("pages",pageInfo);
@@ -63,18 +73,29 @@ public class StaffOrderControlle {
     @RequestMapping("filishOrder")
     public String filishOrder(Integer id){
         System.out.println("finishOrderid:" + id);
-        Integer hosermanid = 1;
+        Horseman horseman = loginEntityHelper.getEntityByClass(Horseman.class);
+        if(horseman==null){
+            throw new RuntimeException("error");
+        }
+        Integer hosermanid = horseman.getId();
         Integer status = 2;
         if(staffOrderService.filishOrder(id,hosermanid,status)){
             return "redirect:/staff/staffGetOrder";
+        }else {
+            throw new RuntimeException("error");
         }
-        return "redirect:/staff/staffGetOrder?error=0";
+
 
     }
     //历史订单界面
     @RequestMapping("staffHistoryOrder")
     public String staffHistoryOrder(Integer indexpage, HttpServletRequest request){
-        Integer hosermanid = 1;
+        Horseman horseman = loginEntityHelper.getEntityByClass(Horseman.class);
+        if(horseman==null){
+            throw new RuntimeException("error");
+        }
+        Integer hosermanid = horseman.getId();
+        System.out.println("骑手id:" + hosermanid);
         Integer status = 3;
         Integer showHosemanStatus = 0;
         PageInfo pageInfo = staffOrderService.selectUserHistoryOrder(indexpage,hosermanid,status,showHosemanStatus);
@@ -123,7 +144,9 @@ public class StaffOrderControlle {
         Integer showHosemanStatus = 0;
         if(staffOrderService.deleteStaffOrder(id,hosermanid,status,showHosemanStatus)){
             return "redirect:/staff/staffHistoryOrder";
+        }else {
+            throw new RuntimeException("error");
         }
-        return "redirect:/staff/staffHistoryOrder?error=0";
+
     }
 }

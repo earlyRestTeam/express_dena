@@ -1,8 +1,10 @@
 package com.example.express_dena.services.impl;
 
 import com.example.express_dena.mapper.OrderMapper;
+import com.example.express_dena.pojo.Horseman;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.OrderExample;
+import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.IStaffOrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,7 +20,8 @@ public class StaffOrderService implements IStaffOrderService {
 
     @Autowired
     OrderMapper orderMapper;
-
+    @Autowired
+    LoginEntityHelper loginEntityHelper;
     @Override
     public PageInfo<Order> selectUserOrder(Integer indexpage, Integer status) {
         indexpage = indexpage == null ? 1: indexpage;
@@ -41,12 +44,16 @@ public class StaffOrderService implements IStaffOrderService {
 
     @Override
     public boolean pickupUserOrder(Integer orderid) {
+        Horseman horseman = loginEntityHelper.getEntityByClass(Horseman.class);
+        if(horseman==null){
+            throw new RuntimeException("error");
+        }
         Order order = orderMapper.selectByPrimaryKey(orderid);
         if(order!=null&&order.getStatus()==1){
             order.setStatus(2);
-            order.setHosermanid(1);
-            order.setHosermainPhone("13378052140");
-            order.setHosermanName("铂金");
+            order.setHosermanid(horseman.getId());
+            order.setHosermainPhone(horseman.getPhone());
+            order.setHosermanName(horseman.getUsername());
         }
 
         return orderMapper.updateByPrimaryKey(order) > 0;
@@ -70,7 +77,7 @@ public class StaffOrderService implements IStaffOrderService {
     public boolean filishOrder(Integer orderid, Integer hosermanid,Integer status) {
         Order order = orderMapper.selectByPrimaryKey(orderid);
         if(order != null && order.getStatus()==status && order.getHosermanid()==hosermanid){
-            order.setStatus(3);
+            order.setComfirmHosemanStatus(1);
             order.setEndTime(new Date());
             return orderMapper.updateByPrimaryKey(order)>0;
         }
@@ -144,5 +151,19 @@ public class StaffOrderService implements IStaffOrderService {
             return orderMapper.updateByPrimaryKey(order)>0;
         }
         return false;
+    }
+
+    @Override
+    public long selectFinishOrderNum(Integer indexpage, Integer hosermanid, Integer status) {
+        indexpage = indexpage == null ? 1: indexpage;
+
+        OrderExample orderExample = new OrderExample();
+        OrderExample.Criteria criteria = orderExample.createCriteria();
+        criteria.andHosermanidEqualTo(hosermanid).andStatusEqualTo(status);
+
+        PageHelper.startPage(indexpage,5);
+        List<Order> orderList = orderMapper.selectByExample(orderExample);
+        PageInfo<Order> info = new PageInfo<>(orderList,5);
+        return info.getTotal();
     }
 }

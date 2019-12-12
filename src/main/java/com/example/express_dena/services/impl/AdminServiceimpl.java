@@ -36,7 +36,6 @@ public class AdminServiceimpl implements AdminService {
     @Autowired
     AdminMapper adminMapper;
 
-
     /**
      * 查询启用用户
      * @param indexpage
@@ -224,7 +223,6 @@ public class AdminServiceimpl implements AdminService {
         HorsemanExample horsemanExample = new HorsemanExample();
         String account;
         String password;
-        String md5Password;
         //按id找到申请的记录
         Horseman horseman = horsemanMapper.selectByPrimaryKey(horsemanid);
         if (status.equals(-1)||status==-1){

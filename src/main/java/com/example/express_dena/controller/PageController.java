@@ -25,6 +25,10 @@ public class PageController {
     IMessageService messageService;
 
 
+    @GetMapping("/logout/success")
+    public String logout(){
+        return "/index";
+    }
     @GetMapping("about_us")
     public String about_us(){
         return "/about_us";
