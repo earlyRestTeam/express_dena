@@ -3,6 +3,7 @@ package com.example.express_dena.services.impl;
 import com.example.express_dena.asyn.Event;
 import com.example.express_dena.asyn.EventProductor;
 import com.example.express_dena.asyn.EventType;
+import com.example.express_dena.mapper.CommentMapper;
 import com.example.express_dena.mapper.AdminMapper;
 import com.example.express_dena.mapper.HorsemanMapper;
 import com.example.express_dena.mapper.UserMapper;
@@ -30,7 +31,7 @@ public class AdminServiceimpl implements AdminService {
     @Autowired
     EventProductor eventProductor;
     @Autowired
-    AdminMapper adminMapper;
+    CommentMapper commentMapper;
 
 
     /**
@@ -47,7 +48,7 @@ public class AdminServiceimpl implements AdminService {
         }
 
         UserExample example = new UserExample();
-        if (serchname != null&&!serchname.equals("")){
+        if (serchname != null&&!serchname.equals("")&&!serchname.equals("null")){
             example.or().andUsernameLike(serchname+"%").andStatusEqualTo((byte) 1);
             example.or().andEmailLike(serchname+"%").andStatusEqualTo((byte) 1);
             example.or().andPhoneLike(serchname+"%").andStatusEqualTo((byte) 1);
@@ -74,7 +75,7 @@ public class AdminServiceimpl implements AdminService {
         }
 
         UserExample example = new UserExample();
-        if (serchname != null&&!serchname.equals("")){
+        if (serchname != null&&!serchname.equals("")&&!serchname.equals("null")){
             example.or().andUsernameLike(serchname+"%").andStatusEqualTo((byte) -1);
             example.or().andEmailLike(serchname+"%").andStatusEqualTo((byte) -1);
             example.or().andPhoneLike(serchname+"%").andStatusEqualTo((byte) -1);
@@ -125,7 +126,7 @@ public class AdminServiceimpl implements AdminService {
         }
 
         HorsemanExample example = new HorsemanExample();
-        if (serchname != null&&!serchname.equals("")){
+        if (serchname != null&&!serchname.equals("")&&!serchname.equals("null")){
             example.or().andUsernameLike(serchname+"%").andStatusEqualTo((byte) 1);
             example.or().andEmailLike(serchname+"%").andStatusEqualTo((byte) 1);
             example.or().andPhoneLike(serchname+"%").andStatusEqualTo((byte) 1);
@@ -152,7 +153,7 @@ public class AdminServiceimpl implements AdminService {
         }
 
         HorsemanExample example = new HorsemanExample();
-        if (serchname != null&&!serchname.equals("")){
+        if (serchname != null&&!serchname.equals("")&&!serchname.equals("null")){
             example.or().andUsernameLike(serchname+"%").andStatusEqualTo((byte) -1);
             example.or().andEmailLike(serchname+"%").andStatusEqualTo((byte) -1);
             example.or().andPhoneLike(serchname+"%").andStatusEqualTo((byte) -1);
@@ -179,14 +180,14 @@ public class AdminServiceimpl implements AdminService {
     }
 
     /**
-     * 启用骑手
+     * 启用骑手(重新将审核状态变为待审核0)
      * @param horsemanid
      * @return
      */
     @Override
     public boolean startHorseman(Integer horsemanid) {
         Horseman horseman = horsemanMapper.selectByPrimaryKey(horsemanid);
-        horseman.setStatus((byte) 1);
+        horseman.setStatus((byte) 0);
         return horsemanMapper.updateByPrimaryKey(horseman)>0;
     }
 
@@ -203,7 +204,7 @@ public class AdminServiceimpl implements AdminService {
         }
 
         HorsemanExample example = new HorsemanExample();
-        if (serchname != null&&!serchname.equals("")){
+        if (serchname != null&&!serchname.equals("")&&!serchname.equals("null")){
             example.or().andUsernameLike(serchname+"%");
             example.or().andEmailLike(serchname+"%");
             example.or().andPhoneLike(serchname+"%");
@@ -222,23 +223,24 @@ public class AdminServiceimpl implements AdminService {
         String password;
         //按id找到申请的记录
         Horseman horseman = horsemanMapper.selectByPrimaryKey(horsemanid);
-        if (status == -1){
+        if (status.equals(-1)||status==-1){
             horseman.setStatus(status);
             Event e = new Event();
             e.setEventType(EventType.SEND_MAIL);
             e.mapSet("key","checkfail");
-            e.mapSet("email",horseman.getEmail());
+            e.mapSet("mail",horseman.getEmail());
             eventProductor.pushEvent(e);
-        }else if (status == 1){
+        }else if (status.equals(1)||status==1){
+
             do {
                 String uuid = UUID.randomUUID().toString().replaceAll("-", "");
                 //生成账号
-                account =uuid.substring(0,10);
+                account =uuid.substring(0,8);
                 //生成密码
-                 password = uuid.substring(10,18);
+                password = uuid.substring(10,18);
                 horsemanExample.createCriteria().andAccountEqualTo(account);
                 //查询一次如果账号存在则重新生成
-            }while (horsemanMapper.selectByExample(horsemanExample)!=null);
+            }while ( !horsemanMapper.selectByExample(horsemanExample).isEmpty());
             //将账号密码设入
             horseman.setAccount(account);
             horseman.setPassword(password);
@@ -246,13 +248,100 @@ public class AdminServiceimpl implements AdminService {
             Event event = new Event();
             event.setEventType(EventType.SEND_MAIL);
             event.mapSet("key","sendaccount");
-            event.mapSet("email",horseman.getEmail());
+            event.mapSet("mail",horseman.getEmail());
             event.mapSet("account",account);
             event.mapSet("password",password);
             eventProductor.pushEvent(event);
         }
         return horsemanMapper.updateByPrimaryKey(horseman)>0;
+    }
 
+    /**
+     * 根据订单id，骑手id，或者用户id查询有效评论（serchid为空则查全部）
+     * @param indexpage
+     * @param serchid
+     * @return
+     */
+    @Override
+    public PageInfo selectComment(Integer indexpage, Integer serchid) {
+        if (indexpage == null){
+            indexpage = 0;
+        }
+
+        CommentExample example = new CommentExample();
+        if (serchid != null&&!serchid.equals(0)&&!serchid.equals("null")){
+            example.or().andUserIdEqualTo(serchid).andStatusEqualTo((byte) 1);
+            example.or().andIdEqualTo(serchid).andStatusEqualTo((byte) 1);
+            example.or().andOrderIdEqualTo(serchid).andStatusEqualTo((byte) 1);
+            example.or().andHorsemanIdEqualTo(serchid).andStatusEqualTo((byte) 1);
+        }else {
+            example.or().andStatusEqualTo((byte) 1);
+        }
+        PageHelper.startPage(indexpage,10);
+        List<Comment> comments = commentMapper.selectByExample(example);
+        PageInfo info = new PageInfo(comments,5);
+        return info;
+    }
+
+    /**
+     * 根据订单id，骑手id，或者用户id查询有效评论（serchid为空则查全部）
+     * @param indexpage
+     * @param serchid
+     * @return
+     */
+    @Override
+    public PageInfo selectCommentStop(Integer indexpage, Integer serchid) {
+        if (indexpage == null){
+            indexpage = 0;
+        }
+
+        CommentExample example = new CommentExample();
+        if (serchid != null&&!serchid.equals(0)&&!serchid.equals("null")){
+            example.or().andUserIdEqualTo(serchid).andStatusEqualTo((byte)0);
+            example.or().andIdEqualTo(serchid).andStatusEqualTo((byte)0);
+            example.or().andOrderIdEqualTo(serchid).andStatusEqualTo((byte)0);
+            example.or().andHorsemanIdEqualTo(serchid).andStatusEqualTo((byte)0);
+        }else {
+            example.or().andStatusEqualTo((byte) 0);
+        }
+        PageHelper.startPage(indexpage,10);
+        List<Comment> comments = commentMapper.selectByExample(example);
+        PageInfo info = new PageInfo(comments,5);
+        return info;
+    }
+
+    /**
+     * 禁用评论
+     * @param commentid
+     * @return
+     */
+    @Override
+    public boolean forzenComment(Integer commentid) {
+        Comment comment = commentMapper.selectByPrimaryKey(commentid);
+        comment.setStatus((byte) 0);
+        return commentMapper.updateByPrimaryKey(comment)>0;
+    }
+
+    /**
+     * 启用评论
+     * @param commentid
+     * @return
+     */
+    @Override
+    public boolean startComment(Integer commentid) {
+        Comment comment = commentMapper.selectByPrimaryKey(commentid);
+        comment.setStatus((byte) 1);
+        return commentMapper.updateByPrimaryKey(comment)>0;
+    }
+
+    /**
+     * 通过评论id查询详细评论内容
+     * @param commentid
+     * @return
+     */
+    @Override
+    public Comment selectCommentbyid(Integer commentid) {
+        return commentMapper.selectByPrimaryKey(commentid);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.express_dena.controller;
 
 
+import com.example.express_dena.pojo.Comment;
 import com.example.express_dena.services.impl.AdminServiceimpl;
 import com.example.express_dena.util.StaticPool;
 import com.github.pagehelper.PageInfo;
@@ -105,7 +106,9 @@ public class AdminController {
     public String member_list(HttpServletRequest request, Integer indexpage, String serchname){
         PageInfo pageInfo = adminServiceimpl.selectUsers(indexpage, serchname);
         request.setAttribute("pages",pageInfo);
-        request.setAttribute("serchname",serchname);
+        if (!"null".equals(serchname)){
+            request.setAttribute("serchname",serchname);
+        }
         return "/admin/member-list";
     }
 
@@ -120,7 +123,9 @@ public class AdminController {
     public String member_list_stop(HttpServletRequest request, Integer indexpage, String serchname){
         PageInfo pageInfo = adminServiceimpl.selectUsersStop(indexpage, serchname);
         request.setAttribute("pages",pageInfo);
-        request.setAttribute("serchname",serchname);
+        if (!"null".equals(serchname)){
+            request.setAttribute("serchname",serchname);
+        }
         return "/admin/member-del";
     }
 
@@ -157,7 +162,9 @@ public class AdminController {
     public String horseman_list(HttpServletRequest request, Integer indexpage, String serchname){
         PageInfo pageInfo = adminServiceimpl.selectHorseman(indexpage, serchname);
         request.setAttribute("pages",pageInfo);
-        request.setAttribute("serchname",serchname);
+        if (!"null".equals(serchname)){
+            request.setAttribute("serchname",serchname);
+        }
         return "/admin/horseman-list";
     }
 
@@ -172,7 +179,9 @@ public class AdminController {
     public String horseman_list_stop(HttpServletRequest request, Integer indexpage, String serchname){
         PageInfo pageInfo = adminServiceimpl.selectHorsemanStop(indexpage, serchname);
         request.setAttribute("pages",pageInfo);
-        request.setAttribute("serchname",serchname);
+        if (!"null".equals(serchname)){
+            request.setAttribute("serchname",serchname);
+        }
         return "/admin/horseman-del";
     }
 
@@ -188,7 +197,7 @@ public class AdminController {
     }
 
     /**
-     * 启用骑手
+     * 启用骑手(重新将审核状态变为待审核0)
      * @param horsemanid
      * @return
      */
@@ -209,14 +218,87 @@ public class AdminController {
     public String article_list(HttpServletRequest request, Integer indexpage, String serchname){
         PageInfo pageInfo = adminServiceimpl.selectAllHorseman(indexpage, serchname);
         request.setAttribute("pages",pageInfo);
-        request.setAttribute("serchname",serchname);
-        System.out.println(pageInfo);
+        if (!"null".equals(serchname)){
+            request.setAttribute("serchname",serchname);
+        }
+
         return "/admin/article-list";
     }
+
+    /**
+     * 审核骑手的申请
+     * @param horsemanid
+     * @param status
+     * @return
+     */
     @RequestMapping("checked_apply")
     public String checked_apply(Integer horsemanid,Byte status){
         adminServiceimpl.checked_apply(horsemanid,status);
         return "redirect:/admin/article_list";
+    }
+
+    /**
+     * 查询启用的评论列表
+     * @param request
+     * @param indexpage
+     * @param serchid
+     * @return
+     */
+    @RequestMapping("comment_list")
+    public String comment_list(HttpServletRequest request,Integer indexpage,Integer serchid){
+        PageInfo pageInfo = adminServiceimpl.selectComment(indexpage, serchid);
+        request.setAttribute("pages",pageInfo);
+        if (!"null".equals(serchid)){
+            request.setAttribute("serchid",serchid);
+        }
+        return "/admin/comment-list";
+    }
+
+    /**
+     * 查询禁用的评论列表
+     * @param request
+     * @param indexpage
+     * @param serchid
+     * @return
+     */
+    @RequestMapping("comment_list_stop")
+    public String comment_list_stop(HttpServletRequest request,Integer indexpage,Integer serchid){
+        PageInfo pageInfo = adminServiceimpl.selectCommentStop(indexpage, serchid);
+        request.setAttribute("pages",pageInfo);
+        if (!"null".equals(serchid)){
+            request.setAttribute("serchid",serchid);
+        }
+        return "/admin/comment-del";
+    }
+
+
+    @RequestMapping("comment_show")
+    public String comment_show(HttpServletRequest request,Integer commentid){
+        Comment comment = adminServiceimpl.selectCommentbyid(commentid);
+        request.setAttribute("comment",comment);
+        return "/admin/comment-show";
+    }
+
+    /**
+     * 冻结评论
+     * @param commentid
+     * @return
+     */
+    @RequestMapping("comment_list_frozencomment")
+    public String comment_list_frozencomment(Integer commentid){
+        adminServiceimpl.forzenComment(commentid);
+        return "redirect:/admin/comment_list";
+    }
+
+    /**
+     * 启用评论
+     * @param commentid
+     * @return
+     */
+    @RequestMapping("comment_list_startcomment")
+    public String comment_list_startcomment(Integer commentid){
+        adminServiceimpl.startComment(commentid);
+        return "redirect:/admin/comment_list_stop";
     }
 
 

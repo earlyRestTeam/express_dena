@@ -1,6 +1,6 @@
 package com.example.express_dena.services;
 
-import com.example.express_dena.pojo.Admin;
+import com.example.express_dena.pojo.Comment;
 import com.example.express_dena.pojo.User;
 import com.github.pagehelper.PageInfo;
 
@@ -62,7 +62,7 @@ public interface AdminService {
     boolean forzenHorseman(Integer horsemanid);
 
     /**
-     * 启用骑手
+     * 启用骑手(重新将审核状态变为待审核0)
      * @param horsemanid
      * @return
      */
@@ -85,4 +85,41 @@ public interface AdminService {
     boolean checked_apply(Integer horsemanid,Byte status);
 
     Admin loadByAccount(String account);
+
+    /**
+     * 根据订单id，骑手id，或者用户id查询有效评论（serchid为空则查全部）
+     * @param indexpage
+     * @param serchid
+     * @return
+     */
+    PageInfo selectComment(Integer indexpage,Integer serchid);
+
+    /**
+     * 根据订单id，骑手id，或者用户id查询停用评论（serchid为空则查全部）
+     * @param indexpage
+     * @param serchid
+     * @return
+     */
+    PageInfo selectCommentStop(Integer indexpage,Integer serchid);
+
+    /**
+     * 冻结评论
+     * @param commentid
+     * @return
+     */
+    boolean forzenComment(Integer commentid);
+
+    /**
+     * 启用评论
+     * @param commentid
+     * @return
+     */
+    boolean startComment(Integer commentid);
+
+    /**
+     * 只通过id查询详细的评论内容
+     * @param commentid
+     * @return
+     */
+    Comment selectCommentbyid(Integer commentid);
 }

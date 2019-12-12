@@ -9,9 +9,9 @@ spring:
     #邮箱配置
     mail:
         host: smtp.163.com
-        username: 18216308307@163.com
+        username: 1040592536@qq.com
         #QQ邮箱的授权码
-        password: m4gewo
+        password: ozgkzwarxjznbcdc
         default-encoding: UTF-8
         properties:
             mail:
