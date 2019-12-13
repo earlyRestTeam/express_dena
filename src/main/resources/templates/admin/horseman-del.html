@@ -56,15 +56,15 @@
         <tr class="text-c" th:each="u:${pages.list}">
             <td><input type="checkbox" value="1" name=""></td>
             <td th:text="${u.id}"></td>
-            <td th:text="${u.avatar}"></td>
+            <td><img width="60px" height="60px" th:src="${u.avatar}"/></td>
             <td th:text="${u.username}"></td>
             <td th:text="${u.account}"></td>
             <td th:text="${u.phone}"></td>
             <td th:text="${u.email}"></td>
             <td th:text="${u.balance}"></td>
             <td th:text="${u.idCard}"></td>
-            <td th:text="${u.idCardPicPre}"></td>
-            <td th:text="${u.idCardPicPre}"></td>
+            <td><img th:src="${u.idCardPicPre}"/></td>
+            <td><img th:src="${u.idCardPicBack}"/></td>
             <td th:text="${#dates.format(u.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td class="td-status"><span class="label label-danger radius">已停用</span></td>
             <td class="td-manage"><a style="text-decoration:none" th:onclick="'article_shenhe('+${u.id}+')'" title="还原"><i class="Hui-iconfont">&#xe66b;</i></a></td>
@@ -95,7 +95,15 @@
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script> 
 <script type="text/javascript">
-
+    $("img").bind("click",function(){
+        var url= $(this).attr("src")
+        var index = layer.open({
+            type: 2,
+            content: "idcard_show?url="+url,
+            maxmin:true
+        });
+        layer.full(index);
+    });
 
     function article_shenhe(id){
         layer.confirm('启用？', {

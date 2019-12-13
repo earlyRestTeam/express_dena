@@ -37,12 +37,12 @@
 		<thead>
 			<tr class="text-c">
 				<th width="25"><input type="checkbox" name="" value=""></th>
-				<th width="80">ID</th>
-                <th width="40">头像</th>
-				<th width="100">用户名</th>
+				<th width="40">ID</th>
+                <th width="80">头像</th>
+				<th width="80">用户名</th>
 				<th width="40">账号</th>
 				<th width="90">手机</th>
-				<th width="150">邮箱</th>
+				<th width="80">邮箱</th>
 				<th width="130">加入时间</th>
 				<th width="70">状态</th>
 				<th width="100">操作</th>
@@ -52,7 +52,7 @@
 			<tr class="text-c" th:each="u:${pages.list}">
 				<td><input type="checkbox" value="1" name=""></td>
 				<td th:text="${u.id}"></td>
-                <td th:text="${u.avatar}"></td>
+                <td><img width="60px" height="60px" th:src="${u.avatar}"/></td>
 				<td th:text="${u.username}"></td>
 				<td th:text="${u.account}"></td>
 				<td th:text="${u.phone}"></td>
@@ -87,7 +87,15 @@
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-
+    $("img").bind("click",function(){
+        var url= $(this).attr("src")
+        var index = layer.open({
+            type: 2,
+            content: "idcard_show?url="+url,
+            maxmin:true
+        });
+        layer.full(index);
+    });
     function article_shenhe(id){
         layer.confirm('停用？', {
                 btn: ['确定','取消'],

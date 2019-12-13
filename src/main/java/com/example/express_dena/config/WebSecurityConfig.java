@@ -88,8 +88,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public LoginFailureHandler loginFailureHandler(){
-        return new LoginFailureHandler(loginUrlEntryPoint());
+    public LoginFailureHandler loginFailureHandler() throws Exception {
+        return new LoginFailureHandler(myUsernamePasswordAuthenticationFilter());
     }
 
     @Bean

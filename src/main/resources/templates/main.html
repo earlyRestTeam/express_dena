@@ -74,7 +74,7 @@
 
                 </button>
                 <a class="navbar-brand" href="index">
-                    <img src="images/3.png" class="img-responsive" alt="company-logo">
+                    <img src="/images/3.png" class="img-responsive" alt="company-logo">
                 </a>
             </div>
             <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
@@ -108,7 +108,7 @@
                             模态框（Modal）标题
                         </h4>
                     </div>
-                        <img id="headUrl" src="images/avatar.jpg" style="width: 80px;height: 80px">
+                        <img id="headUrl" src="/images/avatar.jpg" style="width: 80px;height: 80px">
                         <input type="file" id="file" >
                         <button class="btn btn-primary" onclick="upload()">确定</button>
                         <input hidden id="userHeadUrl">
@@ -135,7 +135,7 @@
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
-                    <li class="nav-title">Navigation</li>
+                    <li class="nav-title">风火轮</li>
 
                     <li class="nav-item">
                         <a href="main" class="nav-link active">
@@ -232,7 +232,7 @@
             <div class="main-info">
                 <div class="main-info-left">
                     <div class="info-avatar">
-                        <img th:src="@{${user.avatar}}" id="showHead" src="images/avatar.jpg">
+                        <img th:src="@{${user.avatar}}" id="showHead" src="/images/avatar.jpg">
                     </div>
                     <div class="main-info-name">
                         <p class="info-name" th:text="${user.username}" id="showName">杨秀秀</p>
@@ -303,12 +303,14 @@
     }
 </script>
 <script>
+     //文件输入框的操作
     $('#file').change(function(e) {
         var _URL = window.URL || window.webkitURL;
         var file, img;
         if ((file = this.files[0])) {
             img = new Image();
             img.onload = function() {
+                //头像 操作图片
                 $('#headUrl').attr('src', this.src);
             };
             img.src = _URL.createObjectURL(file);
@@ -316,6 +318,7 @@
     })
 </script>
 <script>
+    //上床操作
     function upload() {
         var formData = new FormData();
         var file = document.getElementById("file").files[0];
@@ -339,30 +342,30 @@
         });
     }
 </script>
-<script>
-    function upload() {
-        var formData = new FormData();
-        var file = document.getElementById("file").files[0];
-        formData.append("file", file);
-        $.ajax({
-            url:"/upload",
-            type:"POST",
-            data:formData,
-            processData : false,
-            contentType : false,
-            dataType : 'json',
-            async : false,
-            success : function (result) {
-                console.log(result);
-                if(result.code == 200){
-                    $('#headUrl').attr("src",result.message);
-                }else {
-                    alert("error!");
-                }
-            }
-        });
-    }
-</script>
+<!--<script>-->
+<!--    function upload() {-->
+<!--        var formData = new FormData();-->
+<!--        var file = document.getElementById("file").files[0];-->
+<!--        formData.append("file", file);-->
+<!--        $.ajax({-->
+<!--            url:"/upload",-->
+<!--            type:"POST",-->
+<!--            data:formData,-->
+<!--            processData : false,-->
+<!--            contentType : false,-->
+<!--            dataType : 'json',-->
+<!--            async : false,-->
+<!--            success : function (result) {-->
+<!--                console.log(result);-->
+<!--                if(result.code == 200){-->
+<!--                    $('#headUrl').attr("src",result.message);-->
+<!--                }else {-->
+<!--                    alert("error!");-->
+<!--                }-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
 <script>
 
     function change() {

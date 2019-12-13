@@ -244,6 +244,18 @@ public class AdminController {
     }
 
     /**
+     * 放大身份证
+     * @param request
+     * @param url
+     * @return
+     */
+    @RequestMapping("idcard_show")
+    public String idcard_show(HttpServletRequest request,String url){
+        request.setAttribute("url",url);
+        return "/admin/idcard-show";
+    }
+
+    /**
      * 查询启用的评论列表
      * @param request
      * @param indexpage
@@ -278,6 +290,12 @@ public class AdminController {
     }
 
 
+    /**
+     * 弹窗显示评论详情
+     * @param request
+     * @param commentid
+     * @return
+     */
     @RequestMapping("comment_show")
     public String comment_show(HttpServletRequest request,Integer commentid){
         Comment comment = adminServiceimpl.selectCommentbyid(commentid);

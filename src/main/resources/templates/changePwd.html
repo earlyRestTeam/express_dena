@@ -99,7 +99,7 @@
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
-                    <li class="nav-title">Navigation</li>
+                    <li class="nav-title">风火轮</li>
 
                     <li class="nav-item">
                         <a href="main" class="nav-link active">
@@ -309,7 +309,7 @@
         $.ajax({
             type: 'POST',//方法类型
             dataType: "json",//预期服务器返回的数据类型
-            url: 'user/changePassword',//url
+            url: '/user/changePassword',//url
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             success: function (result) {

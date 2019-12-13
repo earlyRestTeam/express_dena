@@ -98,7 +98,7 @@
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
-                    <li class="nav-title">Navigation</li>
+                    <li class="nav-title">风火轮</li>
 
                     <li class="nav-item">
                         <a href="main" class="nav-link active">
@@ -198,54 +198,108 @@
                     </div>
                 </nav>
                 <!-- 主体 -->
-                <form class="form-horizontal" id="expressForm">
-                    <div class="form-group">
-                        <label for="inputName" class="col-sm-1 control-label">取件姓名</label>
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" id="inputName" name="name" placeholder="请输入取件姓名">
+                <form class="form-horizontal" id="expressForm" action="payOrder" method='post'>
+                        <div class="form-group">
+                            <label for="inputName" class="col-sm-1 control-label">取件姓名</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control" id="inputName" name="username" placeholder="请输入取件姓名">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTel" class="col-sm-1 control-label">联系电话</label>
-                        <div class="col-sm-11">
-                            <input type="tel" class="form-control" id="inputTel" name="tel" placeholder="请输入联系电话">
+
+                        <div class="form-group">
+                            <label for="inputTel" class="col-sm-1 control-label">联系电话</label>
+                            <div class="col-sm-11">
+                                <input type="tel" class="form-control" id="inputTel" name="userTelephone" placeholder="请输入联系电话">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputInfo" class="col-sm-1 control-label">取件短信</label>
-                        <div class="col-sm-11">
+
+                        <div id="manageAddress">
+                            <div class="form-group">
+                                <label for="inputInfo" class="col-sm-1 control-label">取件码</label>
+                                <a  class="addinfo" id="addAddress" >添加取件码</a>
+                                <a  class="addinfo" id="deleteAddress">删除取件码</a>
+                                <div class="col-sm-11">
                 <textarea class="form-control dis_change_textarea" id="inputInfo" name="message" rows="5"
-                          placeholder="请直接复制取件短信（一个快递一个订单）"></textarea>
+                          placeholder="请填写验证码（能添加多个，一个地址可以有多个包裹）"></textarea>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress" class="col-sm-1 control-label">配送地址</label>
-                        <div class="col-sm-11">
-                <textarea class="form-control dis_change_textarea" id="inputAddress" name="address" rows="5"
+
+
+                        <div class="form-group">
+                            <label for="inputAddress" class="col-sm-1 control-label">选择地址</label>
+                            <div class="col-sm-11">
+                            省份
+                            <select style="width: 200px" id="identity" name="identityaddress">
+                                <option value ="湖南省">湖南省</option>
+                                <option value ="saab">Saab</option>
+                                <option value="opel">Opel</option>
+                                <option value="audi">Audi</option>
+                            </select>
+                            市级
+                            <select style="width: 200px" id="city" name="cityaddress">
+                                <option value ="岳阳市">岳阳市</option>
+                                <option value ="saab">Saab</option>
+                                <option value="opel">Opel</option>
+                                <option value="audi">Audi</option>
+                            </select>
+                            区级
+                            <select style="width: 200px" id="area" name="areaaddress">
+                                <option value ="岳阳楼区">岳阳楼区</option>
+                                <option value ="saab">Saab</option>
+                                <option value="opel">Opel</option>
+                                <option value="audi">Audi</option>
+                            </select>
+                            街道
+                                <select style="width: 200px" id="street" name="streetaddress">
+                                    <option value ="太平街">太平街</option>
+                                    <option value ="saab">Saab</option>
+                                    <option value="opel">Opel</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group num">
+                            <label for="inputAddress" class="col-sm-1 control-label">送达详细地址</label>
+                            <div class="col-sm-11">
+                <textarea class="form-control dis_change_textarea" id="targetAddress" name="targetAddress" rows="5"
                           placeholder="请输入配送地址"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputRemark" class="col-sm-1 control-label">备注（可选）</label>
+
+                    <div class="form-group num">
+                        <label for="inputAddress" class="col-sm-1 control-label">取件详细地址</label>
                         <div class="col-sm-11">
-                <textarea class="form-control dis_change_textarea" id="inputRemark" name="remark" rows="5"
+                <textarea class="form-control dis_change_textarea" id="inputAddress" name="pickUpAddress" rows="5"
+                          placeholder="请输入取件地址"></textarea>
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <label for="inputRemark" class="col-sm-1 control-label">备注（可选）</label>
+                            <div class="col-sm-11">
+                <textarea class="form-control dis_change_textarea" id="inputRemark" name="note" rows="5"
                           placeholder="如果有特殊要求，请备注于此"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputVerify" class="col-sm-1 control-label">验证码</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="inputVerify" name="verify" placeholder="请输入验证码">
+
+                        <div class="form-group">
+                            <label for="inputVerify" class="col-sm-1 control-label">验证码</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="inputVerify" name="verify" placeholder="请输入验证码">
+                            </div>
+                            <div class="col-sm-5" style="margin-top: 10px">
+                                <img id="verifyCode" src="getVerifyCode" title="看不清，请点我" onclick="refresh(this)"
+                                     onmouseover="mouseover(this)"/>
+                            </div>
                         </div>
-                        <div class="col-sm-5" style="margin-top: 10px">
-                            <img id="verifyCode" src="getVerifyCode" title="看不清，请点我" onclick="refresh(this)"
-                                 onmouseover="mouseover(this)"/>
+
+                        <div class="form-group" style="text-align: center">
+                            <button class="btn btn-primary" type="submit">前往支付</button>
+                            <button class="btn btn-warning" type="reset">重新填写</button>
                         </div>
-                    </div>
-                    <div class="form-group" style="text-align: center">
-                        <button class="btn btn-primary" type="submit">前往支付</button>
-                        <button class="btn btn-warning" type="reset">重新填写</button>
-                    </div>
+
                 </form>
             </div>
         </div>
@@ -281,46 +335,52 @@
     $().ready(function() {
         $("#expressForm").validate({
             rules: {
-                name: "required",
-                tel: {
+                username: "required",
+                userTelephone: {
                     required: true,
                     minlength: 11
                 },
                 message: "required",
-                address: "required",
-                verify: "required"
+                pickUpAddress: "required",
             },
             messages: {
-                name: "取件姓名不能为空",
-                tel: {
+                usernamename: "取件姓名不能为空",
+                userTelephone: {
                     required: "联系电话不能为空",
                     minlength: "手机号码不少于11位"
                 },
                 message: "取件短信不能为空",
-                address: "配送地址不能为空",
-                verify: "验证码不能为空"
+                pickUpAddress: "配送地址不能为空",
             },
 
             submitHandler: function (form) {
-                ajaxSubmit();
+                $("form").submit();
             }
         });
     });
-    function ajaxSubmit() {
-        $.ajax({
-            async : false,
-            cache : false,
-            type : 'POST',
-            data : $("#editForm").serialize(),
-            url : "payOrder",//请求的action路径
-            error : function() {//请求失败处理函数
-                alert('失败');
-            },
-            success : function(data) { //请求成功后处理函数。
-                alert(data);
-            }
-        });
-    }
+    var count = 1;
+    $("#addAddress").click(function () {
+        count = count + 1;
+        var message = "message" + count;
+        var html=' <div class="form-group">\n' +
+            '                            <label for="inputInfo" class="col-sm-1 control-label">取件短信</label>\n' +
+            '                            <div class="col-sm-11">\n' +
+            '                <textarea class="form-control dis_change_textarea" id="inputInfo" name=message rows="5"\n' +
+            '                          placeholder="请直接复制取件短信（一个快递一个订单）"></textarea>\n' +
+            '                            </div>\n' +
+            '                        </div>';
+        $("#manageAddress").append(html);
+    })
+
+    $("#deleteAddress").click(function () {
+        var num =  $("#manageAddress").children().length;
+        if(num>1){
+            $("#manageAddress").children().last().remove();
+            updatePrice();
+        }
+    })
+
+
 </script>
 </body>
 </html>

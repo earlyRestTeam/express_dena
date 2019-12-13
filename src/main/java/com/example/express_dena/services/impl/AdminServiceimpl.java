@@ -9,6 +9,7 @@ import com.example.express_dena.mapper.HorsemanMapper;
 import com.example.express_dena.mapper.UserMapper;
 import com.example.express_dena.pojo.*;
 import com.example.express_dena.services.AdminService;
+import com.example.express_dena.util.MD5Utils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ public class AdminServiceimpl implements AdminService {
     EventProductor eventProductor;
     @Autowired
     CommentMapper commentMapper;
-
+    @Autowired
+    AdminMapper adminMapper;
 
     /**
      * 查询启用用户
@@ -221,6 +223,7 @@ public class AdminServiceimpl implements AdminService {
         HorsemanExample horsemanExample = new HorsemanExample();
         String account;
         String password;
+        String md5Password = null;
         //按id找到申请的记录
         Horseman horseman = horsemanMapper.selectByPrimaryKey(horsemanid);
         if (status.equals(-1)||status==-1){
@@ -238,12 +241,13 @@ public class AdminServiceimpl implements AdminService {
                 account =uuid.substring(0,8);
                 //生成密码
                 password = uuid.substring(10,18);
+                md5Password=MD5Utils.StringInMd5(password);
                 horsemanExample.createCriteria().andAccountEqualTo(account);
                 //查询一次如果账号存在则重新生成
             }while ( !horsemanMapper.selectByExample(horsemanExample).isEmpty());
             //将账号密码设入
             horseman.setAccount(account);
-            horseman.setPassword(password);
+            horseman.setPassword(md5Password);
             horseman.setStatus(status);
             Event event = new Event();
             event.setEventType(EventType.SEND_MAIL);
