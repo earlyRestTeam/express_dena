@@ -110,7 +110,7 @@ public class UserOrderController {
             orderdetail.setKg(Float.parseFloat(kglist.get(i)));
             orderdetails.add(orderdetail);
         }
-        Map<String, String> submitresult = service.submitOrder(order,orderdetails);
+        Map<String, String> submitresult = service.insertOrder(order,orderdetails);
         APIResult apiResult = new APIResult();
         if(submitresult.get(StaticPool.SUCCESS) != null){
             returnresult.put("flag",1);

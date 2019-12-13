@@ -16,7 +16,7 @@ import java.util.Map;
 public interface UserOrderService {
 
     //发布订单
-    public Map<String,String> submitOrder(Order order, List<Orderdetail> orderdetails);
+    public Map<String,String> insertOrder(Order order, List<Orderdetail> orderdetails);
 
     //查询当前订单
     public PageInfo selectOrderCurrent(int userid,Integer indexpage);
@@ -31,16 +31,16 @@ public interface UserOrderService {
     public int selectStatus(int orderid);
 
     //取消订单
-    public Map<String,String> cancelOrderByID(int orderid);
+    public Map<String,String> updateCancelOrderByID(int orderid);
 
     //查询订单详情
     public Map<String,String> selectOrderDetail(int orderid);
 
     //确认订单完成
-    public Map<String,String> completeOrder(int Orderid);
+    public Map<String,String> updateCompleteOrder(int Orderid);
 
     //评论
-    public Map<String,String> comments(int userid,String contenr,int orderid,int hosemanid);
+    public Map<String,String> insertComments(int userid,String contenr,int orderid,int hosemanid);
 
     /**
      * 查找 指定用户 指定状态 的 数量

@@ -49,6 +49,8 @@ public class TransactionConfig {
         source.addTransactionalMethod("update*", txAttr_REQUIRED);
         source.addTransactionalMethod("exec*", txAttr_REQUIRED);
         source.addTransactionalMethod("set*", txAttr_REQUIRED);
+        source.addTransactionalMethod("insert*", txAttr_REQUIRED);
+        source.addTransactionalMethod("add*", txAttr_REQUIRED);
 
         //以下 只能为 只读的 数据库连接
         source.addTransactionalMethod("get*", txAttr_REQUIRED_READONLY);
@@ -57,6 +59,8 @@ public class TransactionConfig {
         source.addTransactionalMethod("list*", txAttr_REQUIRED_READONLY);
         source.addTransactionalMethod("count*", txAttr_REQUIRED_READONLY);
         source.addTransactionalMethod("is*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("select*", txAttr_REQUIRED_READONLY);
+        source.addTransactionalMethod("sear*", txAttr_REQUIRED_READONLY);
 
         //将增强 配置近事务的 拦截器中
         return new TransactionInterceptor(transactionManager, source);

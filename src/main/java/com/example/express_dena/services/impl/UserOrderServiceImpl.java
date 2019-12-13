@@ -31,7 +31,7 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //提交订单
     @Override
-    public Map<String, String> submitOrder(Order order, List<Orderdetail> orderdetails) {
+    public Map<String, String> insertOrder(Order order, List<Orderdetail> orderdetails) {
         Map<String,String> map = new HashMap<>();
         order.setCreateTime(new Date());            //设置订单创建时间
         order.setStatus(1);                         //设置订单初始状态1 未接单
@@ -156,7 +156,7 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //取消订单
     @Override
-    public Map<String, String> cancelOrderByID(int orderid) {
+    public Map<String, String> updateCancelOrderByID(int orderid) {
 
         Map<String,String> res = new HashMap<>();
         Order order1 = orderMapper.selectByPrimaryKey(orderid);
@@ -179,7 +179,7 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //确认完成订单
     @Override
-    public Map<String, String> completeOrder(int orderid) {
+    public Map<String, String> updateCompleteOrder(int orderid) {
         Map<String,String> res = new HashMap<>();
         Order order1 = orderMapper.selectByPrimaryKey(orderid);
         System.out.println(order1.toString());
@@ -195,7 +195,7 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //评论
     @Override
-    public Map<String, String> comments(int userid, String contenr, int orderid, int hosemanid) {
+    public Map<String, String> insertComments(int userid, String contenr, int orderid, int hosemanid) {
         return null;
     }
 
