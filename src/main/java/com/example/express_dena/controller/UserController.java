@@ -99,7 +99,7 @@ public class UserController {
      * @param model
      * @return
      */
-    @GetMapping("/user/message")
+    @GetMapping("/message")
     public String message(@RequestParam(value = "index",defaultValue = "1")int index
             ,@RequestParam(value = "size",defaultValue = "8")int size,Model model){
         User user = loginEntityHelper.getEntityByClass(User.class);

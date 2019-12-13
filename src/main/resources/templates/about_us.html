@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -38,7 +38,7 @@
     </div>
 </div>
 <!------------------Preloader end------------------->
-<div class="tp-header">
+<div class="tp-header"  th:replace=" common :: tp_header">
     <div class="container">
         <div class="row">
             <div class="col-xs-7 col-md-6">
@@ -57,7 +57,7 @@
         </div>
     </div>
 </div>
-<header>
+<header th:replace="common :: header_area">
     <div class="container">
         <nav class="navbar navbar-default">
             <div class="navbar-header">

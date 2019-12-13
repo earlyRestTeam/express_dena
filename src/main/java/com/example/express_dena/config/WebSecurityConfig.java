@@ -50,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()    //表单 登陆
                 .loginPage("/index")// 自定义登录页面
                 .loginProcessingUrl("/login")// 自定义登录路径
+                .failureForwardUrl("/user/login?error=true")
                 .failureHandler(loginFailureHandler())
                 .successHandler(loginSuccessHandler())
                 .and()
@@ -67,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
     }
+
 
 
     /**
@@ -93,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public LoginFailureHandler loginFailureHandler() throws Exception {
-        return new LoginFailureHandler(myUsernamePasswordAuthenticationFilter());
+        return new LoginFailureHandler(loginUrlEntryPoint());
     }
 
     @Bean

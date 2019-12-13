@@ -48,21 +48,27 @@ public class AuthProvider implements AuthenticationProvider {
         switch (type){
             case "admin":
                 Admin admin = adminService.loadByAccount(name);
-                admin.setPassword(null);
-                obj = admin;
                 truePassword = (admin == null ? null:admin.getPassword() );
+                if(admin != null)
+                    admin.setPassword(null);
+                obj = admin;
+
                 break;
             case "staff":
                 Horseman h = staffService.loadStaffByAccount(name);
-                h.setPassword(null);
-                obj = h;
                 truePassword = (h == null ? null:h.getPassword() );
+                if(h != null)
+                    h.setPassword(null);
+                obj = h;
+
                 break;
             case "user":
                 User user = userService.selectByUserName(name);
-                user.setPassword(null);
-                obj = user;
                 truePassword = (user == null ? null:user.getPassword() );
+                if(user != null)
+                    user.setPassword(null);
+                obj = user;
+
                 break;
             default:
                 throw new BadCredentialsException("error");

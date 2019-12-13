@@ -1,6 +1,8 @@
 package com.example.express_dena.config;
 
+import com.example.express_dena.controller.interceptor.EntityInterceptor;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -20,10 +22,13 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
  * @author 王志坚
  * @createTime 2019.11.25.20:13
  */
-//@Configuration
+@Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     @Value("${spring.thymeleaf.cache}")
     private boolean thymeleafCacheEnable = true;
+
+    @Autowired
+    EntityInterceptor entityInterceptor;
 
     private ApplicationContext applicationContext;
 
@@ -82,7 +87,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements Application
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(applicationContext.getBean("entityInterceptor", HandlerInterceptor.class)).addPathPatterns("/**");
+        registry.addInterceptor(entityInterceptor).addPathPatterns("/**");
         super.addInterceptors(registry);
     }
 }
