@@ -430,7 +430,7 @@
         if(confirm("您确定要"+status+"订单吗？")){
             if (status == "取消定单") {
                 $.ajax({
-                    url:"cancelOrderByID",
+                    url:"/user/cancelOrderByID",
                     data:JSON.stringify({orderid:orderid}),
                     contentType: 'application/json; charset=UTF-8',
                     type:"post",
@@ -455,7 +455,7 @@
                     dataType:"json",
                     success:function(result){
                         if (result.data.success != null){
-                            window.location.href="userHistoryOrder";
+                            window.location.href="/user/userHistoryOrder";
                         }else{
                             alert(result.data.error)
                         }
@@ -502,7 +502,7 @@
     function jumpNormalPage(page){
         var totalPage = parseInt($("#pages").val());
         if(page>0 && page<=totalPage){
-            window.location.href="currentUserOrder?indexpage=" + page;
+            window.location.href="/user/currentUserOrder?indexpage=" + page;
         }
 
 
@@ -519,19 +519,19 @@
                 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
                 pageNum = 1;
             }
-            window.location.href="currentUserOrder?indexpage=" + pageNum;
+            window.location.href="/user/currentUserOrder?indexpage=" + pageNum;
             // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + pageNum).submit();
         }else{
             // “跳转页数”为空
             art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-            window.location.href="currentUserOrder?indexpage=" + 1;
+            window.location.href="/user/currentUserOrder?indexpage=" + 1;
             // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + 1).submit();
         }
     }
 
     /*查看订单详情*/
     function checkOrderDetail(orderid) {
-        window.location.href ="checkOrderDetail?orderid="+orderid;
+        window.location.href ="/user/checkOrderDetail?orderid="+orderid;
     }
 
 </script>

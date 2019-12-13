@@ -14,5 +14,5 @@ public interface IAliPayService {
 
     String genPage(String totalAmount,String orderno);
 
-    String refund(String outTradeNo) throws AlipayApiException;
+    String refund(String outTradeNo,String balance) throws AlipayApiException;
 }

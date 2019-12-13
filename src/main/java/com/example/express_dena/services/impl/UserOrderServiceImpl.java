@@ -1,10 +1,12 @@
 package com.example.express_dena.services.impl;
 
+import com.alipay.api.AlipayApiException;
 import com.example.express_dena.mapper.HorsemanMapper;
 import com.example.express_dena.mapper.OrderMapper;
 import com.example.express_dena.mapper.OrderdetailMapper;
 import com.example.express_dena.pojo.*;
 import com.example.express_dena.security.LoginEntityHelper;
+import com.example.express_dena.services.IAliPayService;
 import com.example.express_dena.services.IMessageService;
 import com.example.express_dena.services.UserOrderService;
 import com.example.express_dena.util.PayException;
@@ -35,6 +37,9 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     @Autowired
     IMessageService iMessageService;
+
+    @Autowired
+    IAliPayService iAliPayService;
 
     //提交订单
     @Override
@@ -186,15 +191,55 @@ public class UserOrderServiceImpl implements UserOrderService {
     public Map<String, String> updateCancelOrderByID(int orderid) {
 
         Map<String,String> res = new HashMap<>();
-        Order order1 = orderMapper.selectByPrimaryKey(orderid);
-        order1.setStatus(4);
-        int result = orderMapper.updateByPrimaryKey(order1);
-        if(result>0){
-            res.put(StaticPool.SUCCESS,"取消成功");
-        }else{
-            res.put(StaticPool.ERROR,"取消失败");
+        Order order1 = orderMapper.selectByPrimaryKey(orderid);   //根据订单编号查询订单信息
+
+        Message message = new Message();
+        Message usermessage = new Message();     //发给用户信息
+        usermessage.setReceiverid(order1.getUserid());
+        String content = "您的订单编号为"+order1.getOrderno()+"已取消";
+        usermessage.setContent(content);         //设置发送内容
+        usermessage.setReceiverType(1);          //设置发送用户类型 1.普通用户 2.骑手
+        usermessage.setSendTime(new Date());     //设置发送时间
+        usermessage.setStatus(1);                //设置信息状态 1.未读 2.已读
+        Map<String,String> userres = new HashMap<>();
+
+        if(order1 != null){
+            LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
+            User user = loginEntityHelper.getEntityByClass(User.class);
+
+            if(user != null){
+                if(order1.getUserid() == user.getId() && order1.getStatus() == 1){
+                    order1.setStatus(4);
+                    int result = orderMapper.updateByPrimaryKey(order1);
+                    if(result>0){
+                        try {
+                            String s = iAliPayService.refund(order1.getOrderno(),order1.getTotalAmount().toString());
+                            if(s.contains("Success")){
+                                userres = iMessageService.sendMessage(message);
+                                if(userres.get(StaticPool.SUCCESS) != null){
+                                    res.put(StaticPool.SUCCESS,"取消成功");
+                                }else{
+                                    throw new PayException("发送消息异常");
+                                }
+                            }
+                        } catch (AlipayApiException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        throw new PayException("取消订单异常");
+                    }
+                    return res;
+                }else{
+                    throw new PayException("订单状态异常");
+                }
+            }else{
+                throw new PayException("登陆状态异常");
+            }
         }
-        return res;
+        else{
+            throw new PayException("取消异常");
+        }
+
     }
 
     //查询订单详情
@@ -280,21 +325,5 @@ public class UserOrderServiceImpl implements UserOrderService {
         List<Order> list = orderMapper.selectByExample(example);
         return list == null ? 0 : list.size();
     }
-
-/*    //给骑手打款
-    @Override
-    public Map<String, String> updateHosermanBalance(int hosermanid, float balance) {
-        Map<String,String> res = new HashMap<>();
-        Horseman horseman = horsemanMapper.selectByPrimaryKey(hosermanid);
-        float newbalance = balance + horseman.getBalance();
-        horseman.setBalance(newbalance);
-        int result = horsemanMapper.updateByPrimaryKey(horseman);
-        if(result>0){
-            res.put(StaticPool.SUCCESS,"打款成功");
-        }else{
-            throw new PageException("打款异常");
-        }
-        return res;
-    }*/
 
 }

@@ -416,7 +416,7 @@
     function del(orderid){
         if(confirm("您确定要删除订单吗")){
                 $.ajax({
-                    url:"deleteUserOrder",
+                    url:"/user/deleteUserOrder",
                     data:JSON.stringify({orderid:orderid}),
                     contentType: 'application/json; charset=UTF-8',
                     type:"post",
@@ -474,7 +474,7 @@
     function jumpNormalPage(page){
         var totalPage = parseInt($("#pages").val());
         if(page>0 && page<=totalPage){
-            window.location.href="userHistoryOrder?indexpage=" + page;
+            window.location.href="/user/userHistoryOrder?indexpage=" + page;
         }
 
 
@@ -491,12 +491,12 @@
                 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
                 pageNum = 1;
             }
-            window.location.href="userHistoryOrder?indexpage=" + pageNum;
+            window.location.href="/user/userHistoryOrder?indexpage=" + pageNum;
             // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + pageNum).submit();
         }else{
             // “跳转页数”为空
             art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-            window.location.href="userHistoryOrder?indexpage=" + 1;
+            window.location.href="/user/userHistoryOrder?indexpage=" + 1;
             // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + 1).submit();
         }
     }
@@ -504,7 +504,7 @@
     /*查看订单详情*/
     function checkOrderDetail(orderid) {
         alert(orderid);
-        window.location.href ="checkOrderDetail?orderid="+orderid;
+        window.location.href ="/user/checkOrderDetail?orderid="+orderid;
     }
 </script>
 </body>

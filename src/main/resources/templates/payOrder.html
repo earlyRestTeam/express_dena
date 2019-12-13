@@ -1,20 +1,19 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Carbon - Admin Template</title>
-    <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/css/styles.css">
 
     <!----------------Global css------------------->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
 
     <!--pay Order-->
-    <link rel="stylesheet" href="css/express.css">
+    <link rel="stylesheet" href="/css/express.css">
 
 </head>
 <body>
@@ -270,7 +269,7 @@
 
                         <div class="col-sm-12 pt10">
                             <h4>支付方式（在线方式至少付款0.01元）</h4>
-                            <form class="form-inline col-sm-4" id="alipayForm" action="topay" method="get">
+                            <form class="form-inline col-sm-4" id="alipayForm" action="#" method="get">
                                 <input type="hidden" id="alipayMoney" name="totalAmount">
                                 <button class="btn btn-info" type="button" onclick="alipay()">支付宝支付</button>
                             </form>
@@ -289,19 +288,19 @@
     </div>
 
 
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/carbon.js"></script>
-<script src="js/demo.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/carbon.js"></script>
+<script src="/js/demo.js"></script>
         <!------------------Copy rights End------------------>
-<script src="js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 <!----------------------page Level Js-------------------------->
-<script src="js/custom.js"></script>
+<script src="/js/custom.js"></script>
 
 <!--pay Order-->
-<script src="js/submitOrder/jquery3.3.1.min.js"></script>
-<script src="js/submitOrder/layer/layer.js"></script>
-<script src="js/submitOrder/http.js"></script>
+<script src="/js/submitOrder/jquery3.3.1.min.js"></script>
+<script src="/js/submitOrder/layer/layer.js"></script>
+<script src="/js/submitOrder/http.js"></script>
 <script>
     var express,total=0;
     // 更新价格
@@ -379,7 +378,7 @@
 
         console.log(message);
         $.ajax({
-            url:"insertorder",
+            url:"/user/insertorder",
             data:JSON.stringify({
                 totalAmount:totalAmount,
                 username:username,
@@ -398,7 +397,7 @@
                 if (result.data.flag>0){
                     var totalAmount = result.data.totalAmount;
                     var orderno = result.data.orderno;
-                    window.location.href="topay?orderno="+orderno+"&totalAmount="+totalAmount;
+                    window.location.href="/user/topay?orderno="+orderno+"&totalAmount="+totalAmount;
                 } else{
                     alert("订单异常")
                 }

@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.express_dena.pojo.Message;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.Orderdetail;
+import com.example.express_dena.pojo.User;
+import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.IAliPayService;
 import com.example.express_dena.services.IMessageService;
 import com.example.express_dena.services.UserOrderService;
@@ -29,6 +31,7 @@ import java.util.*;
  * @date :2019/12/11 16:03
  */
 @Controller
+@RequestMapping("/user")
 public class UserOrderController {
 
     @Autowired
@@ -45,8 +48,9 @@ public class UserOrderController {
     //查看用户当前订单
     @RequestMapping("currentUserOrder")
     public String selectOrderCurrent(Integer indexpage, HttpServletRequest request){
-        int userid = 1;
-        PageInfo info = service.selectOrderCurrent(userid,indexpage);
+        LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
+        User user =loginEntityHelper.getEntityByClass(User.class);
+        PageInfo info = service.selectOrderCurrent(user.getId(),indexpage);
         request.setAttribute("pages",info);
         return "/currentUserOrder";
     }
@@ -54,8 +58,9 @@ public class UserOrderController {
     //查看用户历史订单
     @RequestMapping("userHistoryOrder")
     public String selectuserHistoryOrder(Integer indexpage, HttpServletRequest request){
-        int userid = 1;
-        PageInfo info = service.selectHistoryOrder(userid,indexpage);
+        LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
+        User user =loginEntityHelper.getEntityByClass(User.class);
+        PageInfo info = service.selectHistoryOrder(user.getId(),indexpage);
         request.setAttribute("pages",info);
         return "/userHistoryOrder";
     }
@@ -67,7 +72,7 @@ public class UserOrderController {
     }
 
     //前往支付页面
-    @RequestMapping("payOrder")
+    @RequestMapping("returnpayOrder")
     public String returnpayOrder(HttpServletRequest request,Order order,String[] message,
                                  String identityaddress,String cityaddress,
                                  String areaaddress,String streetaddress){
