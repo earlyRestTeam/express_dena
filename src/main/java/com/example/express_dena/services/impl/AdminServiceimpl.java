@@ -97,7 +97,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean forzenUser(Integer userid) {
+    public boolean updateUserForzen(Integer userid) {
         User user = userMapper.selectByPrimaryKey(userid);
         user.setStatus((byte) -1);
         return userMapper.updateByPrimaryKey(user)>0;
@@ -109,7 +109,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean startUser(Integer userid) {
+    public boolean updateUserStart(Integer userid) {
         User user = userMapper.selectByPrimaryKey(userid);
         user.setStatus((byte) 1);
         return userMapper.updateByPrimaryKey(user)>0;
@@ -175,7 +175,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean forzenHorseman(Integer horsemanid) {
+    public boolean updateHorsemanForzen(Integer horsemanid) {
         Horseman horseman = horsemanMapper.selectByPrimaryKey(horsemanid);
         horseman.setStatus((byte) -1);
         return horsemanMapper.updateByPrimaryKey(horseman)>0;
@@ -187,7 +187,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean startHorseman(Integer horsemanid) {
+    public boolean updateHorsemanStart(Integer horsemanid) {
         Horseman horseman = horsemanMapper.selectByPrimaryKey(horsemanid);
         horseman.setStatus((byte) 0);
         return horsemanMapper.updateByPrimaryKey(horseman)>0;
@@ -219,7 +219,7 @@ public class AdminServiceimpl implements AdminService {
     }
 
     @Override
-    public boolean checked_apply(Integer horsemanid, Byte status) {
+    public boolean updateChecked_apply(Integer horsemanid, Byte status) {
         HorsemanExample horsemanExample = new HorsemanExample();
         String account;
         String password;
@@ -320,7 +320,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean forzenComment(Integer commentid) {
+    public boolean updateCommentForzen(Integer commentid) {
         Comment comment = commentMapper.selectByPrimaryKey(commentid);
         comment.setStatus((byte) 0);
         return commentMapper.updateByPrimaryKey(comment)>0;
@@ -332,7 +332,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean startComment(Integer commentid) {
+    public boolean updateCommentStart(Integer commentid) {
         Comment comment = commentMapper.selectByPrimaryKey(commentid);
         comment.setStatus((byte) 1);
         return commentMapper.updateByPrimaryKey(comment)>0;

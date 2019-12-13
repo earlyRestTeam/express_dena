@@ -29,14 +29,14 @@ public interface AdminService {
      * @param userid
      * @return
      */
-    boolean forzenUser(Integer userid);
+    boolean updateUserForzen(Integer userid);
 
     /**
      * 启用用户
      * @param userid
      * @return
      */
-    boolean startUser(Integer userid);
+    boolean updateUserStart(Integer userid);
 
 
     /**
@@ -60,14 +60,14 @@ public interface AdminService {
      * @param horsemanid
      * @return
      */
-    boolean forzenHorseman(Integer horsemanid);
+    boolean updateHorsemanForzen(Integer horsemanid);
 
     /**
      * 启用骑手(重新将审核状态变为待审核0)
      * @param horsemanid
      * @return
      */
-    boolean startHorseman(Integer horsemanid);
+    boolean updateHorsemanStart(Integer horsemanid);
 
     /**
      * 根据邮箱，电话，或者用户名查询所有骑手（serchname为空则查全部）
@@ -83,7 +83,7 @@ public interface AdminService {
      * @param status
      * @return
      */
-    boolean checked_apply(Integer horsemanid,Byte status);
+    boolean updateChecked_apply(Integer horsemanid,Byte status);
 
     Admin loadByAccount(String account);
 
@@ -108,14 +108,14 @@ public interface AdminService {
      * @param commentid
      * @return
      */
-    boolean forzenComment(Integer commentid);
+    boolean updateCommentForzen(Integer commentid);
 
     /**
      * 启用评论
      * @param commentid
      * @return
      */
-    boolean startComment(Integer commentid);
+    boolean updateCommentStart(Integer commentid);
 
     /**
      * 只通过id查询详细的评论内容

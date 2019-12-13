@@ -136,7 +136,7 @@ public class AdminController {
      */
     @RequestMapping("member_list_frozenuser")
     public String member_list_frozenuser(Integer userid){
-        adminServiceimpl.forzenUser(userid);
+        adminServiceimpl.updateUserForzen(userid);
         return "redirect:/admin/member_list";
     }
 
@@ -147,7 +147,7 @@ public class AdminController {
      */
     @RequestMapping("member_list_startuser")
     public String member_list_startuser(Integer userid){
-        adminServiceimpl.startUser(userid);
+        adminServiceimpl.updateUserStart(userid);
         return "redirect:/admin/member_list_stop";
     }
 
@@ -192,7 +192,7 @@ public class AdminController {
      */
     @RequestMapping("horseman_list_frozenuser")
     public String horseman_list_frozenuser(Integer horsemanid){
-        adminServiceimpl.forzenHorseman(horsemanid);
+        adminServiceimpl.updateHorsemanForzen(horsemanid);
         return "redirect:/admin/horseman_list";
     }
 
@@ -203,7 +203,7 @@ public class AdminController {
      */
     @RequestMapping("horseman_list_startuser")
     public String horseman_list_startuser(Integer horsemanid){
-        adminServiceimpl.startHorseman(horsemanid);
+        adminServiceimpl.updateHorsemanStart(horsemanid);
         return "redirect:/admin/horseman_list_stop";
     }
 
@@ -233,7 +233,7 @@ public class AdminController {
      */
     @RequestMapping("checked_apply")
     public String checked_apply(Integer horsemanid,Byte status){
-        adminServiceimpl.checked_apply(horsemanid,status);
+        adminServiceimpl.updateChecked_apply(horsemanid,status);
         return "redirect:/admin/article_list";
     }
 
@@ -304,7 +304,7 @@ public class AdminController {
      */
     @RequestMapping("comment_list_frozencomment")
     public String comment_list_frozencomment(Integer commentid){
-        adminServiceimpl.forzenComment(commentid);
+        adminServiceimpl.updateCommentForzen(commentid);
         return "redirect:/admin/comment_list";
     }
 
@@ -315,7 +315,7 @@ public class AdminController {
      */
     @RequestMapping("comment_list_startcomment")
     public String comment_list_startcomment(Integer commentid){
-        adminServiceimpl.startComment(commentid);
+        adminServiceimpl.updateCommentStart(commentid);
         return "redirect:/admin/comment_list_stop";
     }
 
