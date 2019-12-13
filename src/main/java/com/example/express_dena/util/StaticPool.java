@@ -10,7 +10,7 @@ public interface StaticPool {
 
 
     String ADMIN = "admin";
-   String STAFF = "staff";
+    String STAFF = "staff";
     String USER = "user";
 
     int USER_ENTITY = 1;

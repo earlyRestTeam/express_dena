@@ -1,14 +1,15 @@
 package com.example.express_dena.services.impl;
 
+import com.example.express_dena.mapper.HorsemanMapper;
 import com.example.express_dena.mapper.OrderMapper;
 import com.example.express_dena.mapper.OrderdetailMapper;
-import com.example.express_dena.pojo.Order;
-import com.example.express_dena.pojo.OrderExample;
-import com.example.express_dena.pojo.Orderdetail;
-import com.example.express_dena.pojo.User;
+import com.example.express_dena.pojo.*;
 import com.example.express_dena.security.LoginEntityHelper;
+import com.example.express_dena.services.IMessageService;
 import com.example.express_dena.services.UserOrderService;
+import com.example.express_dena.util.PayException;
 import com.example.express_dena.util.StaticPool;
+import com.github.pagehelper.PageException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class UserOrderServiceImpl implements UserOrderService {
     @Autowired
     OrderMapper orderMapper;
 
+    @Autowired
+    HorsemanMapper horsemanMapper;
+
+    @Autowired
+    IMessageService iMessageService;
+
     //提交订单
     @Override
     public Map<String, String> insertOrder(Order order, List<Orderdetail> orderdetails) {
@@ -46,6 +53,7 @@ public class UserOrderServiceImpl implements UserOrderService {
         if(loginEntityHelper.getEntityByClass(User.class) != null){
             user = loginEntityHelper.getEntityByClass(User.class);
         }
+
         if(user.getId()!=null){
             order.setUserid(user.getId());
         }else{
@@ -122,6 +130,31 @@ public class UserOrderServiceImpl implements UserOrderService {
         return info;
     }
 
+    //根据id查询订单详情
+    @Override
+    public Order selectOrderById(int orderid) {
+        Order order = orderMapper.selectByPrimaryKey(orderid);
+        if(order != null){
+            return order;
+        }else{
+            return null;
+        }
+    }
+
+    //根据orderid查询该订单的所有包裹详情
+    @Override
+    public List<Orderdetail> selectOrderdetailById(int orderid) {
+        OrderdetailExample orderdetailExample = new OrderdetailExample();
+        OrderdetailExample.Criteria criteria = orderdetailExample.createCriteria();
+        criteria.andOrderidEqualTo(orderid);
+        List<Orderdetail> list =  orderdetailMapper.selectByExample(orderdetailExample);
+        if(list != null){
+            return list;
+        }else{
+            return null;
+        }
+    }
+
     //删除已完成订单
     @Override
     public Map<String, String> deleteUserOrderByID(int orderid) {
@@ -154,7 +187,6 @@ public class UserOrderServiceImpl implements UserOrderService {
 
         Map<String,String> res = new HashMap<>();
         Order order1 = orderMapper.selectByPrimaryKey(orderid);
-        System.out.println(order1.toString());
         order1.setStatus(4);
         int result = orderMapper.updateByPrimaryKey(order1);
         if(result>0){
@@ -176,17 +208,63 @@ public class UserOrderServiceImpl implements UserOrderService {
     public Map<String, String> updateCompleteOrder(int orderid) {
         Map<String,String> res = new HashMap<>();
         Order order1 = orderMapper.selectByPrimaryKey(orderid);
-        System.out.println(order1.toString());
-        order1.setComfirmUserStatus(1);
-        order1.setStatus(3);
-        order1.setEndTime(new Date());
-        int result = orderMapper.updateByPrimaryKey(order1);
-        if(result>0){
-            res.put(StaticPool.SUCCESS,"订单完成");
+        if(order1!=null){
+
+            order1.setComfirmUserStatus(1);
+            order1.setStatus(3);
+            order1.setEndTime(new Date());
+            int result = orderMapper.updateByPrimaryKey(order1);
+            int hosermanid = order1.getHosermanid();
+            float balance = order1.getTotalAmount();
+
+            Message usermessage = new Message();     //发给用户信息
+            usermessage.setReceiverid(order1.getUserid());
+            String content = "您的订单编号为"+order1.getOrderno()+"已完成";
+            usermessage.setContent(content);         //设置发送内容
+            usermessage.setReceiverType(1);          //设置发送用户类型 1.普通用户 2.骑手
+            usermessage.setSendTime(new Date());     //设置发送时间
+            usermessage.setStatus(1);                //设置信息状态 1.未读 2.已读
+
+
+            Message hosermanmessage = new Message();     //发给骑手信息
+            hosermanmessage.setReceiverid(order1.getUserid());
+            String hosercontent = "您的订单编号为"+order1.getOrderno()+"已完成,到账"+order1.getTotalAmount()+"元";
+            hosermanmessage.setContent(content);         //设置发送内容
+            hosermanmessage.setReceiverType(2);          //设置发送用户类型 1.普通用户 2.骑手
+            hosermanmessage.setSendTime(new Date());     //设置发送时间
+            hosermanmessage.setStatus(1);                //设置信息状态 1.未读 2.已读
+
+
+            if(result>0){
+                Horseman horseman = horsemanMapper.selectByPrimaryKey(hosermanid);
+                float newbalance = balance + horseman.getBalance();
+                horseman.setBalance(newbalance);
+
+                //给骑手打款
+                int balanceresult = horsemanMapper.updateByPrimaryKey(horseman);
+                if(balanceresult > 0){
+                    Map<String,String> userres = new HashMap<>();
+                    Map<String,String> hoserres = new HashMap<>();
+                    //发送短信
+                    userres = iMessageService.sendMessage(usermessage);   //给用户发送信息
+                    hoserres = iMessageService.sendMessage(hosermanmessage); //给骑手发送信息
+
+                    if(userres.get(StaticPool.SUCCESS) != null && hoserres.get(StaticPool.SUCCESS) != null){
+                        res.put(StaticPool.SUCCESS,"订单完成");
+                    }else{
+                        throw new PayException("消息异常");
+                    }
+                }else{
+                    throw new PayException("打款异常");
+                }
+            }else{
+                throw new PayException("订单完成异常");
+            }
+            return res;
         }else{
-            res.put(StaticPool.ERROR,"订单异常");
+            throw new PayException("订单号异常");
         }
-        return res;
+
     }
 
     //评论
@@ -202,5 +280,21 @@ public class UserOrderServiceImpl implements UserOrderService {
         List<Order> list = orderMapper.selectByExample(example);
         return list == null ? 0 : list.size();
     }
+
+/*    //给骑手打款
+    @Override
+    public Map<String, String> updateHosermanBalance(int hosermanid, float balance) {
+        Map<String,String> res = new HashMap<>();
+        Horseman horseman = horsemanMapper.selectByPrimaryKey(hosermanid);
+        float newbalance = balance + horseman.getBalance();
+        horseman.setBalance(newbalance);
+        int result = horsemanMapper.updateByPrimaryKey(horseman);
+        if(result>0){
+            res.put(StaticPool.SUCCESS,"打款成功");
+        }else{
+            throw new PageException("打款异常");
+        }
+        return res;
+    }*/
 
 }

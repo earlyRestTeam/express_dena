@@ -5,6 +5,7 @@ import com.example.express_dena.pojo.Message;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.Orderdetail;
 import com.example.express_dena.services.IAliPayService;
+import com.example.express_dena.services.IMessageService;
 import com.example.express_dena.services.UserOrderService;
 import com.example.express_dena.util.APIResult;
 import com.example.express_dena.util.StaticPool;
@@ -37,12 +38,16 @@ public class UserOrderController {
     IAliPayService iAliPayService;
 
 
+    @Autowired
+    IMessageService iMessageService;
+
+
     //查看用户当前订单
     @RequestMapping("currentUserOrder")
     public String selectOrderCurrent(Integer indexpage, HttpServletRequest request){
         int userid = 1;
         PageInfo info = service.selectOrderCurrent(userid,indexpage);
-        request.setAttribute("page",info);
+        request.setAttribute("pages",info);
         return "/currentUserOrder";
     }
 
@@ -51,7 +56,7 @@ public class UserOrderController {
     public String selectuserHistoryOrder(Integer indexpage, HttpServletRequest request){
         int userid = 1;
         PageInfo info = service.selectHistoryOrder(userid,indexpage);
-        request.setAttribute("page",info);
+        request.setAttribute("pages",info);
         return "/userHistoryOrder";
     }
 
@@ -95,6 +100,7 @@ public class UserOrderController {
         String note = (String) jsonObject.get("note");
         String targetAddress = (String) jsonObject.get("targetAddress");
         String orderno = UUID.randomUUID().toString().replaceAll("-","");
+        String username = (String) jsonObject.get("username");
         Order order = new Order();
         order.setTotalAmount(Float.parseFloat(totalAmount));
         order.setPickUpAddress(pickUpAddress);
@@ -102,6 +108,7 @@ public class UserOrderController {
         order.setNote(note);
         order.setOrderno(orderno);
         order.setTargetAddress(targetAddress);
+        order.setUsername(username);
 
         Map<String, Object> returnresult = new HashMap<>();
         returnresult.put("totalAmount",totalAmount);
@@ -159,7 +166,7 @@ public class UserOrderController {
     @ResponseBody
     public APIResult updateCompleteOrder(@RequestBody JSONObject jsonObject){
         Integer orderid = (Integer) jsonObject.get("orderid");
-        Map<String,String> map =  service.deleteUserOrderByID(orderid);
+        Map<String,String> map =  service.updateCompleteOrder(orderid);
         APIResult apiResult = new APIResult();
         apiResult.setData(map);
         return apiResult;
@@ -175,6 +182,17 @@ public class UserOrderController {
         APIResult apiResult = new APIResult();
         apiResult.setData(map);
         return apiResult;
+    }
+
+    //查看订单详情
+    @RequestMapping("checkOrderDetail")
+    public String checkOrderDetail(Integer orderid, HttpServletRequest request){
+       /* Integer orderid = (Integer) jsonObject.get("orderid");*/
+        Order order = service.selectOrderById(orderid);
+        List<Orderdetail> list = service.selectOrderdetailById(orderid);
+        request.setAttribute("order",order);
+        request.setAttribute("orderdetail",list);
+        return "orderdetils";
     }
 
 }
