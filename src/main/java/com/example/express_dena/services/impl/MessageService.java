@@ -4,6 +4,7 @@ import com.example.express_dena.mapper.MessageMapper;
 import com.example.express_dena.pojo.Message;
 import com.example.express_dena.pojo.MessageExample;
 import com.example.express_dena.services.IMessageService;
+import com.example.express_dena.util.StaticPool;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -11,6 +12,7 @@ import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,8 +44,16 @@ public class MessageService implements IMessageService {
         return pageInfo;
     }
 
+    //插入发送信息到数据库
     @Override
     public Map<String, String> sendMessage(Message message) {
-        return null;
+        int result = messageMapper.insert(message);
+        Map<String, String> map = new HashMap<>();
+        if(result > 0){
+            map.put(StaticPool.SUCCESS,"发送成功");
+        }else{
+            map.put(StaticPool.SUCCESS,"发送失败");
+        }
+        return map;
     }
 }

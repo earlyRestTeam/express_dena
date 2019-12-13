@@ -5,6 +5,7 @@ import com.example.express_dena.pojo.Message;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.Orderdetail;
 import com.example.express_dena.services.IAliPayService;
+import com.example.express_dena.services.IMessageService;
 import com.example.express_dena.services.UserOrderService;
 import com.example.express_dena.util.APIResult;
 import com.example.express_dena.util.StaticPool;
@@ -35,6 +36,10 @@ public class UserOrderController {
 
     @Autowired
     IAliPayService iAliPayService;
+
+
+    @Autowired
+    IMessageService iMessageService;
 
 
     //查看用户当前订单

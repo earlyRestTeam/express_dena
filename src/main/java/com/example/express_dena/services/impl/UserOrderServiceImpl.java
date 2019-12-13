@@ -5,6 +5,7 @@ import com.example.express_dena.mapper.OrderMapper;
 import com.example.express_dena.mapper.OrderdetailMapper;
 import com.example.express_dena.pojo.*;
 import com.example.express_dena.security.LoginEntityHelper;
+import com.example.express_dena.services.IMessageService;
 import com.example.express_dena.services.UserOrderService;
 import com.example.express_dena.util.PayException;
 import com.example.express_dena.util.StaticPool;
@@ -31,6 +32,9 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     @Autowired
     HorsemanMapper horsemanMapper;
+
+    @Autowired
+    IMessageService iMessageService;
 
     //提交订单
     @Override
@@ -205,19 +209,51 @@ public class UserOrderServiceImpl implements UserOrderService {
         Map<String,String> res = new HashMap<>();
         Order order1 = orderMapper.selectByPrimaryKey(orderid);
         if(order1!=null){
+
             order1.setComfirmUserStatus(1);
             order1.setStatus(3);
             order1.setEndTime(new Date());
             int result = orderMapper.updateByPrimaryKey(order1);
             int hosermanid = order1.getHosermanid();
             float balance = order1.getTotalAmount();
+
+            Message usermessage = new Message();     //发给用户信息
+            usermessage.setReceiverid(order1.getUserid());
+            String content = "您的订单编号为"+order1.getOrderno()+"已完成";
+            usermessage.setContent(content);         //设置发送内容
+            usermessage.setReceiverType(1);          //设置发送用户类型 1.普通用户 2.骑手
+            usermessage.setSendTime(new Date());     //设置发送时间
+            usermessage.setStatus(1);                //设置信息状态 1.未读 2.已读
+
+
+            Message hosermanmessage = new Message();     //发给骑手信息
+            hosermanmessage.setReceiverid(order1.getUserid());
+            String hosercontent = "您的订单编号为"+order1.getOrderno()+"已完成,到账"+order1.getTotalAmount()+"元";
+            hosermanmessage.setContent(content);         //设置发送内容
+            hosermanmessage.setReceiverType(2);          //设置发送用户类型 1.普通用户 2.骑手
+            hosermanmessage.setSendTime(new Date());     //设置发送时间
+            hosermanmessage.setStatus(1);                //设置信息状态 1.未读 2.已读
+
+
             if(result>0){
                 Horseman horseman = horsemanMapper.selectByPrimaryKey(hosermanid);
                 float newbalance = balance + horseman.getBalance();
                 horseman.setBalance(newbalance);
+
+                //给骑手打款
                 int balanceresult = horsemanMapper.updateByPrimaryKey(horseman);
                 if(balanceresult > 0){
-                    res.put(StaticPool.SUCCESS,"订单完成");
+                    Map<String,String> userres = new HashMap<>();
+                    Map<String,String> hoserres = new HashMap<>();
+                    //发送短信
+                    userres = iMessageService.sendMessage(usermessage);   //给用户发送信息
+                    hoserres = iMessageService.sendMessage(hosermanmessage); //给骑手发送信息
+
+                    if(userres.get(StaticPool.SUCCESS) != null && hoserres.get(StaticPool.SUCCESS) != null){
+                        res.put(StaticPool.SUCCESS,"订单完成");
+                    }else{
+                        throw new PayException("消息异常");
+                    }
                 }else{
                     throw new PayException("打款异常");
                 }
