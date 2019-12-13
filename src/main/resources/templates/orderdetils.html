@@ -229,16 +229,25 @@
 <!-------------contenr start--------->
         <div class="content">
             <p>订单详情展示</p>
-            <div class="main-info">
-                <div class="main-info-left">
-                    <table style="margin:70px 20px;height: 220px " class="main-info-center-table">
+            <div class="main-info" style="width: 1500px" >
+                <div style="width: 500px" class="main-info-left" >
+                    <table style="margin:70px 20px;height: 220px;width: 380px" class="main-info-center-table">
                         <tr >
-                            <td class="glyphicon glyphicon-user">下单用户:</td>
+                            <td width="100px" class="glyphicon glyphicon-user">下单用户:</td>
                             <td  class="main-info-center-content" th:text="${order.username}"></td>
                         </tr>
                         <tr >
                             <td class="glyphicon glyphicon-user">接单骑手:</td>
                             <td  class="main-info-center-content" th:text="${order.hosermanName}"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="glyphicon glyphicon-phone-alt">用户电话:</td>
+                            <td  class="main-info-center-content" th:text="${order.userTelephone}">userTelephone</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-phone-alt">骑手电话:</td>
+                            <td  class="main-info-center-content" th:text="${order.hosermainPhone}">hosermainPhone</td>
                         </tr>
                         <tr>
                             <td class="glyphicon glyphicon-envelope">取件地址:</td>
@@ -248,21 +257,13 @@
                             <td class="glyphicon glyphicon-envelope">收件地址:</td>
                             <td  class="main-info-center-content" th:text="${order.targetAddress}"></td>
                         </tr>
-                        <tr>
-                            <td class="glyphicon glyphicon-phone-alt">用户电话:</td>
-                            <td  class="main-info-center-content" th:text="${order.userTelephone}">userTelephone</td>
-                        </tr>
-                        <tr>
-                            <td class="glyphicon glyphicon-phone-alt">骑手电话:</td>
-                            <td  class="main-info-center-content" th:text="${order.hosermainPhone}">hosermainPhone</td>
-                        </tr>
                     </table>
                 </div>
                 <div class="main-info-center">
                     <table style="height: 250px;top: 60px" class="main-info-center-table">
 
                         <tr>
-                            <td class="glyphicon glyphicon-yen">订单金额:</td>
+                            <td  width="100px" class="glyphicon glyphicon-yen">订单金额:</td>
                             <td  class="main-info-center-content" th:text="${order.totalAmount}"></td>
                         </tr>
 
@@ -292,16 +293,16 @@
                         <p class="main-info-right-content">已完成</p>
                     </div>
                     <div class="main-info-right-xian"></div>
-                    <div style="left: 250px; top: 38px;"  class="main-info-center-modify" onclick="jsOpenModal()">
+                    <div style="left: 350px; top: 38px;"  class="main-info-center-modify" onclick="jsOpenModal()">
                         <i class="glyphicon glyphicon-paperclip">订单评论</i>
                     </div>
                 </div>
             </div>
 
-            <div style="margin-top: 20px" class="main-info" th:each="orderdetail:${orderdetail}">
-                <div class="main-info-left">
-                    <div class="main-info-name">
-                        <p style="font-size: 50px" class="info-name"  id="showName">包裹</p>
+            <div style="margin-top: 20px;width: 1500px" class="main-info" th:each="orderdetail:${orderdetail}">
+                <div style="width: 500px" class="main-info-left">
+                    <div style="margin: 0 110px;top: 130px" class="main-info-name">
+                        <p style="font-size: 40px" class="info-name"  id="showName">包裹1</p>
                     </div>
                 </div>
                 <div class="main-info-center">
