@@ -56,6 +56,7 @@ public interface UserOrderService {
      */
     int selectOrderCountByUseridAndOrderStatus(int userid,int status);
 
-
+/*    //完成订单给骑手打款
+    public Map<String,String> updateHosermanBalance(int hosermanid,float balance);*/
 
 }

@@ -95,6 +95,7 @@ public class UserOrderController {
         String note = (String) jsonObject.get("note");
         String targetAddress = (String) jsonObject.get("targetAddress");
         String orderno = UUID.randomUUID().toString().replaceAll("-","");
+        String username = (String) jsonObject.get("username");
         Order order = new Order();
         order.setTotalAmount(Float.parseFloat(totalAmount));
         order.setPickUpAddress(pickUpAddress);
@@ -102,6 +103,7 @@ public class UserOrderController {
         order.setNote(note);
         order.setOrderno(orderno);
         order.setTargetAddress(targetAddress);
+        order.setUsername(username);
 
         Map<String, Object> returnresult = new HashMap<>();
         returnresult.put("totalAmount",totalAmount);
@@ -159,7 +161,7 @@ public class UserOrderController {
     @ResponseBody
     public APIResult updateCompleteOrder(@RequestBody JSONObject jsonObject){
         Integer orderid = (Integer) jsonObject.get("orderid");
-        Map<String,String> map =  service.deleteUserOrderByID(orderid);
+        Map<String,String> map =  service.updateCompleteOrder(orderid);
         APIResult apiResult = new APIResult();
         apiResult.setData(map);
         return apiResult;
