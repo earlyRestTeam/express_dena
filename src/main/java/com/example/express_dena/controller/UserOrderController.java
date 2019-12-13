@@ -42,7 +42,7 @@ public class UserOrderController {
     public String selectOrderCurrent(Integer indexpage, HttpServletRequest request){
         int userid = 1;
         PageInfo info = service.selectOrderCurrent(userid,indexpage);
-        request.setAttribute("page",info);
+        request.setAttribute("pages",info);
         return "/currentUserOrder";
     }
 
@@ -51,7 +51,7 @@ public class UserOrderController {
     public String selectuserHistoryOrder(Integer indexpage, HttpServletRequest request){
         int userid = 1;
         PageInfo info = service.selectHistoryOrder(userid,indexpage);
-        request.setAttribute("page",info);
+        request.setAttribute("pages",info);
         return "/userHistoryOrder";
     }
 
@@ -175,6 +175,17 @@ public class UserOrderController {
         APIResult apiResult = new APIResult();
         apiResult.setData(map);
         return apiResult;
+    }
+
+    //查看订单详情
+    @RequestMapping("checkOrderDetail")
+    public String checkOrderDetail(Integer orderid, HttpServletRequest request){
+       /* Integer orderid = (Integer) jsonObject.get("orderid");*/
+        Order order = service.selectOrderById(orderid);
+        List<Orderdetail> list = service.selectOrderdetailById(orderid);
+        request.setAttribute("order",order);
+        request.setAttribute("orderdetail",list);
+        return "orderdetils";
     }
 
 }

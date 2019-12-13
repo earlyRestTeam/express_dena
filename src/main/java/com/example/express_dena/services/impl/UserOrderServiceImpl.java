@@ -2,10 +2,7 @@ package com.example.express_dena.services.impl;
 
 import com.example.express_dena.mapper.OrderMapper;
 import com.example.express_dena.mapper.OrderdetailMapper;
-import com.example.express_dena.pojo.Order;
-import com.example.express_dena.pojo.OrderExample;
-import com.example.express_dena.pojo.Orderdetail;
-import com.example.express_dena.pojo.User;
+import com.example.express_dena.pojo.*;
 import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.UserOrderService;
 import com.example.express_dena.util.StaticPool;
@@ -120,6 +117,31 @@ public class UserOrderServiceImpl implements UserOrderService {
         PageInfo info = new PageInfo(list,3);
 
         return info;
+    }
+
+    //根据id查询订单详情
+    @Override
+    public Order selectOrderById(int orderid) {
+        Order order = orderMapper.selectByPrimaryKey(orderid);
+        if(order != null){
+            return order;
+        }else{
+            return null;
+        }
+    }
+
+    //根据orderid查询该订单的所有包裹详情
+    @Override
+    public List<Orderdetail> selectOrderdetailById(int orderid) {
+        OrderdetailExample orderdetailExample = new OrderdetailExample();
+        OrderdetailExample.Criteria criteria = orderdetailExample.createCriteria();
+        criteria.andOrderidEqualTo(orderid);
+        List<Orderdetail> list =  orderdetailMapper.selectByExample(orderdetailExample);
+        if(list != null){
+            return list;
+        }else{
+            return null;
+        }
     }
 
     //删除已完成订单

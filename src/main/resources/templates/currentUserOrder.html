@@ -290,7 +290,7 @@
                                     <th>显示详情</th>
                                 </tr>
 
-                                <tr th:each="order:${page.list}">
+                                <tr th:each="order:${pages.list}">
                                     <td><input type="checkbox" name="IDCheck" value="${order.orderid}" class="acb" /></td>
                                     <td id="orderno" th:text="${order.orderno}"></td>
                                     <td th:text="${order.createTime}"></td>
@@ -304,34 +304,28 @@
                                            class="queren"
                                            th:text="${order.ReturnConfirmStatus}"></a>
                                     </td>
-                                    <td><button>点击显示详情</button></td>
+                                    <td><a th:onclick="checkOrderDetail([[${order.id}]])">点击显示详情</a></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="ui_tb_h30">
                             <div class="ui_flt" style="height: 30px; line-height: 30px;">
-                                共有
-                                <span class="ui_txt_bold04"><p th:text="${page.pages}"></p></span>
-                                条记录，当前第
-                                <span class="ui_txt_bold04"><p th:text="${page.pageNum}"></p>
-						/
-						9</span>
+                                共有<span class="ui_txt_bold04" th:text="${pages.total}"></span>
+                                条记录，当前第<span class="ui_txt_bold04" th:text="${pages.pageNum}"></span>
+                                /<span class="ui_txt_bold04" th:text="${pages.pages}"></span>
                                 页
                             </div>
                             <div class="ui_frt">
                                 <!--    如果是第一页，则只显示下一页、尾页 -->
 
-                                <input type="button" value="首页" class="ui_input_btn01" />
-                                <input type="button" value="上一页" class="ui_input_btn01" />
-                                <input type="button" value="下一页" class="ui_input_btn01"
-                                       onclick="jumpNormalPage(2);" />
-                                <input type="button" value="尾页" class="ui_input_btn01"
-                                       onclick="jumpNormalPage(9);" />
-
+                                <input onclick="jumpNormalPage(1);"  type="button" value="首页" class="ui_input_btn01" />
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.prePage}')|" type="button" value="上一页" class="ui_input_btn01" />
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.nextPage}')|" type="button" value="下一页" class="ui_input_btn01"/>
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.pages}')|" type="button" value="尾页" class="ui_input_btn01"/>
                                 <!--     如果是最后一页，则只显示首页、上一页 -->
-
                                 转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
-                                <input type="button" class="ui_input_btn01" value="跳转" onclick="jumpInputPage(9);" />
+                                <input th:onclick="|javascript : jumpInputPage('${pages.pages}')|" type="button" class="ui_input_btn01" value="跳转"  />
+                                <input id="pages" type="hidden" th:value="${pages.pages}" />
                             </div>
                         </div>
                     </div>
@@ -506,7 +500,13 @@
 
     /** 普通跳转 **/
     function jumpNormalPage(page){
-        $("#submitForm").attr("action", "house_list?page=" + page).submit();
+        var totalPage = parseInt($("#pages").val());
+        if(page>0 && page<=totalPage){
+            window.location.href="currentUserOrder?indexpage=" + page;
+        }
+
+
+        // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + page).submit();
     }
 
     /** 输入页跳转 **/
@@ -519,13 +519,21 @@
                 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
                 pageNum = 1;
             }
-            $("#submitForm").attr("action", "house_list?page=" + pageNum).submit();
+            window.location.href="currentUserOrder?indexpage=" + pageNum;
+            // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + pageNum).submit();
         }else{
             // “跳转页数”为空
             art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-            $("#submitForm").attr("action", "house_list?page=" + 1).submit();
+            window.location.href="currentUserOrder?indexpage=" + 1;
+            // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + 1).submit();
         }
     }
+
+    /*查看订单详情*/
+    function checkOrderDetail(orderid) {
+        window.location.href ="checkOrderDetail?orderid="+orderid;
+    }
+
 </script>
 </body>
 </html>

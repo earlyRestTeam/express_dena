@@ -24,6 +24,12 @@ public interface UserOrderService {
     //查询历史已完成订单
     public PageInfo selectHistoryOrder(int userid,Integer indexpage);
 
+    //根据orderid查询订单信息
+    public Order selectOrderById(int orderid);
+
+    //根据orderid查询该订单的所有包裹详情
+    public List<Orderdetail> selectOrderdetailById(int orderid);
+
     //删除历史订单
     public Map<String,String> deleteUserOrderByID(int orderid);
 
