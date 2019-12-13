@@ -32,7 +32,7 @@ public class MessageService implements IMessageService {
         MessageExample example = new MessageExample();
         MessageExample.Criteria criteria = example.createCriteria();
         criteria.andReceiveridEqualTo(entityId);
-        criteria.andReceiverTypeEqualTo(entityId);
+        criteria.andReceiverTypeEqualTo(entityType);
         example.setOrderByClause("send_time desc");
 
         PageHelper.startPage(index, size);
@@ -43,7 +43,15 @@ public class MessageService implements IMessageService {
 
         return pageInfo;
     }
+    public int queryUSerUnreadMessageCount(int userid){
+        MessageExample example = new MessageExample();
+        MessageExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(1);
+        criteria.andReceiveridEqualTo(userid);
 
+        List<Message> messages = messageMapper.selectByExample(example);
+        return  messages == null ? 0 : messages.size();
+    }
     //插入发送信息到数据库
     @Override
     public Map<String, String> sendMessage(Message message) {

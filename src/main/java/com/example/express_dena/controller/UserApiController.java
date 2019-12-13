@@ -9,6 +9,7 @@ import com.example.express_dena.pojo.User;
 import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.CodeCenter;
 import com.example.express_dena.services.UserService;
+import com.example.express_dena.services.impl.MessageService;
 import com.example.express_dena.util.APIResult;
 import com.example.express_dena.util.StaticPool;
 import org.slf4j.Logger;
@@ -39,6 +40,8 @@ public class UserApiController {
     CodeCenter codeCenter;
     @Autowired
     LoginEntityHelper loginEntityHelper;
+    @Autowired
+    MessageService messageService;
 
     /**
      * 修改个人信息
@@ -103,6 +106,21 @@ public class UserApiController {
         return result;
     }
 
+    /**
+     * 获取 未读信息
+     * @return
+     */
+    @PostMapping("/user/getUserUnreadMessageCount")
+    public APIResult getUserUnreadMessageCount(){
+        User u2 = loginEntityHelper.getEntityByClass(User.class);
+        if ( u2 == null )
+            throw new RuntimeException("error");
+
+        APIResult result = null;
+        int res = messageService.queryUSerUnreadMessageCount(u2.getId());
+        System.out.println("res = " + res);
+        return APIResult.genSuccessApiResponse(""+res);
+    }
     /**
      * 账号找回
      * @param jsonObject
@@ -267,4 +285,6 @@ public class UserApiController {
         }
         return result;
     }
+
+
 }
