@@ -13,25 +13,21 @@ import java.io.IOException;
  * @createTime 2019.12.06.9:20
  */
 public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-    private final  LoginUrlEntryPoint loginUrlEntryPoint;
+
+    private final MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter;
 
 
-
-
-    public LoginFailureHandler(LoginUrlEntryPoint loginUrlEntryPoint){
-        super("/user/login?error");
-        this.loginUrlEntryPoint = loginUrlEntryPoint;
+    public LoginFailureHandler(MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter){
+        this.myUsernamePasswordAuthenticationFilter = myUsernamePasswordAuthenticationFilter;
     }
 
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
-        String url = loginUrlEntryPoint.getLastPoint();
-        if(url == null)
-            url = loginUrlEntryPoint.getLoginFormUrl();
+        String type = myUsernamePasswordAuthenticationFilter.getType();
 
-        url += "?error=true";
+        String url = "/"+type+"/login?error=true";
         super.setDefaultFailureUrl(url);
         super.onAuthenticationFailure(request,response,exception);
 

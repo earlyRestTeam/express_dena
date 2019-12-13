@@ -2,10 +2,7 @@ package com.example.express_dena.config;
 
 
 
-import com.example.express_dena.security.LoginFailureHandler;
-import com.example.express_dena.security.LoginSuccessHandler;
-import com.example.express_dena.security.LoginUrlEntryPoint;
-import com.example.express_dena.security.MyUsernamePasswordAuthenticationFilter;
+import com.example.express_dena.security.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -64,7 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(loginUrlEntryPoint())
                 .accessDeniedPage("/403");
 
-        http.addFilter(myUsernamePasswordAuthenticationFilter());
+//        http.addFilter(myUsernamePasswordAuthenticationFilter());
+        //放入拦截器链之前
+        http.addFilterBefore(myUsernamePasswordAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
     }
@@ -78,10 +76,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter() throws Exception {
-        MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter = new MyUsernamePasswordAuthenticationFilter();
+        MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter = new MyUsernamePasswordAuthenticationFilter("/**");
         myUsernamePasswordAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
         return myUsernamePasswordAuthenticationFilter;
     }
+
+
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -95,7 +96,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public LoginFailureHandler loginFailureHandler() throws Exception {
-        return new LoginFailureHandler(loginUrlEntryPoint());
+        return new LoginFailureHandler(myUsernamePasswordAuthenticationFilter());
     }
 
     @Bean
