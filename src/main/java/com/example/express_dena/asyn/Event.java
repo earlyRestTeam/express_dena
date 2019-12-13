@@ -5,14 +5,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ *
+ * 事件 类
  * @author 王志坚
  * @createTime 2019.04.27.11:08
  */
 public class Event implements Serializable {
+    //促发者id
     private Long sendUserId;
+    //接受者 id
     private Long acceptUserId;
+    //事件类型
     private EventType eventType;
+    //
     private Long entityId;
+    //
     private Long entityType;
 
     private Map<String,String> map = new HashMap<>();

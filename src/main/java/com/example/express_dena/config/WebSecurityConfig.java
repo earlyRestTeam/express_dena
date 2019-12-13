@@ -69,7 +69,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
+    /**
+     * 将自己写的 登陆认证器 加入到 登陆拦截中
+     * @return
+     * @throws Exception
+     */
     @Bean
     public MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter() throws Exception {
         MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter = new MyUsernamePasswordAuthenticationFilter();

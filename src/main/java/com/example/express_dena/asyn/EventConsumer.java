@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 事件消费者 -- 实现 ApplicationContextAware 获取 spring上下文
+ * -- 实现 InitializingBean 在创建对象之后 进行初始化操作
  * @author 王志坚
  * @createTime 2019.04.27.12:04
  */
@@ -24,13 +26,18 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
     @Autowired
     MessageQueue messageQueue;
 
+    /**
+     * 初始化操作
+     * @throws Exception
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
         map = new HashMap<EventType, List<EventHandler>>();
-        //充spring上下文获取所有的EventHandler的实现类
+        //从spring上下文获取所有的EventHandler的实现类
         Map<String,EventHandler> eventHandlerBeans = applicationContext.getBeansOfType(EventHandler.class);
 
         if(eventHandlerBeans!=null){
+            //遍历 map
             for (Map.Entry<String,EventHandler> entry : eventHandlerBeans.entrySet()){
 
                 List<EventType> eventTypes = entry.getValue().getSupportEventTypes();
@@ -43,7 +50,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                 }
             }
         }
-
+        //开启 事件处理线程 暂时只开启 一条
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
