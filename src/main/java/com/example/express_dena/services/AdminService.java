@@ -123,4 +123,21 @@ public interface AdminService {
      * @return
      */
     Comment selectCommentbyid(Integer commentid);
+
+    /**
+     * 查询提现申请
+     * @param indexpage
+     * @param status
+     * @param serchid
+     * @return
+     */
+    PageInfo selectDrawmoney(Integer indexpage,Integer status,Integer serchid);
+
+    /**
+     * 处理提现申请并且发送消息提醒
+     * @param id
+     * @param withdrawalsBalance
+     * @return
+     */
+    boolean updateDrawmoney(Integer id,Float withdrawalsBalance);
 }

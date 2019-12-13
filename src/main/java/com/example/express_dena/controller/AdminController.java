@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -257,12 +258,14 @@ public class AdminController {
      * @return
      */
     @RequestMapping("comment_list")
-    public String comment_list(HttpServletRequest request,Integer indexpage,Integer serchid){
-        PageInfo pageInfo = adminServiceimpl.selectComment(indexpage, serchid);
-        request.setAttribute("pages",pageInfo);
-        if (!"null".equals(serchid)){
-            request.setAttribute("serchid",serchid);
+    public String comment_list(HttpServletRequest request,Integer indexpage,String serchid){
+        Integer serchid1 = null;
+        if (serchid!=null&&serchid.matches("^[0-9]*$")&&!serchid.equals("")){
+            serchid1 = Integer.valueOf(serchid);
         }
+        PageInfo pageInfo = adminServiceimpl.selectComment(indexpage, serchid1);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchid",serchid);
         return "/admin/comment-list";
     }
 
@@ -274,12 +277,14 @@ public class AdminController {
      * @return
      */
     @RequestMapping("comment_list_stop")
-    public String comment_list_stop(HttpServletRequest request,Integer indexpage,Integer serchid){
-        PageInfo pageInfo = adminServiceimpl.selectCommentStop(indexpage, serchid);
-        request.setAttribute("pages",pageInfo);
-        if (!"null".equals(serchid)){
-            request.setAttribute("serchid",serchid);
+    public String comment_list_stop(HttpServletRequest request,Integer indexpage,String serchid){
+        Integer serchid1 = null;
+        if (serchid!=null&&serchid.matches("^[0-9]*$")&&!serchid.equals("")){
+            serchid1 = Integer.valueOf(serchid);
         }
+        PageInfo pageInfo = adminServiceimpl.selectCommentStop(indexpage, serchid1);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchid",serchid);
         return "/admin/comment-del";
     }
 
@@ -317,6 +322,40 @@ public class AdminController {
     public String comment_list_startcomment(Integer commentid){
         adminServiceimpl.updateCommentStart(commentid);
         return "redirect:/admin/comment_list_stop";
+    }
+
+    /**
+     * 查询提现申请
+     * @param indexpage
+     * @param status
+     * @param serchid
+     * @return
+     */
+    @RequestMapping("drawmoney_list")
+    public String drawmoney_list(HttpServletRequest request,Integer indexpage,Integer status,String serchid){
+        Integer serchid1 = null;
+        if (serchid!=null&&serchid.matches("^[0-9]*$")&&!serchid.equals("")){
+             serchid1 = Integer.valueOf(serchid);
+        }
+        PageInfo pageInfo = adminServiceimpl.selectDrawmoney(indexpage, status, serchid1);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchid",serchid);
+        if (status == 2){
+            return "/admin/drawmoney-list";
+        }
+       return "/admin/drawmoney-ok";
+    }
+
+
+    /**
+     * 处理提现申请并且发送消息提醒
+     * @param id
+     * @return
+     */
+    @RequestMapping("update_drawmoney")
+    public String update_drawmoney(Integer id,Float withdrawalsBalance){
+        boolean b = adminServiceimpl.updateDrawmoney(id,withdrawalsBalance);
+        return "redirect:/admin/drawmoney_list?status=2";
     }
 
 

@@ -3,10 +3,7 @@ package com.example.express_dena.services.impl;
 import com.example.express_dena.asyn.Event;
 import com.example.express_dena.asyn.EventProductor;
 import com.example.express_dena.asyn.EventType;
-import com.example.express_dena.mapper.CommentMapper;
-import com.example.express_dena.mapper.AdminMapper;
-import com.example.express_dena.mapper.HorsemanMapper;
-import com.example.express_dena.mapper.UserMapper;
+import com.example.express_dena.mapper.*;
 import com.example.express_dena.pojo.*;
 import com.example.express_dena.services.AdminService;
 import com.example.express_dena.util.MD5Utils;
@@ -15,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +33,10 @@ public class AdminServiceimpl implements AdminService {
     CommentMapper commentMapper;
     @Autowired
     AdminMapper adminMapper;
+    @Autowired
+    WithdrawalsMapper withdrawalsMapper;
+    @Autowired
+    MessageMapper messageMapper;
 
     /**
      * 查询启用用户
@@ -346,6 +348,45 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public Comment selectCommentbyid(Integer commentid) {
         return commentMapper.selectByPrimaryKey(commentid);
+    }
+
+    @Override
+    public PageInfo selectDrawmoney(Integer indexpage, Integer status, Integer serchid) {
+        if (indexpage == null){
+            indexpage = 0;
+        }
+
+        WithdrawalsExample example = new WithdrawalsExample();
+        if (serchid != null&&!serchid.equals(0)&&!serchid.equals("null")){
+           example.or().andHorsemanidEqualTo(serchid).andTypeEqualTo(status);
+           Float serchidf=Float.parseFloat(serchid.toString());
+           example.or().andWithdrawalsBalanceEqualTo(serchidf).andTypeEqualTo(status);
+        }else {
+            example.or().andTypeEqualTo(status);
+        }
+        PageHelper.startPage(indexpage,10);
+        List<Withdrawals> withdrawals = withdrawalsMapper.selectByExample(example);
+        PageInfo info = new PageInfo(withdrawals,5);
+        return info;
+    }
+
+    /**
+     * 处理提现申请并且发送消息提醒
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean updateDrawmoney(Integer id,Float withdrawalsBalance) {
+        Withdrawals withdrawals = withdrawalsMapper.selectByPrimaryKey(id);
+        withdrawals.setType(1);
+        Message message = new Message();
+        message.setReceiverid(id);
+        message.setStatus(1);
+        message.setReceiverType(2);
+        message.setSendTime(new Date(System.currentTimeMillis()));
+        message.setContent("恭喜您的提现申请成功！您的提现金额"+withdrawalsBalance+"会在5分钟之内到账，请注意查收！");
+        messageMapper.insert(message);
+        return withdrawalsMapper.updateByPrimaryKey(withdrawals)>0;
     }
 
     @Override

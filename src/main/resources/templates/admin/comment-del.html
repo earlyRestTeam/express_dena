@@ -62,12 +62,12 @@
                 <tr style="height: 50px;">
                     <td style="text-align: center" colspan="10">
 
-                        <a class="yb-reward-history__pagination"  th:href="'comment_list_stop?indexpage='+${pages.prePage}">上一页</a>
-                        <a class="yb-reward-history__pagination" href="comment_list_stop?indexpage=1">1</a>
+                        <a class="yb-reward-history__pagination"  th:href="'comment_list_stop?indexpage='+${pages.prePage}+'&serchid='+${serchid}">上一页</a>
+                        <a class="yb-reward-history__pagination" th:href="'comment_list_stop?indexpage=1&serchid='+${serchid}">1</a>
                         ...
-                        <a th:each="p:${pages.navigatepageNums}" th:text="${p}"  th:href="'comment_list_stop?indexpage='+${p}" class="yb-reward-history__pagination"></a>
-                        ...<a th:text="${pages.pages}" th:href="'comment_list_stop?indexpage='+${pages.pages}" class="yb-reward-history__pagination"></a>
-                        <a class="yb-reward-history__pagination"  th:href="'comment_list_stop?indexpage='+${pages.nextPage}" >下一页</a>
+                        <a th:each="p:${pages.navigatepageNums}" th:text="${p}"  th:href="'comment_list_stop?indexpage='+${p}+'&serchid='+${serchid}" class="yb-reward-history__pagination"></a>
+                        ...<a th:text="${pages.pages}" th:href="'comment_list_stop?indexpage='+${pages.pages}+'&serchid='+${serchid}" class="yb-reward-history__pagination"></a>
+                        <a class="yb-reward-history__pagination"  th:href="'comment_list_stop?indexpage='+${pages.nextPage}+'&serchid='+${serchid}" >下一页</a>
                     </td>
                 </tr>
 			</tbody>
