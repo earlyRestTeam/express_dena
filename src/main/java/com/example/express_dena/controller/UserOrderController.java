@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,7 @@ public class UserOrderController {
     IAliPayService iAliPayService;
 
 
+    //查看用户当前订单
     @RequestMapping("currentUserOrder")
     public String selectOrderCurrent(Integer indexpage, HttpServletRequest request){
         int userid = 1;
@@ -44,10 +46,11 @@ public class UserOrderController {
         return "/currentUserOrder";
     }
 
+    //查看用户历史订单
     @RequestMapping("userHistoryOrder")
     public String selectuserHistoryOrder(Integer indexpage, HttpServletRequest request){
         int userid = 1;
-        PageInfo info = service.selectOrderCurrent(userid,indexpage);
+        PageInfo info = service.selectHistoryOrder(userid,indexpage);
         request.setAttribute("page",info);
         return "/userHistoryOrder";
     }
@@ -122,6 +125,7 @@ public class UserOrderController {
         return apiResult;
     }
 
+    //前往支付页面
     @RequestMapping("topay")
     public void payorder(String totalAmount, String orderno, HttpServletResponse httpResponse) throws IOException {
 
@@ -132,12 +136,45 @@ public class UserOrderController {
         httpResponse.getWriter().close();
     }
 
+    //支付成功后返回
     @RequestMapping("returnUrl")
     public String returnusrl(){
         System.out.println("支付");
           return "submitOrder";
     }
 
+    //取消订单
+    @RequestMapping("cancelOrderByID")
+    @ResponseBody
+    public APIResult updateCancelOrderByID(@RequestBody JSONObject jsonObject){
+        Integer orderid = (Integer) jsonObject.get("orderid");
+        Map<String,String> map =  service.updateCancelOrderByID(orderid);
+        APIResult apiResult = new APIResult();
+        apiResult.setData(map);
+        return apiResult;
+    }
 
+    //确认订单完成订单
+    @RequestMapping("completeOrder")
+    @ResponseBody
+    public APIResult updateCompleteOrder(@RequestBody JSONObject jsonObject){
+        Integer orderid = (Integer) jsonObject.get("orderid");
+        Map<String,String> map =  service.deleteUserOrderByID(orderid);
+        APIResult apiResult = new APIResult();
+        apiResult.setData(map);
+        return apiResult;
+    }
+
+
+    //删除用户历史订单
+    @RequestMapping("deleteUserOrder")
+    @ResponseBody
+    public APIResult deleteUserOrder(@RequestBody JSONObject jsonObject){
+        Integer orderid = (Integer) jsonObject.get("orderid");
+        Map<String,String> map =  service.deleteUserOrderByID(orderid);
+        APIResult apiResult = new APIResult();
+        apiResult.setData(map);
+        return apiResult;
+    }
 
 }

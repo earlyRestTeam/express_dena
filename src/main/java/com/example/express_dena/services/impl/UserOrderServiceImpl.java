@@ -46,11 +46,6 @@ public class UserOrderServiceImpl implements UserOrderService {
         if(loginEntityHelper.getEntityByClass(User.class) != null){
             user = loginEntityHelper.getEntityByClass(User.class);
         }
-        if(user.getUsername()!=null){
-            order.setUsername(user.getUsername());
-        }else{
-            order.setUsername("杨秀秀");
-        }
         if(user.getId()!=null){
             order.setUserid(user.getId());
         }else{
@@ -92,7 +87,6 @@ public class UserOrderServiceImpl implements UserOrderService {
         list1.add(2);
         criteria.andStatusIn(list1);
 
-
         indexpage = indexpage == null ? 1: indexpage;
 
         PageHelper.startPage(indexpage,7);
@@ -130,7 +124,7 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //删除已完成订单
     @Override
-    public Map<String, String> deleteOrderByID(int orderid) {
+    public Map<String, String> deleteUserOrderByID(int orderid) {
         Map<String,String> res = new HashMap<>();
         Order order1 = orderMapper.selectByPrimaryKey(orderid);
         System.out.println(order1.toString());
@@ -184,6 +178,8 @@ public class UserOrderServiceImpl implements UserOrderService {
         Order order1 = orderMapper.selectByPrimaryKey(orderid);
         System.out.println(order1.toString());
         order1.setComfirmUserStatus(1);
+        order1.setStatus(3);
+        order1.setEndTime(new Date());
         int result = orderMapper.updateByPrimaryKey(order1);
         if(result>0){
             res.put(StaticPool.SUCCESS,"订单完成");

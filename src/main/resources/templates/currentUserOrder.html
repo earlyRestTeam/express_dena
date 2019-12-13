@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -292,18 +292,20 @@
 
                                 <tr th:each="order:${page.list}">
                                     <td><input type="checkbox" name="IDCheck" value="${order.orderid}" class="acb" /></td>
-                                    <td th:text="${order.orderno}"></td>
+                                    <td id="orderno" th:text="${order.orderno}"></td>
                                     <td th:text="${order.createTime}"></td>
                                     <td th:text="${order.commentNum}"></td>
                                     <td th:text="${order.totalAmount}"></td>
-                                    <td th:text="${order.status}"></td>
+                                    <td th:text="${order.ReturnStatus}"></td>
                                     <td th:text="${order.note}"></td>
                                     <td>
-                                        <a href="javascript:del('14458632171244');" class="queren">确认完成</a>
+                                        <a
+                                           th:onclick="updateStatus([[${order.ReturnConfirmStatus}]],[[${order.id}]])"
+                                           class="queren"
+                                           th:text="${order.ReturnConfirmStatus}"></a>
                                     </td>
                                     <td><button>点击显示详情</button></td>
                                 </tr>
-
                             </table>
                         </div>
                         <div class="ui_tb_h30">
@@ -325,8 +327,6 @@
                                        onclick="jumpNormalPage(2);" />
                                 <input type="button" value="尾页" class="ui_input_btn01"
                                        onclick="jumpNormalPage(9);" />
-
-
 
                                 <!--     如果是最后一页，则只显示首页、上一页 -->
 
@@ -429,12 +429,45 @@
         }
     }
 
-    /** 删除 **/
-    function del(fyID){
-        // 非空判断
-        if(fyID == '') return;
-        if(confirm("您确定要删除吗？")){
-            $("#submitForm").attr("action", "/xngzf/archives/delFangyuan.action?fyID=" + fyID).submit();
+    /** 修改订单状态 **/
+    function updateStatus(status,orderid){
+        alert(status+orderid)
+
+        if(confirm("您确定要"+status+"订单吗？")){
+            if (status == "取消定单") {
+                $.ajax({
+                    url:"cancelOrderByID",
+                    data:JSON.stringify({orderid:orderid}),
+                    contentType: 'application/json; charset=UTF-8',
+                    type:"post",
+                    dataType:"json",
+                    success:function(result){
+                        if (result.data.success != null){
+                            window.location.reload();
+                            alert(result.data.success)
+                        }else{
+                            alert(result.data.error)
+                        }
+                    }
+                })
+            }
+
+            else if(status== "确认完成") {
+                $.ajax({
+                    url:"completeOrder",
+                    data:JSON.stringify({orderid:orderid}),
+                    contentType: 'application/json; charset=UTF-8',
+                    type:"post",
+                    dataType:"json",
+                    success:function(result){
+                        if (result.data.success != null){
+                            window.location.href="userHistoryOrder";
+                        }else{
+                            alert(result.data.error)
+                        }
+                    }
+                })
+            }
         }
     }
 

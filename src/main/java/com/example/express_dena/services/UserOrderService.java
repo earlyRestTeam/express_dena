@@ -25,7 +25,7 @@ public interface UserOrderService {
     public PageInfo selectHistoryOrder(int userid,Integer indexpage);
 
     //删除历史订单
-    public Map<String,String> deleteOrderByID(int orderid);
+    public Map<String,String> deleteUserOrderByID(int orderid);
 
     //查询订单状态
     public int selectStatus(int orderid);
