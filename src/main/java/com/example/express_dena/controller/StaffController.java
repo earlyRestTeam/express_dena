@@ -84,8 +84,8 @@ public class StaffController {
     @RequestMapping("staffinfo")
     public String staffInfo(HttpServletRequest request){
 
-//        return "redirect:/staff/staffmain";
-        return "/staff/staffInfo";
+        return "redirect:/staff/staffmain";
+//        return "/staff/staffmain";
     }
 
     @RequestMapping("staffchangePwd")
