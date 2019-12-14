@@ -15,23 +15,28 @@
                     <a href="#"> <i class="fa fa-instagram" aria-hidden="true"></i></a>
                 </div>
                 <div th:if="${entity == null}" class="col-xs-5 col-md-6 text-right">
-                    <span class="signin" data-toggle="modal" data-target="#myModal">
-                        <a class="hidden-xs" href="/user/login">登陆</a>
+                    <span class="signin">
+                        <a class="hidden-xs" href="/user/login">用户登陆</a>
                         <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
                     </span>
-
-                    <span class="register" data-toggle="modal" data-target="#myModal">
+                    <span class="signin">
+                        <a class="hidden-xs" href="/staff/login">骑手登陆</a>
+                        <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
+                    </span>
+                    <span class="register" >
                         <a class="hidden-xs" href="/register">注册</a>
                         </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
                     </i></span>
                 </div>
                 <div th:if="${entity != null}" class="col-xs-5 col-md-6 text-right">
-                    <span class="signin" data-toggle="modal" data-target="#myModal">
-                        <a class="hidden-xs" href="/user/main" th:text="${entity.username}"></a>
+                    <span class="signin">
+                        <a class="hidden-xs" th:if="${type == 1}" href="/user/main" th:text="${entity.username}"></a>
+                        <a class="hidden-xs" th:if="${type == 2}" href="/admin/index" th:text="${entity.username}"></a>
+                        <a class="hidden-xs" th:if="${type == 3}" href="/staff/staffmain" th:text="${entity.username}"></a>
                         <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
                     </span>
 
-                    <span class="register" data-toggle="modal" data-target="#myModal">
+                    <span class="register">
                         <a class="hidden-xs" href="/logout">退出登陆</a>
                         </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
                     </i></span>
