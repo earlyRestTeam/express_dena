@@ -2,8 +2,10 @@ package com.example.express_dena.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.express_dena.pojo.Horseman;
+import com.example.express_dena.pojo.Message;
 import com.example.express_dena.pojo.User;
 import com.example.express_dena.security.LoginEntityHelper;
+import com.example.express_dena.services.impl.MessageService;
 import com.example.express_dena.services.impl.StaffOrderService;
 import com.example.express_dena.services.impl.StaffService;
 import com.example.express_dena.util.APIResult;
@@ -33,6 +35,8 @@ public class StaffController {
 
     @Autowired
     StaffService staffService;
+    @Autowired
+    MessageService messageService;
 
     @Autowired
     LoginEntityHelper loginEntityHelper;
@@ -80,7 +84,8 @@ public class StaffController {
     @RequestMapping("staffinfo")
     public String staffInfo(HttpServletRequest request){
 
-        return "redirect:/staff/staffmain";
+//        return "redirect:/staff/staffmain";
+        return "/staff/staffInfo";
     }
 
     @RequestMapping("staffchangePwd")
@@ -110,7 +115,7 @@ public class StaffController {
             return result;
         }
 
-        Map<String, String> res = staffService.changePassword(horseman.getId(), oldPassword, newPassword);
+        Map<String, String> res = staffService.updateChangePassword(horseman.getId(), oldPassword, newPassword);
 
         if( res.get(StaticPool.ERROR) != null ){
             result = APIResult.genFailApiResponse(res.get(StaticPool.ERROR));
@@ -142,5 +147,36 @@ public class StaffController {
 
     }
 
+    /**
+     * 骑手消息
+     */
+    @RequestMapping("staffMessage")
+    public String staffMessage(Integer indexpage, HttpServletRequest request){
+        Horseman horseman = loginEntityHelper.getEntityByClass(Horseman.class);
 
+        if ( horseman == null )
+            throw new RuntimeException("error");
+
+        Integer horsemanid = horseman.getId();
+        PageInfo<Message> messagePageInfo = messageService.queryMessage(horsemanid, 2, indexpage, 3);
+        request.setAttribute("pages",messagePageInfo);
+        System.out.println(messagePageInfo);
+
+        if(indexpage!=null){
+            return "/staff/staffMessage::article_type";
+        }
+        return "/staff/staffMessage";
+    }
+
+    /**
+     * 骑手读取消息
+     */
+    @RequestMapping("readMessage")
+    public String readMessage(Integer messageId) {
+        if (messageService.updateReadMessage(messageId)) {
+            return "redirect:/staff/staffMessage";
+        } else {
+            throw new RuntimeException("error");
+        }
+    }
 }

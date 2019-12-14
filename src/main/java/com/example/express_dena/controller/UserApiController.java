@@ -117,7 +117,7 @@ public class UserApiController {
             throw new RuntimeException("error");
 
         APIResult result = null;
-        int res = messageService.queryUSerUnreadMessageCount(u2.getId());
+        int res = messageService.queryEntityUnreadMessageCount(u2.getId(),1);
         System.out.println("res = " + res);
         return APIResult.genSuccessApiResponse(""+res);
     }

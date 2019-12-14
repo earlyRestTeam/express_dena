@@ -27,12 +27,12 @@ public class MessageService implements IMessageService {
     MessageMapper messageMapper;
 
     @Override
-    public PageInfo<Message> queryMessage(int entityId, int entityType, int index, int size) {
-
+    public PageInfo<Message> queryMessage(int entityId, int entityType, Integer index, int size) {
+        index = index == null ? 1: index;
         MessageExample example = new MessageExample();
         MessageExample.Criteria criteria = example.createCriteria();
         criteria.andReceiveridEqualTo(entityId);
-        criteria.andReceiverTypeEqualTo(entityId);
+        criteria.andReceiverTypeEqualTo(entityType);
         example.setOrderByClause("send_time desc");
 
         PageHelper.startPage(index, size);
@@ -43,6 +43,8 @@ public class MessageService implements IMessageService {
 
         return pageInfo;
     }
+
+
 
     //插入发送信息到数据库
     @Override
@@ -55,6 +57,19 @@ public class MessageService implements IMessageService {
             map.put(StaticPool.SUCCESS,"发送失败");
         }
         return map;
+    }
+
+    @Override
+    public boolean updateReadMessage(Integer id) {
+        Message message = messageMapper.selectByPrimaryKey(id);
+        System.out.println("message:" +message);
+        if(message != null){
+            message.setStatus(1);
+            return messageMapper.updateByPrimaryKey(message) > 0;
+        }else {
+            throw new RuntimeException("error");
+        }
+
     }
 
     @Override

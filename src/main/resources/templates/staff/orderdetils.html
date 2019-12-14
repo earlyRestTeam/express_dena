@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Carbon - Admin Template</title>
-    <link rel="stylesheet" href="../vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="../vendors/font-awesome/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendors/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <!----------------Global css------------------->
-    <link rel="stylesheet" href="../css/bootstrap.css">
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/custom.css">
-    <link rel="stylesheet" href="../css/userInfo.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/userInfo.css">
 </head>
 <body>
 
@@ -32,7 +32,7 @@
     top: 50%;
     background-position: center;
     margin:-25px 0 0 -25px;">
-        <img src="../images/loader.gif" alt="loading...">
+        <img src="images/loader.gif" alt="loading...">
     </div>
 </div>
 <!----------------Preloader end----------------->
@@ -72,6 +72,8 @@
                     </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
                 </i></span>
             </div>
+
+
         </div>
     </div>
 </div>
@@ -88,14 +90,13 @@
 
                 </button>
                 <a class="navbar-brand" href="index">
-                    <img src="../images/3.png" class="img-responsive" alt="company-logo">
+                    <img src="/images/3.png" class="img-responsive" alt="company-logo">
                 </a>
             </div>
             <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
                 <ul class="nav navbar-nav">
-                    <li class="list2"><a href="/index" class="hvr-underline-from-center">主页</a></li>
+                    <li class="list2"><a href="../index" class="hvr-underline-from-center">主页</a></li>
                     <li class="list2"><a href="/staff/staffmain" class="hvr-underline-from-center">个人中心</a></li>
-
                 </ul>
             </div>
 
@@ -118,18 +119,18 @@
                             模态框（Modal）标题
                         </h4>
                     </div>
-                    <img id="headUrl" src="images/avatar.jpg" style="width: 80px;height: 80px">
-                    <input type="file" id="file" >
-                    <button class="btn btn-primary" onclick="upload()">确定</button>
-                    <input hidden id="userHeadUrl">
-                    <div class="form-group">
-                        <label for="inputUsername">username</label>
-                        <input type="username" class="form-control" id="inputUsername" aria-describedby="emailHelp">
-                    </div>
-                    <div class="form-group">
-                        <label for="InputPhone">phone</label>
-                        <input class="form-control" id="InputPhone">
-                    </div>
+                        <img id="headUrl" src="/images/avatar.jpg" style="width: 80px;height: 80px">
+                        <input type="file" id="file" >
+                        <button class="btn btn-primary" onclick="upload()">确定</button>
+                        <input hidden id="userHeadUrl">
+                        <div class="form-group">
+                            <label for="inputUsername">username</label>
+                            <input type="username" class="form-control" id="inputUsername" aria-describedby="emailHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="InputPhone">phone</label>
+                            <input class="form-control" id="InputPhone">
+                        </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
@@ -148,13 +149,13 @@
                     <li class="nav-title">风火轮</li>
 
                     <li class="nav-item">
-                        <a href="/staff/staffmain" class="nav-link active">
+                        <a href="../index" class="nav-link active">
                             <i class="icon icon-speedometer"></i> 首页
                         </a>
                     </li>
 
                     <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
+                        <a href="/staff/staffmain" class="nav-link nav-dropdown-toggle">
                             <i class="icon icon-target"></i> 个人主页 <i class="fa fa-caret-left"></i>
                         </a>
 
@@ -192,7 +193,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="/staff/currentStaffOrder" class="nav-link">
+                                <a href="/staff/staffGetOrder" class="nav-link">
                                     <i class="icon icon-energy"></i> 我的订单
                                 </a>
                             </li>
@@ -218,81 +219,156 @@
                             </li>
                         </ul>
                     </li>
+
+
                 </ul>
             </nav>
         </div>
 
 <!-------------contenr start--------->
         <div class="content">
-            <p>我的资料</p>
-            <div class="main-info">
-                <div class="main-info-left">
-                    <div class="info-avatar">
-                        <img th:src="@{${horseman.avatar}}" id="showHead" >
+            <p>订单详情</p>
+            <div  class="main-info" style="width: 1500px">
+                <div style="width: 500px"  class="main-info-left">
+                    <table style="margin:70px 20px;height: 220px;width: 380px " class="main-info-center-table">
+                        <tr >
+                            <td width="100px" class="glyphicon glyphicon-user" >下单用户:</td>
+                            <td  class="main-info-center-content" th:text="${order.username}">绿青蛙</td>
+                        </tr>
+                        <tr >
+                            <td class="glyphicon glyphicon-user">接单骑手:</td>
+                            <td  class="main-info-center-content" th:text="${order.hosermanName}">青蛙绿</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-envelope">取件地址:</td>
+                            <td  class="main-info-center-content" th:text="${order.pickUpAddress}">青蛙池</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-envelope">收件地址:</td>
+                            <td  class="main-info-center-content" th:text="${order.targetAddress}">青蛙池中间</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-phone-alt">用户电话:</td>
+                            <td  class="main-info-center-content" th:text="${order.userTelephone}">123456789</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-phone-alt">骑手电话:</td>
+                            <td  class="main-info-center-content" th:text="${order.hosermainPhone}">123456789</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="main-info-center">
+
+
+                    <table style="height: 250px;top: 60px" class="main-info-center-table">
+
+                        <tr>
+                            <td width="100px" class="glyphicon glyphicon-yen">订单金额:</td>
+                            <td  class="main-info-center-content" th:text="${order.totalAmount}+'￥'">15W</td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="glyphicon glyphicon-align-justify">总件数:</td>
+                            <td  class="main-info-center-content" th:text="${order.commentNum}">20</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-time">下单时间:</td>
+                            <td class="main-info-center-content" th:text="${#dates.format(order.createTime,'yyyy-MM-dd HH:mm:ss')}">2018-9-16</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-time">结束时间:</td>
+                            <td class="main-info-center-content" th:text="${#dates.format(order.endTime,'yyyy-MM-dd HH:mm:ss')}">2018-9-16</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-phone-alt">备注:</td>
+                            <td  class="main-info-center-content" th:text="${order.note}">青蛙沙窝</td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="main-info-xian"></div>
+
+                <div class="main-info-right">
+                    <div class="main-info-right-up" th:switch="${order.status}">
+                        <p class="title">订单状态:</p>
+                        <p class="main-info-right-content" th:case="1" style="color: dodgerblue">待领取</p>
+                        <p class="main-info-right-content" th:case="2" style="color: #ff7800">真正派送</p>
+                        <p class="main-info-right-content" th:case="3" style="color: #d9534f">已完成</p>
+
                     </div>
-                    <div class="main-info-name">
-                        <p class="info-name" th:text="${horseman.username}" id="showName"></p>
+                    <div class="main-info-right-xian"></div>
+                    <div style="left: 350px; top: 38px;"  class="main-info-center-modify" onclick="jsOpenModal()">
+                        <i class="glyphicon glyphicon-paperclip">订单评论</i>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;width: 1500px" class="main-info" th:each="orderdetail:${pages.list}">
+                <div style="width: 500px"  class="main-info-left">
+                    <div style="margin: 0 110px;top: 130px" class="main-info-name">
+                        <p style="font-size: 40px" class="info-name"  id="showName">包裹1</p>
                     </div>
                 </div>
 
                 <div class="main-info-center">
-                    <div class="main-info-center-modify" onclick="jsOpenModal()">
-                        <i class="glyphicon glyphicon-pencil">点击修改</i>
-                    </div>
+
+
                     <table class="main-info-center-table">
                         <tr >
-                            <td class="glyphicon glyphicon-user">账号:</td>
-                            <td class="main-info-center-content" th:text="${horseman.account}"></td>
+                            <td class="glyphicon glyphicon-yen" >金额:</td>
+                            <td  class="main-info-center-content" th:text="${orderdetail.balance}+'￥'">15.6</td>
                         </tr>
                         <tr>
-                            <td class="glyphicon glyphicon-envelope">邮箱:</td>
-                            <td class="main-info-center-content" th:text="${horseman.email}"></td>
+                            <td class="glyphicon glyphicon-briefcase">重量:</td>
+                            <td  class="main-info-center-content" th:text="${orderdetail.kg}+'Kg'">15kg</td>
                         </tr>
                         <tr>
-                            <td class="glyphicon glyphicon-phone-alt">联系电话:</td>
-                            <td class="main-info-center-content" th:text="${horseman.phone}" id="showPhone"></td>
+                            <td class="glyphicon glyphicon-transfer">取件地址:</td>
+                            <td  class="main-info-center-content" id="showPhone" th:text="${order.pickUpAddress}">123456</td>
                         </tr>
                         <tr>
-                            <td class="glyphicon glyphicon-map-marker" >账户余额：</td>
-                            <td class="main-info-center-content" th:text="${horseman.balance}"></td>
-                        </tr>
-                        <tr>
-                            <td class="glyphicon glyphicon-time">注册时间:</td>
-                            <td class="main-info-center-content" th:text="${#dates.format(horseman.createTime,'yyyy-MM-dd HH-mm-ss')}"></td>
+                            <td class="glyphicon glyphicon-plane" >快递公司:</td>
+                            <td class="main-info-center-content" th:text="${orderdetail.courierCompany}">中通</td>
                         </tr>
                     </table>
+
                 </div>
 
                 <div class="main-info-xian"></div>
 
                 <div class="main-info-right">
                     <div class="main-info-right-up">
-                        <p class="title">订单成交数:</p>
-                        <p class="main-info-right-content" th:text="${finishOrderNum}+'笔'"></p>
+                        <p class="title">取件码:</p>
+                        <p class="main-info-right-content" th:text="${orderdetail.pickUpCode}">123456</p>
                     </div>
                     <div class="main-info-right-xian"></div>
+
                 </div>
             </div>
+
+
         </div>
+
 <!-------------contenr end--------->
     </div>
 
-<script src="../js/jquery.min.js"></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/chart.js/chart.min.js"></script>
-<script src="../js/chart.js"></script>
-<script src="../js/carbon.js"></script>
-<script src="../js/demo.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/chart.js/chart.min.js"></script>
+<script src="/js/chart.js"></script>
+<script src="/js/carbon.js"></script>
+<script src="/js/demo.js"></script>
         <!------------------Copy rights End------------------>
-<script src="../js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 <!----------------------page Level Js-------------------------->
-<script src="../js/custom.js"></script>
-
+<script src="/js/custom.js"></script>
 <script type="text/javascript">
     function jsOpenModal() {
         var showHead = $('#showHead').attr("src");
-        console.log("图片地址" + showHead);
-        $("#headUrl").attr("src",showHead);
+        $("headUrl").attr("src",showHead);
         var showName = $("#showName").text();
         $("#inputUsername").val(showName);
         var showPhone = $("#showPhone").text();
@@ -303,8 +379,23 @@
         $('#myModal').modal('hide');
     }
 </script>
-
 <script>
+     //文件输入框的操作
+    $('#file').change(function(e) {
+        var _URL = window.URL || window.webkitURL;
+        var file, img;
+        if ((file = this.files[0])) {
+            img = new Image();
+            img.onload = function() {
+                //头像 操作图片
+                $('#headUrl').attr('src', this.src);
+            };
+            img.src = _URL.createObjectURL(file);
+        }
+    })
+</script>
+<script>
+    //上床操作
     function upload() {
         var formData = new FormData();
         var file = document.getElementById("file").files[0];
@@ -328,19 +419,30 @@
         });
     }
 </script>
-<script>
-    $('#file').change(function(e) {
-        var _URL = window.URL || window.webkitURL;
-        var file, img;
-        if ((file = this.files[0])) {
-            img = new Image();
-            img.onload = function() {
-                $('#headUrl').attr('src', this.src);
-            };
-            img.src = _URL.createObjectURL(file);
-        }
-    })
-</script>
+<!--<script>-->
+<!--    function upload() {-->
+<!--        var formData = new FormData();-->
+<!--        var file = document.getElementById("file").files[0];-->
+<!--        formData.append("file", file);-->
+<!--        $.ajax({-->
+<!--            url:"/upload",-->
+<!--            type:"POST",-->
+<!--            data:formData,-->
+<!--            processData : false,-->
+<!--            contentType : false,-->
+<!--            dataType : 'json',-->
+<!--            async : false,-->
+<!--            success : function (result) {-->
+<!--                console.log(result);-->
+<!--                if(result.code == 200){-->
+<!--                    $('#headUrl').attr("src",result.message);-->
+<!--                }else {-->
+<!--                    alert("error!");-->
+<!--                }-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
 <script>
 
     function change() {
@@ -352,7 +454,7 @@
         $.ajax({
             type: 'POST',//方法类型
             dataType: "json",//预期服务器返回的数据类型
-            url: '/staff/update',//url
+            url: '/user/update',//url
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             success: function (result) {
@@ -360,7 +462,7 @@
                 if (result.code == 200) {
                     var showHead = $("#headUrl").attr("src");
                     console.log(showHead);
-                    $('#showHead').attr("src",showHead);
+                     $('#showHead').attr("src",showHead);
 
                     var showName = $("#inputUsername").val();
                     console.log(showName);
