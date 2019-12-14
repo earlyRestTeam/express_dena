@@ -30,6 +30,8 @@ public class Order implements Serializable {
 
     private Integer hosermanid;
 
+    private Date pickUpTime;
+
     private String hosermainPhone;
 
     private String hosermanName;
@@ -152,6 +154,14 @@ public class Order implements Serializable {
         this.hosermanid = hosermanid;
     }
 
+    public Date getPickUpTime() {
+        return pickUpTime;
+    }
+
+    public void setPickUpTime(Date pickUpTime) {
+        this.pickUpTime = pickUpTime;
+    }
+
     public String getHosermainPhone() {
         return hosermainPhone;
     }
@@ -255,6 +265,7 @@ public class Order implements Serializable {
         sb.append(", commentNum=").append(commentNum);
         sb.append(", createTime=").append(createTime);
         sb.append(", hosermanid=").append(hosermanid);
+        sb.append(", pickUpTime=").append(pickUpTime);
         sb.append(", hosermainPhone=").append(hosermainPhone);
         sb.append(", hosermanName=").append(hosermanName);
         sb.append(", showHosemanStatus=").append(showHosemanStatus);

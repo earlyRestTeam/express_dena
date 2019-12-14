@@ -169,11 +169,9 @@ public class UserOrderController {
         }catch (PayException e){
             System.out.println("e.getMessage() = " + e.getMessage());
             APIResult apiResult = APIResult.genFailApiResponse(e.getMessage());
-            System.out.println("error");
 //            Logger.error("reback error");
             return apiResult;
         }
-
     }
 
     //确认订单完成订单
@@ -181,10 +179,15 @@ public class UserOrderController {
     @ResponseBody
     public APIResult updateCompleteOrder(@RequestBody JSONObject jsonObject){
         Integer orderid = (Integer) jsonObject.get("orderid");
-        Map<String,String> map =  service.updateCompleteOrder(orderid);
-        APIResult apiResult = new APIResult();
-        apiResult.setData(map);
-        return apiResult;
+        try{
+            Map<String,String> map =  service.updateCompleteOrder(orderid);
+            return APIResult.genSuccessApiResponse(map.get(StaticPool.SUCCESS));
+        } catch (PayException e){
+            System.out.println("e.getMessage() = " + e.getMessage());
+            APIResult apiResult = APIResult.genFailApiResponse(e.getMessage());
+//            Logger.error("reback error");
+            return apiResult;
+        }
     }
 
 

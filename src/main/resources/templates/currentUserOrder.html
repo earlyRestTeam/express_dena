@@ -439,7 +439,6 @@
                         if (result.code == 200){
                             alert(result.message)
                             window.location.reload();
-
                         }else{
                             alert(result.message)
                         }
@@ -449,16 +448,17 @@
 
             else if(status== "确认完成") {
                 $.ajax({
-                    url:"completeOrder",
+                    url:"/user/completeOrder",
                     data:JSON.stringify({orderid:orderid}),
                     contentType: 'application/json; charset=UTF-8',
                     type:"post",
                     dataType:"json",
                     success:function(result){
-                        if (result.data.success != null){
+                        if (result.code == 200){
+                            alert(result.message)
                             window.location.href="/user/userHistoryOrder";
                         }else{
-                            alert(result.data.error)
+                            alert(result.message)
                         }
                     }
                 })
