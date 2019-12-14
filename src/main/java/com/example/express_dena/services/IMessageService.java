@@ -15,4 +15,5 @@ public interface IMessageService {
 
      Map<String,String> sendMessage(Message message);
 
+     int queryEntityUnreadMessageCount(int entityId,int entityType);
 }

@@ -56,4 +56,15 @@ public class MessageService implements IMessageService {
         }
         return map;
     }
+
+    @Override
+    public int queryEntityUnreadMessageCount(int entityId, int entityType) {
+        MessageExample example = new MessageExample();
+        MessageExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(1);
+        criteria.andReceiveridEqualTo(entityId);
+        criteria.andReceiverTypeEqualTo(entityType);
+        List<Message> messages = messageMapper.selectByExample(example);
+        return messages == null ? 0 : messages.size();
+    }
 }
