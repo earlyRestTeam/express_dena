@@ -436,11 +436,12 @@
                     type:"post",
                     dataType:"json",
                     success:function(result){
-                        if (result.data.success != null){
+                        if (result.code == 200){
+                            alert(result.message)
                             window.location.reload();
-                            alert(result.data.success)
+
                         }else{
-                            alert(result.data.error)
+                            alert(result.message)
                         }
                     }
                 })

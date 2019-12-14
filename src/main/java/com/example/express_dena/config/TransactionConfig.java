@@ -20,8 +20,8 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
  * @createTime 2019.12.12.21:31
  *
  */
-//@Configuration
-//@Aspect
+@Configuration
+@Aspect
 public class TransactionConfig {
 
 

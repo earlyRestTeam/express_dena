@@ -10,6 +10,7 @@ import com.example.express_dena.services.IAliPayService;
 import com.example.express_dena.services.IMessageService;
 import com.example.express_dena.services.UserOrderService;
 import com.example.express_dena.util.APIResult;
+import com.example.express_dena.util.PayException;
 import com.example.express_dena.util.StaticPool;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.regexp.internal.RE;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * @author :Yang Jiahong
@@ -160,10 +162,18 @@ public class UserOrderController {
     @ResponseBody
     public APIResult updateCancelOrderByID(@RequestBody JSONObject jsonObject){
         Integer orderid = (Integer) jsonObject.get("orderid");
-        Map<String,String> map =  service.updateCancelOrderByID(orderid);
-        APIResult apiResult = new APIResult();
-        apiResult.setData(map);
-        return apiResult;
+        try{
+            Map<String,String> map =  service.updateCancelOrderByID(orderid);
+
+            return APIResult.genSuccessApiResponse(map.get(StaticPool.SUCCESS));
+        }catch (PayException e){
+            System.out.println("e.getMessage() = " + e.getMessage());
+            APIResult apiResult = APIResult.genFailApiResponse(e.getMessage());
+            System.out.println("error");
+//            Logger.error("reback error");
+            return apiResult;
+        }
+
     }
 
     //确认订单完成订单

@@ -16,6 +16,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -188,57 +189,51 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //取消订单
     @Override
-    public Map<String, String> updateCancelOrderByID(int orderid) {
+    public Map<String, String> updateCancelOrderByID(int orderid) throws PayException {
 
-        Map<String,String> res = new HashMap<>();
+        Map<String, String> res = new HashMap<>();
         Order order1 = orderMapper.selectByPrimaryKey(orderid);   //根据订单编号查询订单信息
 
-        Message message = new Message();
+        if (order1 == null)
+            throw new PayException("取消异常");
+
+        LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
+        User user = loginEntityHelper.getEntityByClass(User.class);
+
+        if (user == null && order1.getUserid() != user.getId() && order1.getStatus() != 1)
+            throw new PayException("登陆状态异常");
+
+        order1.setStatus(4);
+        int result = orderMapper.updateByPrimaryKey(order1);
+
+        if (result <= 0)
+            throw new PayException("取消订单失败");
+
         Message usermessage = new Message();     //发给用户信息
         usermessage.setReceiverid(order1.getUserid());
-        String content = "您的订单编号为"+order1.getOrderno()+"已取消";
+        String content = "您的订单编号为" + order1.getOrderno() + "已取消";
         usermessage.setContent(content);         //设置发送内容
         usermessage.setReceiverType(1);          //设置发送用户类型 1.普通用户 2.骑手
         usermessage.setSendTime(new Date());     //设置发送时间
         usermessage.setStatus(1);                //设置信息状态 1.未读 2.已读
-        Map<String,String> userres = new HashMap<>();
+        Map<String, String> userres = new HashMap<>();
+        userres = iMessageService.sendMessage(usermessage);    //给用户发送取消订单结果信息
 
-        if(order1 != null){
-            LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
-            User user = loginEntityHelper.getEntityByClass(User.class);
+        if (userres.get(StaticPool.SUCCESS) == null)
+            throw new PayException("发送消息异常");
 
-            if(user != null){
-                if(order1.getUserid() == user.getId() && order1.getStatus() == 1){
-                    order1.setStatus(4);
-                    int result = orderMapper.updateByPrimaryKey(order1);
-                    if(result>0){
-                        try {
-                            String s = iAliPayService.refund(order1.getOrderno(),order1.getTotalAmount().toString());
-                            if(s.contains("Success")){
-                                userres = iMessageService.sendMessage(message);
-                                if(userres.get(StaticPool.SUCCESS) != null){
-                                    res.put(StaticPool.SUCCESS,"取消成功");
-                                }else{
-                                    throw new PayException("发送消息异常");
-                                }
-                            }
-                        } catch (AlipayApiException e) {
-                            e.printStackTrace();
-                        }
-                    }else{
-                        throw new PayException("取消订单异常");
-                    }
-                    return res;
-                }else{
-                    throw new PayException("订单状态异常");
-                }
-            }else{
-                throw new PayException("登陆状态异常");
-            }
+        String s = null;
+        try {
+            s = iAliPayService.refund(order1.getOrderno(), order1.getTotalAmount().toString());
+        } catch (AlipayApiException e) {
+            throw new PayException(e.getMessage());
         }
-        else{
-            throw new PayException("取消异常");
-        }
+
+        if (!s.contains("Success"))
+            throw new PayException("取消失败");
+
+        res.put(StaticPool.SUCCESS, "取消成功");
+        return res;
 
     }
 
