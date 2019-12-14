@@ -389,6 +389,31 @@ public class AdminServiceimpl implements AdminService {
         return withdrawalsMapper.updateByPrimaryKey(withdrawals)>0;
     }
 
+    /**
+     * 根据用户类型和ID查找消息列表
+     * @param indexpage
+     * @param receiver_type
+     * @param serchid
+     * @return
+     */
+    @Override
+    public PageInfo selectMessaage(Integer indexpage, Integer receiver_type, Integer serchid) {
+        if (indexpage == null){
+            indexpage = 0;
+        }
+
+        MessageExample example = new MessageExample();
+        if (serchid != null&&!serchid.equals(0)&&!serchid.equals("null")){
+            example.or().andReceiveridEqualTo(serchid).andReceiverTypeEqualTo(receiver_type);
+        }else {
+            example.or().andReceiverTypeEqualTo(receiver_type);
+        }
+        PageHelper.startPage(indexpage,10);
+        List<Message> messages = messageMapper.selectByExample(example);
+        PageInfo info = new PageInfo(messages,5);
+        return info;
+    }
+
     @Override
     public Admin loadByAccount(String account) {
         AdminExample example = new AdminExample();

@@ -140,4 +140,13 @@ public interface AdminService {
      * @return
      */
     boolean updateDrawmoney(Integer id,Float withdrawalsBalance);
+
+    /**
+     * 根据用户类型和ID查找消息列表
+     * @param indexpage
+     * @param receiver_type
+     * @param serchid
+     * @return
+     */
+    PageInfo selectMessaage(Integer indexpage,Integer receiver_type,Integer serchid);
 }

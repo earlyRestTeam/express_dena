@@ -358,6 +358,29 @@ public class AdminController {
         return "redirect:/admin/drawmoney_list?status=2";
     }
 
+    /**
+     * 根据用户类型和ID查找消息列表
+     * @param request
+     * @param indexpage
+     * @param receiverType
+     * @param serchid
+     * @return
+     */
+    @RequestMapping("message_list")
+    public String message_list(HttpServletRequest request,Integer indexpage,Integer receiverType,String serchid){
+        Integer serchid1 = null;
+        if (serchid!=null&&serchid.matches("^[0-9]*$")&&!serchid.equals("")){
+            serchid1 = Integer.valueOf(serchid);
+        }
+        PageInfo pageInfo = adminServiceimpl.selectMessaage(indexpage, receiverType, serchid1);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchid",serchid);
+        if (receiverType == 1){
+            return "/admin/messageuser-list";
+        }
+        return "/admin/messagehorseman-list";
+    }
+
 
     @RequestMapping("picture_add")
     public String picture_add(){
