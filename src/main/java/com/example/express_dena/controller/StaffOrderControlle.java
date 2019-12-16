@@ -156,7 +156,7 @@ public class StaffOrderControlle {
         Integer hosermanid = 1;
         PageInfo<Order> pageInfo = staffOrderService.searchGetOrderInfo(indexpage,orderno,hosermanid,status);
         request.setAttribute("pages",pageInfo);
-        return "/staff/staffGetOrder::article_type";
+        return "/staff/staffGetOrder";
     }
     //搜索历史订单
     @RequestMapping("searchHistoryOrder")
@@ -167,7 +167,7 @@ public class StaffOrderControlle {
         Integer showHosemanStatus = 0;
         PageInfo<Order> pageInfo = staffOrderService.searchHistoryOrder(indexpage,hosermanid,orderno,status,showHosemanStatus);
         request.setAttribute("pages",pageInfo);
-        return "/staff/staffhistoryOrder::article_type";
+        return "/staff/staffhistoryOrder";
     }
     //删除历史订单
     @RequestMapping("deleteHistoryOrder")
