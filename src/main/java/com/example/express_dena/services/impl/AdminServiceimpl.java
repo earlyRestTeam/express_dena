@@ -196,7 +196,7 @@ public class AdminServiceimpl implements AdminService {
     }
 
     /**
-     * 根据邮箱，电话，或者用户名查询所有骑手（serchname为空则查全部）
+     * 根据邮箱，电话，或者用户名查询所有待审核骑手（serchname为空则查全部）
      * @param indexpage
      * @param serchname
      * @return
@@ -209,9 +209,11 @@ public class AdminServiceimpl implements AdminService {
 
         HorsemanExample example = new HorsemanExample();
         if (serchname != null&&!serchname.equals("")&&!serchname.equals("null")){
-            example.or().andUsernameLike(serchname+"%");
-            example.or().andEmailLike(serchname+"%");
-            example.or().andPhoneLike(serchname+"%");
+            example.or().andUsernameLike(serchname+"%").andStatusEqualTo((byte) 0);
+            example.or().andEmailLike(serchname+"%").andStatusEqualTo((byte) 0);
+            example.or().andPhoneLike(serchname+"%").andStatusEqualTo((byte) 0);
+        }else {
+            example.or().andStatusEqualTo((byte) 0);
         }
 
         PageHelper.startPage(indexpage,10);

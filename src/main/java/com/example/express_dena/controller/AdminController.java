@@ -215,7 +215,7 @@ public class AdminController {
     }
 
     /**
-     * 显示申请骑手审核列表即所有状态的骑手
+     * 显示申请骑手待审核列表
      * @param request
      * @param indexpage
      * @param serchname
@@ -241,6 +241,19 @@ public class AdminController {
     @RequestMapping("checked_apply")
     public String checked_apply(Integer horsemanid,Byte status){
         adminServiceimpl.updateChecked_apply(horsemanid,status);
+        return "redirect:/admin/article_list";
+    }
+    /**
+     * 批量审核骑手的申请
+     * @param horsemanid
+     * @param status
+     * @return
+     */
+    @RequestMapping("checked_applymore")
+    public String checked_applymore(Integer horsemanid[],Byte status){
+        for (int i = 0; i <horsemanid.length ; i++) {
+            adminServiceimpl.updateChecked_apply(horsemanid[i],status);
+        }
         return "redirect:/admin/article_list";
     }
 
@@ -361,6 +374,19 @@ public class AdminController {
     @RequestMapping("update_drawmoney")
     public String update_drawmoney(Integer id,Float withdrawalsBalance){
         boolean b = adminServiceimpl.updateDrawmoney(id,withdrawalsBalance);
+        return "redirect:/admin/drawmoney_list?status=2";
+    }
+
+    /**
+     * 批量处理提现申请并且发送消息提醒
+     * @param id
+     * @return
+     */
+    @RequestMapping("update_drawmoneymore")
+    public String update_drawmoneymore(Integer id[],Float withdrawalsBalance[]){
+        for (int i = 0; i <id.length ; i++) {
+            adminServiceimpl.updateDrawmoney(id[i],withdrawalsBalance[i]);
+        }
         return "redirect:/admin/drawmoney_list?status=2";
     }
 

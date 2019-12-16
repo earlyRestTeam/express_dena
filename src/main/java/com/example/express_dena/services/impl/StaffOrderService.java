@@ -32,8 +32,12 @@ public class StaffOrderService implements IStaffOrderService {
         OrderExample.Criteria criteria = orderExample.createCriteria();
         criteria.andStatusEqualTo(status);
 
+        orderExample.setOrderByClause("create_time desc");
+
         PageHelper.startPage(indexpage,3);
+
         List<Order> orderList = orderMapper.selectByExample(orderExample);
+
         PageInfo<Order> info = new PageInfo<>(orderList,5);
 
         return info;
@@ -79,10 +83,14 @@ public class StaffOrderService implements IStaffOrderService {
         OrderExample orderExample = new OrderExample();
         OrderExample.Criteria criteria = orderExample.createCriteria();
         criteria.andHosermanidEqualTo(hosermanid).andStatusEqualTo(status);
+        orderExample.setOrderByClause("pick_up_time desc");
 
         PageHelper.startPage(indexpage,5);
+
         List<Order> orderList = orderMapper.selectByExample(orderExample);
+
         PageInfo<Order> info = new PageInfo<>(orderList,5);
+
         return info;
     }
 
@@ -104,10 +112,14 @@ public class StaffOrderService implements IStaffOrderService {
         OrderExample orderExample = new OrderExample();
         OrderExample.Criteria criteria = orderExample.createCriteria();
         criteria.andHosermanidEqualTo(hosermanid).andStatusEqualTo(status).andShowHosemanStatusEqualTo(showHosemanStatus);
+        orderExample.setOrderByClause("end_time desc");
 
         PageHelper.startPage(indexpage,5);
+
         List<Order> orderList = orderMapper.selectByExample(orderExample);
+
         PageInfo<Order> info = new PageInfo<>(orderList,5);
+
         return info;
     }
 
