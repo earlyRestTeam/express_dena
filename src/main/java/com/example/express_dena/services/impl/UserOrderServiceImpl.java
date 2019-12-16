@@ -1,6 +1,7 @@
 package com.example.express_dena.services.impl;
 
 import com.alipay.api.AlipayApiException;
+import com.example.express_dena.mapper.CommentMapper;
 import com.example.express_dena.mapper.HorsemanMapper;
 import com.example.express_dena.mapper.OrderMapper;
 import com.example.express_dena.mapper.OrderdetailMapper;
@@ -14,6 +15,7 @@ import com.example.express_dena.util.StaticPool;
 import com.github.pagehelper.PageException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,9 @@ public class UserOrderServiceImpl implements UserOrderService {
     HorsemanMapper horsemanMapper;
 
     @Autowired
+    CommentMapper commentMapper;
+
+    @Autowired
     IMessageService iMessageService;
 
     @Autowired
@@ -53,6 +58,7 @@ public class UserOrderServiceImpl implements UserOrderService {
         order.setComfirmUserStatus(0);              //设置用户确认完成
         order.setComfirmHosemanStatus(0);          //设置骑手确认完成
         order.setCommentNum(orderdetails.size());  //快递包裹个数
+        order.setRemark1("未评论，点击评论");
 
         LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
         User user = new User();
@@ -309,10 +315,34 @@ public class UserOrderServiceImpl implements UserOrderService {
         return res;
     }
 
-    //评论
+    //添加评论
     @Override
-    public Map<String, String> insertComments(int userid, String contenr, int orderid, int hosemanid) {
-        return null;
+    public Map<String, String> insertComments(Comment comment) {
+        int orderid = comment.getOrderId();
+        Order order = orderMapper.selectByPrimaryKey(orderid);
+        if(order == null)
+            throw new PayException("订单取消失败");
+        if(order.getRemark1().equals("未评论，点击评论")){
+            order.setRemark1("以评论，再评论?");
+            int updateorder = orderMapper.updateByPrimaryKey(order);
+            int result = commentMapper.insert(comment);
+            Map<String, String> res = new HashMap<>();
+            if(result > 0 && updateorder > 0){
+                res.put(StaticPool.SUCCESS,"评论成功");
+            }else{
+                res.put(StaticPool.SUCCESS,"评论失败");
+            }
+            return res;
+        }else{
+            int result = commentMapper.insert(comment);
+            Map<String, String> res = new HashMap<>();
+            if(result > 0){
+                res.put(StaticPool.SUCCESS,"评论成功");
+            }else{
+                res.put(StaticPool.SUCCESS,"评论失败");
+            }
+            return res;
+        }
     }
 
     @Override
@@ -322,5 +352,7 @@ public class UserOrderServiceImpl implements UserOrderService {
         List<Order> list = orderMapper.selectByExample(example);
         return list == null ? 0 : list.size();
     }
+
+
 }
 

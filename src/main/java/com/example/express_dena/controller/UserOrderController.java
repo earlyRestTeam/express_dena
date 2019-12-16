@@ -1,10 +1,7 @@
 package com.example.express_dena.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.express_dena.pojo.Message;
-import com.example.express_dena.pojo.Order;
-import com.example.express_dena.pojo.Orderdetail;
-import com.example.express_dena.pojo.User;
+import com.example.express_dena.pojo.*;
 import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.IAliPayService;
 import com.example.express_dena.services.IMessageService;
@@ -142,7 +139,6 @@ public class UserOrderController {
     //前往支付页面
     @RequestMapping("topay")
     public void payorder(String totalAmount, String orderno, HttpServletResponse httpResponse) throws IOException {
-
         String form = iAliPayService.genPage(totalAmount,orderno);
         httpResponse.setContentType("text/html;charset=" + "utf8");
         httpResponse.getWriter().write(form);//直接将完整的表单html输出到页面
@@ -213,4 +209,35 @@ public class UserOrderController {
         return "orderdetils";
     }
 
+    //查看订单详情
+    @RequestMapping("tocomments")
+    public String tocomments(Integer orderid, HttpServletRequest request){
+        request.setAttribute("orderid",orderid);
+        return "comments";
+    }
+
+    @RequestMapping("submitcomments")
+    @ResponseBody
+    public APIResult submitcomments(@RequestBody JSONObject jsonObject,HttpServletRequest request){
+        String orderid = (String) jsonObject.get("orderid");
+        String comments = (String) jsonObject.get("comments");
+        System.out.println("orderid"+orderid);
+        System.out.println("comments"+comments);
+        Order order = service.selectOrderById(Integer.parseInt(orderid));
+
+        int userid = order.getUserid();
+        int hosermanid = order.getHosermanid();
+
+        Comment comment = new Comment();
+        comment.setContent(comments);
+        comment.setCreateTime(new Date());
+        comment.setHorsemanId(hosermanid);
+        comment.setOrderId(Integer.parseInt(orderid));
+        comment.setStatus((byte) 1);
+        comment.setUserId(userid);
+        Map<String,String> map = service.insertComments(comment);
+        APIResult apiResult = new APIResult();
+        apiResult.setData(map);
+        return apiResult;
+    }
 }

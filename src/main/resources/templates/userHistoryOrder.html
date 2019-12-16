@@ -290,7 +290,7 @@
                                     <td th:text="${order.commentNum}"></td>
                                     <td th:text="${order.endTime}"></td>
                                     <td>
-                                        <a th:onclick="comment([[${order.id}]])" class="queren">去评论</a>
+                                        <a th:onclick="tocomments([[${order.id}]])" class="queren" th:text="${order.remark1}">去评论</a>
                                         <a th:onclick="del([[${order.id}]])" class="queren">删除订单</a>
                                     </td>
                                     <td><a th:onclick="checkOrderDetail([[${order.id}]])">点击显示详情</a></td>
@@ -503,8 +503,11 @@
 
     /*查看订单详情*/
     function checkOrderDetail(orderid) {
-        alert(orderid);
         window.location.href ="/user/checkOrderDetail?orderid="+orderid;
+    }
+    /*评价该订单*/
+    function tocomments(orderid) {
+        window.location.href ="/user/tocomments?orderid="+orderid;
     }
 </script>
 </body>

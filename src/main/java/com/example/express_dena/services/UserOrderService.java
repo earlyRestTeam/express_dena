@@ -1,5 +1,6 @@
 package com.example.express_dena.services;
 
+import com.example.express_dena.pojo.Comment;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.OrderExample;
 import com.example.express_dena.pojo.Orderdetail;
@@ -46,8 +47,8 @@ public interface UserOrderService {
     //确认订单完成
     public Map<String,String> updateCompleteOrder(int Orderid);
 
-    //评论
-    public Map<String,String> insertComments(int userid,String contenr,int orderid,int hosemanid);
+    //添加评论
+    public Map<String,String> insertComments(Comment comment);
 
     /**
      * 查找 指定用户 指定状态 的 数量
@@ -56,5 +57,7 @@ public interface UserOrderService {
      * @return
      */
     int selectOrderCountByUseridAndOrderStatus(int userid,int status);
+
+
 
 }
