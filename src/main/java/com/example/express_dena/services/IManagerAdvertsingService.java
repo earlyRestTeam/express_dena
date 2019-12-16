@@ -2,27 +2,35 @@ package com.example.express_dena.services;
 
 import com.example.express_dena.pojo.Advertising;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 
 import java.util.Date;
 import java.util.List;
 
-public interface IManagerAdversingService {
+public interface IManagerAdvertsingService {
     /**
      * 查询广告
+     * @param index
      * @param constituency
-     * @param createTime
-     * @param endTime
+     * @param title
      * @param status
      * @return
      */
-    Page selectAdversing(String constituency, Date createTime, Date endTime, Byte status);
+    PageInfo selectAdversing(Integer index, String constituency, String title, Byte status);
 
     /**
      * 删除广告
-     * @param advertisingList
+     * @param advertising
      * @return
      */
-    boolean deleteAdversing(List<Advertising> advertisingList);
+    boolean deleteAdversing(Advertising advertising);
+
+    /**
+     * 批量删除广告
+     * @param ids
+     * @return
+     */
+    boolean deleteADs(Integer[] ids);
 
     /**
      * 添加广告

@@ -1,30 +1,46 @@
 package com.example.express_dena.controller;
 
 
+import com.example.express_dena.pojo.Advertising;
 import com.example.express_dena.pojo.Comment;
-import com.example.express_dena.services.impl.AdminServiceimpl;
+import com.example.express_dena.services.impl.*;
 import com.example.express_dena.util.StaticPool;
-import com.example.express_dena.services.impl.ManagerOrderServiceImpl;
+import com.example.express_dena.pojo.Address;
 import com.github.pagehelper.PageInfo;
 import com.example.express_dena.services.impl.AdminServiceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    @Resource
+    @Autowired
     ManagerOrderServiceImpl orderService;
 
     @Autowired
+    ManagerAddressServiceimpl addressServiceimpl;
+
+    @Autowired
     AdminServiceimpl adminServiceimpl;
+
+    @Autowired
+    ManagerAdvertsingServiceImpl advertsingService;
 
     @RequestMapping("/login")
     public String login(Model model){
@@ -472,20 +488,238 @@ public class AdminController {
     }
 
     @RequestMapping("address_list")
-    public String address_list(){
+    public String address_list(Integer indexpage, HttpServletRequest request, String province, String city, String street, String area, Byte status){
+        PageInfo info = addressServiceimpl.selectAddress(indexpage,province,city,street,area,status);
+        request.setAttribute("province",province);
+        request.setAttribute("city",city);
+        request.setAttribute("street",street);
+        request.setAttribute("area",area);
+        request.setAttribute("status",status);
+        request.setAttribute("pages",info);
         return "/admin/address-list";
     }
 
-    @RequestMapping("adversing_list")
-    public String adversing_list(){
-        return "/admin/adversing-list";
+    @RequestMapping("address_list_status")
+    public String address_list_status(Integer id, Byte status){
+        status = (byte) ((status+1)%2);
+        Address address = new Address();
+        address.setId(id);
+        address.setStatus(status);
+        boolean b = addressServiceimpl.update(address);
+        if (b = false)
+            return "redirect:/admin/address_list?updatestatus=false";
+        else
+            return "redirect:/admin/address_list?updatestatus=ture";
+    }
+
+    @RequestMapping("address_add")
+    public String address_add(String result){
+        return "/admin/address-add";
+    }
+
+    @RequestMapping("address_add_submit")
+    public String address_add_submit(String province, String city, String area, String street){
+        boolean result = addressServiceimpl.selectExist(province,city, street, area);
+        if (result == true) {
+            Address address = new Address();
+            address.setProvince(province);
+            address.setCity(city);
+            address.setArea(area);
+            address.setStreet(street);
+            address.setStatus((byte) 0);
+            address.setCreateTime(new Date());
+            addressServiceimpl.addAddress(address);
+            return "redirect:/admin/address_list";
+        } else {
+            return "redirect:/admin/address_add?result=flase";
+        }
+    }
+
+    @RequestMapping("address_update")
+    public String address_update(HttpServletRequest request, Integer id,
+                                 String province, String city, String area, String street) {
+        request.setAttribute("id",id);
+        request.setAttribute("province", province);
+        request.setAttribute("city", city);
+        request.setAttribute("area", area);
+        request.setAttribute("street", street);
+
+        return "/admin/address-update";
+    }
+
+    @RequestMapping("address_update_submit")
+    public String address_update_sumit(Integer id, String newprovince,
+                                       String newcity, String newarea, String newstreet) {
+        Address address = new Address();
+        address.setId(id);
+        if (newprovince != null) {
+            address.setProvince(newprovince);
+        }
+        if (newcity != null){
+            address.setCity(newcity);
+        }
+        if (newarea != null) {
+            address.setArea(newarea);
+        }
+        if (newstreet != null) {
+            address.setStreet(newstreet);
+        }
+        addressServiceimpl.updateAddress(address);
+
+        return "redirect:/admin/address_list";
+    }
+
+    @RequestMapping("address_delone")
+    public String address_delone(Integer id){
+        Address address = new Address();
+        address.setId(id);
+        addressServiceimpl.deleteOne(address);
+        return "redirect:/admin/address_list";
+    }
+
+    @RequestMapping("address_del")
+    public String address_del(Integer[] ids){
+        addressServiceimpl.deleteAddress(ids);
+        return "redirect:/admin/address_list";
+    }
+
+    @RequestMapping("advertsing_list")
+    public String advertsing_list(Integer indexpage, HttpServletRequest request,String constituency, String title, Byte status){
+        PageInfo info = advertsingService.selectAdversing(indexpage,constituency,title,status);
+        request.setAttribute("constituency",constituency);
+        request.setAttribute("title",title);
+        request.setAttribute("status",status);
+        request.setAttribute("pages",info);
+        return "/admin/advertsing-list";
+    }
+
+    @RequestMapping("advertsing_list_status")
+    public String advertsing_list_status(Integer id, Byte status){
+        status = (byte) ((status+1)%2);
+        Advertising advertsing = new Advertising();
+        advertsing.setId(id);
+        advertsing.setStatus(status);
+        boolean b = advertsingService.updateAdversing(advertsing);
+        if (b = false)
+            return "redirect:/admin/advertsing_list?updatestatus=false";
+        else
+            return "redirect:/admin/advertsing_list?updatestatus=ture";
+    }
+
+    @RequestMapping("advertsing_add")
+    public String advertsing_add(){
+        return "/admin/advertsing-add";
+    }
+
+    @RequestMapping("advertsing_add_submit")
+    public String advertsing_add_sumbit(String constituency, String content, String pic,
+                                 String title, String url, String createTime, String endTime){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date ctime = null;
+        Date etime = null;
+        try {
+            ctime = sdf.parse(createTime);
+            etime = sdf.parse(endTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Advertising advertsing = new Advertising();
+        advertsing.setConstituency(constituency);
+        advertsing.setContent(content);
+        advertsing.setCreateTime(ctime);
+        advertsing.setEndTime(etime);
+        advertsing.setPic(pic);
+        advertsing.setStatus((byte) 0);
+        advertsing.setTitle(title);
+        advertsing.setUrl(url);
+        advertsingService.addAdversing(advertsing);
+
+        return "redirect:/admin/advertsing_list";
+    }
+
+    @RequestMapping("advertsing_update")
+    public String advertsing_update(HttpServletRequest request, Integer id, String createTime, String endTime,
+                                    String constituency, String content, String pic, String title, String url) {
+
+        Date ctime = null;
+        Date etime = null;
+        SimpleDateFormat sdf1 = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.US);
+        try {
+            ctime = sdf1.parse(createTime);
+            etime = sdf1.parse(endTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        String timec = sdf2.format(ctime);
+        String timee = sdf2.format(etime);
+
+        request.setAttribute("id",id);
+        request.setAttribute("constituency", constituency);
+        request.setAttribute("content", content);
+        request.setAttribute("pic", pic);
+        request.setAttribute("createTime",timec);
+        request.setAttribute("endTime",timee);
+        request.setAttribute("title", title);
+        request.setAttribute("url",url);
+
+        return "/admin/advertsing-update";
+    }
+
+    @RequestMapping("advertsing_update_submit")
+    public String advertsing_update_submit(Integer id, String newcreateTime, String newendTime,
+                                    String newconstituency, String newcontent, String newpic, String newtitle, String newurl) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date ctime = null;
+        Date etime = null;
+        try {
+            ctime = sdf.parse(newcreateTime);
+            etime = sdf.parse(newendTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Advertising advertsing = new Advertising();
+        advertsing.setId(id);
+        advertsing.setConstituency(newconstituency);
+        advertsing.setContent(newcontent);
+        advertsing.setPic(newpic);
+        advertsing.setTitle(newtitle);
+        advertsing.setUrl(newurl);
+        advertsing.setCreateTime(ctime);
+        advertsing.setCreateTime(etime);
+        advertsingService.updateAdversing(advertsing);
+
+        return "redirect:/admin/advertsing_list";
+    }
+
+    @RequestMapping("advertsing_delone")
+    public String advertsing_delone(Integer id){
+        Advertising advertsing = new Advertising();
+        advertsing.setId(id);
+        advertsingService.deleteAdversing(advertsing);
+        return "redirect:/admin/advertsing_list";
+    }
+
+    @RequestMapping("advertsing_del")
+    public String advertsing_del(Integer[] ids){
+        advertsingService.deleteADs(ids);
+        return "redirect:/admin/advertsing_list";
+    }
+
+    @RequestMapping("advertsing_show")
+    public String advertsing_show(){
+        return "advertsing-show";
     }
 
     @RequestMapping("order_list")
-    public String order_list(Integer indexpage, HttpServletRequest request){
-        PageInfo info = orderService.selectOrder(indexpage, null, null, null, null, null, null, null, null);
-        request.setAttribute("orders",info);
-
+    public String order_list(Integer indexpage, HttpServletRequest request, String serchno, String serchuser, String serchhoser){
+        PageInfo info = orderService.selectOrder(indexpage, serchno, serchuser, serchhoser);
+        request.setAttribute("pages",info);
+        request.setAttribute("serchno",serchno);
+        request.setAttribute("serchuser",serchuser);
+        request.setAttribute("serchhoser",serchhoser);
         return "/admin/order-list";
     }
 }

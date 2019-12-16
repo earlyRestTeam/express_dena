@@ -22,14 +22,7 @@ public interface IManagerOrderService {
      * @param orderno
      * @param username
      * @param hosermanName
-     * @param createTimeMin
-     * @param createTimeMax
-     * @param endTimeMin
-     * @param endTimeMax
-     * @param status
      * @return
      */
-    PageInfo selectOrder(Integer indexpage, String orderno, String username, String hosermanName,
-                         Date createTimeMin, Date createTimeMax, Date endTimeMin, Date endTimeMax,
-                         Integer status);
+    PageInfo selectOrder(Integer indexpage, String orderno, String username, String hosermanName);
 }
