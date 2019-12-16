@@ -48,7 +48,7 @@ public class AdminServiceimpl implements AdminService {
     public PageInfo selectUsers(Integer indexpage,String serchname) {
 
         if (indexpage == null){
-            indexpage = 0;
+            indexpage = 1;
         }
 
         UserExample example = new UserExample();
@@ -75,7 +75,7 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public PageInfo selectUsersStop(Integer indexpage, String serchname) {
         if (indexpage == null){
-            indexpage = 0;
+            indexpage = 1;
         }
 
         UserExample example = new UserExample();
@@ -126,7 +126,7 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public PageInfo selectHorseman(Integer indexpage, String serchname) {
         if (indexpage == null){
-            indexpage = 0;
+            indexpage = 1;
         }
 
         HorsemanExample example = new HorsemanExample();
@@ -153,7 +153,7 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public PageInfo selectHorsemanStop(Integer indexpage, String serchname) {
         if (indexpage == null){
-            indexpage = 0;
+            indexpage = 1;
         }
 
         HorsemanExample example = new HorsemanExample();
@@ -204,7 +204,7 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public PageInfo selectAllHorseman(Integer indexpage, String serchname) {
         if (indexpage == null){
-            indexpage = 0;
+            indexpage = 1;
         }
 
         HorsemanExample example = new HorsemanExample();
@@ -273,7 +273,7 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public PageInfo selectComment(Integer indexpage, Integer serchid) {
         if (indexpage == null){
-            indexpage = 0;
+            indexpage = 1;
         }
 
         CommentExample example = new CommentExample();
@@ -300,7 +300,7 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public PageInfo selectCommentStop(Integer indexpage, Integer serchid) {
         if (indexpage == null){
-            indexpage = 0;
+            indexpage = 1;
         }
 
         CommentExample example = new CommentExample();
@@ -355,7 +355,7 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public PageInfo selectDrawmoney(Integer indexpage, Integer status, Integer serchid) {
         if (indexpage == null){
-            indexpage = 0;
+            indexpage = 1;
         }
 
         WithdrawalsExample example = new WithdrawalsExample();
@@ -401,7 +401,7 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public PageInfo selectMessaage(Integer indexpage, Integer receiver_type, Integer serchid) {
         if (indexpage == null){
-            indexpage = 0;
+            indexpage = 1;
         }
 
         MessageExample example = new MessageExample();
