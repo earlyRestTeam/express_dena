@@ -1,6 +1,7 @@
 package com.example.express_dena.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.AlipayApiException;
 import com.example.express_dena.pojo.*;
 import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.IAliPayService;
@@ -10,7 +11,9 @@ import com.example.express_dena.util.APIResult;
 import com.example.express_dena.util.PayException;
 import com.example.express_dena.util.StaticPool;
 import com.github.pagehelper.PageInfo;
+import com.sun.corba.se.spi.presentation.rmi.IDLNameTranslator;
 import com.sun.org.apache.regexp.internal.RE;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,20 +49,22 @@ public class UserOrderController {
 
     //查看用户当前订单
     @RequestMapping("currentUserOrder")
-    public String selectOrderCurrent(Integer indexpage, HttpServletRequest request){
+    public String selectOrderCurrent(Integer indexpage, HttpServletRequest request,String serchid){
         LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
         User user =loginEntityHelper.getEntityByClass(User.class);
-        PageInfo info = service.selectOrderCurrent(user.getId(),indexpage);
+        PageInfo info = service.selectOrderCurrent(user.getId(),indexpage,serchid);
+        request.setAttribute("serchid",serchid);
         request.setAttribute("pages",info);
         return "/currentUserOrder";
     }
 
-    //查看用户历史订单
+    //查看用户历史订单(订单号或接单员为空则为全部)
     @RequestMapping("userHistoryOrder")
-    public String selectuserHistoryOrder(Integer indexpage, HttpServletRequest request){
+    public String selectuserHistoryOrder(Integer indexpage, HttpServletRequest request,String serchid){
         LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
         User user =loginEntityHelper.getEntityByClass(User.class);
-        PageInfo info = service.selectHistoryOrder(user.getId(),indexpage);
+        PageInfo info = service.selectHistoryOrder(user.getId(),indexpage,serchid);
+        request.setAttribute("serchid",serchid);
         request.setAttribute("pages",info);
         return "/userHistoryOrder";
     }
@@ -148,9 +153,27 @@ public class UserOrderController {
 
     //支付成功后返回
     @RequestMapping("returnUrl")
-    public String returnusrl(){
-        System.out.println("支付");
-          return "submitOrder";
+    public String returnusrl(HttpServletRequest request){
+          String orderno = request.getParameter("out_trade_no");
+          Order order = service.selecteOrderByNO(orderno);
+        if(iAliPayService.checkAlipay(orderno)) {
+            int count = 3;
+            int result = service.updatePickOrder(order.getId());
+            while (result == 0 && count-- > 0) {
+                result = service.updatePickOrder(order.getId());
+            }
+            if (result > 0) {
+                return "redirect:/user/currentUserOrder";
+            }else{
+                try {
+                    iAliPayService.refund(orderno,order.getTotalAmount().toString());
+                    return "redirect:/user/submitOrder";
+                } catch (AlipayApiException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "redirect:/user/currentUserOrder";
     }
 
     //取消订单
@@ -160,7 +183,6 @@ public class UserOrderController {
         Integer orderid = (Integer) jsonObject.get("orderid");
         try{
             Map<String,String> map =  service.updateCancelOrderByID(orderid);
-
             return APIResult.genSuccessApiResponse(map.get(StaticPool.SUCCESS));
         }catch (PayException e){
             System.out.println("e.getMessage() = " + e.getMessage());

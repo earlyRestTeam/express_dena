@@ -211,115 +211,78 @@
 
 <!-------------contenr start--------->
         <div class="content">
-            <form id="submitForm" name="submitForm" action="" method="post">
-                <input type="hidden" name="allIDCheck" value="" id="allIDCheck"/>
-                <input type="hidden" name="fangyuanEntity.fyXqName" value="" id="fyXqName"/>
-                <div id="container">
-                    <div class="ui_content">
-                        <div class="ui_text_indent">
-                            <div id="box_border">
-                                <div id="box_top">搜索</div>
-                                <div id="box_center">
-                                    订单状态
-                                    <select name="fangyuanEntity.fyXqCode" id="fyXq" class="ui_select01" onchange="getFyDhListByFyXqCode();">
-                                        <option value=""
-                                        >--请选择--</option>
-                                        <option value="6">正在进行</option>
-                                        <option value="77">已完成</option>
-                                        <option value="83">已取消</option>
-                                    </select>
-
-                                    栋号
-                                    <select name="fangyuanEntity.fyDhCode" id="fyDh" class="ui_select01">
-                                        <option value="">--请选择--</option>
-                                    </select>
-                                    户型
-                                    <select name="fangyuanEntity.fyHxCode" id="fyHx" class="ui_select01">
-                                        <option value="">--请选择--</option>
-                                        <option value="76">一室一厅一卫</option>
-                                        <option value="10">两室一厅一卫</option>
-                                        <option value="14">三室一厅一卫</option>
-                                        <option value="71">三室两厅一卫</option>
-                                    </select>
-                                    状态
-                                    <select name="fangyuanEntity.fyStatus" id="fyStatus" class="ui_select01">
-                                        <option value="">--请选择--</option>
-                                        <option value="26">在建</option>
-                                        <option value="25">建成待租</option>
-                                        <option value="13">已配租</option>
-                                        <option value="12">已租赁</option>
-                                        <option value="24">腾退待租</option>
-                                        <option value="23">欠费</option>
-                                        <option value="27">其他</option>
-                                    </select>
-
-                                    座落&nbsp;&nbsp;<input type="text" id="fyZldz" name="fangyuanEntity.fyZldz" class="ui_input_txt02" />
-                                </div>
-                                <div id="box_bottom">
-                                    <input type="button" value="查询" class="btn btn-info" onclick="search();" />
-                                    <input type="button" value="新增" class="btn btn-info" id="addBtn" />
-                                    <input type="button" value="删除" class="btn btn-info" onclick="batchDel();" />
-                                    <input type="button" value="导入" class="btn btn-info" id="importBtn" />
-                                    <input type="button" value="导出" class="btn btn-info" onclick="exportExcel();" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui_content">
-                        <div class="ui_tb">
-                            <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
-                                <tr>
-                                    <th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" />
-                                    </th>
-                                    <th>订单号</th>
-                                    <th>接单员</th>
-                                    <th>开始时间</th>
-                                    <th>金额</th>
-                                    <th>包裹数量</th>
-                                    <th>完成时间</th>
-                                    <th>操作</th>
-                                    <th>显示详情</th>
-                                </tr>
-
-                                <tr th:each="order:${pages.list}">
-                                    <td><input type="checkbox" name="IDCheck" value="${order.orderid}" class="acb" /></td>
-                                    <td th:text="${order.orderno}"></td>
-                                    <td th:text="${order.hosermanName}"></td>
-                                    <td th:text="${order.createTime}"></td>
-                                    <td th:text="${order.totalAmount}"></td>
-                                    <td th:text="${order.commentNum}"></td>
-                                    <td th:text="${order.endTime}"></td>
-                                    <td>
-                                        <a th:onclick="tocomments([[${order.id}]])" class="queren" th:text="${order.remark1}">去评论</a>
-                                        <a th:onclick="del([[${order.id}]])" class="queren">删除订单</a>
-                                    </td>
-                                    <td><a th:onclick="checkOrderDetail([[${order.id}]])">点击显示详情</a></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="ui_tb_h30">
-                            <div class="ui_flt" style="height: 30px; line-height: 30px;">
-                                共有<span class="ui_txt_bold04" th:text="${pages.total}"></span>
-                                条记录，当前第<span class="ui_txt_bold04" th:text="${pages.pageNum}"></span>
-                                /<span class="ui_txt_bold04" th:text="${pages.pages}"></span>
-                                页
-                            </div>
-                            <div class="ui_frt">
-                                <!--    如果是第一页，则只显示下一页、尾页 -->
-
-                                <input onclick="jumpNormalPage(1);"  type="button" value="首页" class="ui_input_btn01" />
-                                <input th:onclick="|javascript : jumpNormalPage( '${pages.prePage}')|" type="button" value="上一页" class="ui_input_btn01" />
-                                <input th:onclick="|javascript : jumpNormalPage( '${pages.nextPage}')|" type="button" value="下一页" class="ui_input_btn01"/>
-                                <input th:onclick="|javascript : jumpNormalPage( '${pages.pages}')|" type="button" value="尾页" class="ui_input_btn01"/>
-                                <!--     如果是最后一页，则只显示首页、上一页 -->
-                                转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
-                                <input th:onclick="|javascript : jumpInputPage('${pages.pages}')|" type="button" class="ui_input_btn01" value="跳转"  />
-                                <input id="pages" type="hidden" th:value="${pages.pages}" />
+            <input type="hidden" name="allIDCheck" value="" id="allIDCheck"/>
+            <input type="hidden" name="fangyuanEntity.fyXqName" value="" id="fyXqName"/>
+            <div id="container">
+                <div class="ui_content">
+                    <div class="ui_text_indent">
+                        <div id="box_border">
+                            <div id="box_top">搜索</div>
+                            <div id="box_center">
+                                <form action="/user/userHistoryOrder" method="get">
+                                    <input th:value="${serchid}" placeholder="请输入订单号或者接单员名字" style="width: 300px;height: 40px;" type="text" id="serchid" name="serchid"  />
+                                    <div id="box_bottom" style="display: inline-block">
+                                        <input style="width: 80px;height: 40px;" type="submit" value="查询" class="btn btn-info"  />
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+                <div class="ui_content">
+                    <div class="ui_tb">
+                        <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+                            <tr>
+                                <th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" />
+                                </th>
+                                <th>订单号</th>
+                                <th>接单员</th>
+                                <th>开始时间</th>
+                                <th>金额</th>
+                                <th>包裹数量</th>
+                                <th>完成时间</th>
+                                <th>操作</th>
+                                <th>显示详情</th>
+                            </tr>
+
+                            <tr th:each="order:${pages.list}">
+                                <td><input type="checkbox" name="IDCheck" value="${order.orderid}" class="acb" /></td>
+                                <td th:text="${order.orderno}"></td>
+                                <td th:text="${order.hosermanName}"></td>
+                                <td th:text="${#dates.format(order.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td th:text="${order.totalAmount}"></td>
+                                <td th:text="${order.commentNum}"></td>
+                                <td th:text="${#dates.format(order.endTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td>
+                                    <a th:onclick="tocomments([[${order.id}]])" class="queren" th:text="${order.remark1}">去评论</a>
+                                    <a th:onclick="del([[${order.id}]])" class="queren">删除订单</a>
+                                </td>
+                                <td><a th:onclick="checkOrderDetail([[${order.id}]])">点击显示详情</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="ui_tb_h30">
+                        <div class="ui_flt" style="height: 30px; line-height: 30px;">
+                            共有<span class="ui_txt_bold04" th:text="${pages.total}"></span>
+                            条记录，当前第<span class="ui_txt_bold04" th:text="${pages.pageNum}"></span>
+                            /<span class="ui_txt_bold04" th:text="${pages.pages}"></span>
+                            页
+                        </div>
+                        <div class="ui_frt">
+                            <!--    如果是第一页，则只显示下一页、尾页 -->
+
+                            <input onclick="jumpNormalPage(1);"  type="button" value="首页" class="ui_input_btn01" />
+                            <input th:onclick="|javascript : jumpNormalPage( '${pages.prePage}')|" type="button" value="上一页" class="ui_input_btn01" />
+                            <input th:onclick="|javascript : jumpNormalPage( '${pages.nextPage}')|" type="button" value="下一页" class="ui_input_btn01"/>
+                            <input th:onclick="|javascript : jumpNormalPage( '${pages.pages}')|" type="button" value="尾页" class="ui_input_btn01"/>
+                            <!--     如果是最后一页，则只显示首页、上一页 -->
+                            转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
+                            <input th:onclick="|javascript : jumpInputPage('${pages.pages}')|" type="button" class="ui_input_btn01" value="跳转"  />
+                            <input id="pages" type="hidden" th:value="${pages.pages}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 <!-------------contenr end--------->
     </div>
@@ -473,8 +436,9 @@
     /** 普通跳转 **/
     function jumpNormalPage(page){
         var totalPage = parseInt($("#pages").val());
+        var serchid= $("#serchid").val()
         if(page>0 && page<=totalPage){
-            window.location.href="/user/userHistoryOrder?indexpage=" + page;
+            window.location.href="/user/userHistoryOrder?indexpage=" + page+"&serchid="+serchid;
         }
 
 

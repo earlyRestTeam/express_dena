@@ -52,7 +52,7 @@ public class UserOrderServiceImpl implements UserOrderService {
     public Map<String, String> insertOrder(Order order, List<Orderdetail> orderdetails) {
         Map<String, String> map = new HashMap<>();
         order.setCreateTime(new Date());            //设置订单创建时间
-        order.setStatus(1);                         //设置订单初始状态1 未接单
+        order.setStatus(5);                         //设置订单初始状态5 未支付
         order.setShowuserstatus(0);                 //设置用户可见初始状态0 （未删除历史订单）
         order.setShowHosemanStatus(0);              //设置骑手可见初始状态0 （未删除历史订单）
         order.setComfirmUserStatus(0);              //设置用户确认完成
@@ -97,16 +97,18 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     //查询当前订单
     @Override
-    public PageInfo selectOrderCurrent(int userid, Integer indexpage) {
+    public PageInfo selectOrderCurrent(int userid, Integer indexpage,String serchid) {
         OrderExample orderExample = new OrderExample();
-        OrderExample.Criteria criteria = orderExample.createCriteria();
-
-        criteria.andUseridEqualTo(userid);
         List<Integer> list1 = new ArrayList<>();
         list1.add(1);
         list1.add(2);
-        criteria.andStatusIn(list1);
+        list1.add(5);
+        if (serchid != null&&!"null".equals(serchid)){
 
+            orderExample.or().andUseridEqualTo(userid).andOrdernoLike(serchid+"%").andStatusIn(list1);
+        }else {
+            orderExample.or().andUseridEqualTo(userid).andStatusIn(list1);
+        }
         indexpage = indexpage == null ? 1 : indexpage;
 
         PageHelper.startPage(indexpage, 7);
@@ -116,21 +118,32 @@ public class UserOrderServiceImpl implements UserOrderService {
         PageInfo info = new PageInfo(list, 3);
 
         return info;
+
     }
 
     //查询历史订单
     @Override
-    public PageInfo selectHistoryOrder(int userid, Integer indexpage) {
+    public PageInfo selectHistoryOrder(int userid, Integer indexpage,String serchid) {
 
         OrderExample orderExample = new OrderExample();
-        OrderExample.Criteria criteria = orderExample.createCriteria();
         orderExample.setOrderByClause("end_time desc");
-        criteria.andUseridEqualTo(userid);
         List<Integer> list1 = new ArrayList<>();
         list1.add(3);
         list1.add(4);
-        criteria.andStatusIn(list1);
-        criteria.andShowuserstatusEqualTo(0);
+        if (serchid != null && !"null".equals(serchid)) {
+            orderExample.or().andStatusIn(list1)
+                    .andShowuserstatusEqualTo(0)
+                    .andUseridEqualTo(userid)
+                    .andHosermanNameLike(serchid + "%");
+            orderExample.or().andStatusIn(list1)
+                    .andShowuserstatusEqualTo(0)
+                    .andUseridEqualTo(userid)
+                    .andOrdernoLike(serchid + "%");
+        } else {
+            orderExample.or().andStatusIn(list1)
+                    .andShowuserstatusEqualTo(0)
+                    .andUseridEqualTo(userid);
+        }
 
         indexpage = indexpage == null ? 1 : indexpage;
 
@@ -142,7 +155,6 @@ public class UserOrderServiceImpl implements UserOrderService {
 
         return info;
     }
-
     //根据id查询订单详情
     @Override
     public Order selectOrderById(int orderid) {
@@ -351,6 +363,32 @@ public class UserOrderServiceImpl implements UserOrderService {
         example.createCriteria().andUseridEqualTo(userid).andStatusEqualTo(status);
         List<Order> list = orderMapper.selectByExample(example);
         return list == null ? 0 : list.size();
+    }
+
+
+    //根据订单编号查询
+    @Override
+    public Order selecteOrderByNO(String orderno) {
+        OrderExample orderExample = new OrderExample();
+        OrderExample.Criteria criteria = orderExample.createCriteria();
+        criteria.andOrdernoEqualTo(orderno);
+        List<Order> order = new ArrayList<>();
+        Order order1 = new Order();
+        order =  orderMapper.selectByExample(orderExample);
+        if(order != null){
+            order1  = order.get(0);
+            return order1;
+        }
+        return null;
+    }
+
+    //是未支付订单状态变为未结单
+    @Override
+    public int updatePickOrder(int orderid) {
+        Order order = orderMapper.selectByPrimaryKey(orderid);
+        order.setStatus(1);  //修改未未结单状态
+        int result = orderMapper.updateByPrimaryKey(order);
+        return result;
     }
 
 

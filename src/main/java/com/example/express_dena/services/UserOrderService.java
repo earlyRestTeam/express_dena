@@ -21,10 +21,10 @@ public interface UserOrderService {
     public Map<String,String> insertOrder(Order order, List<Orderdetail> orderdetails);
 
     //查询当前订单
-    public PageInfo selectOrderCurrent(int userid,Integer indexpage);
+    public PageInfo selectOrderCurrent(int userid, Integer indexpage,String serchid);
 
     //查询历史已完成订单
-    public PageInfo selectHistoryOrder(int userid,Integer indexpage);
+    public PageInfo selectHistoryOrder(int userid, Integer indexpage,String serchid);
 
     //根据orderid查询订单信息
     public Order selectOrderById(int orderid);
@@ -57,6 +57,12 @@ public interface UserOrderService {
      * @return
      */
     int selectOrderCountByUseridAndOrderStatus(int userid,int status);
+
+    //根据订单编号查询订单
+    public Order selecteOrderByNO(String orderno);
+
+    //是未支付订单状态变为未结单
+    public int updatePickOrder(int orderid);
 
 
 

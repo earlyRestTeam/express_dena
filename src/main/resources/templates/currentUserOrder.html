@@ -220,57 +220,20 @@
 
 <!-------------contenr start--------->
         <div class="content">
-            <form id="submitForm" name="submitForm" action="" method="post">
-                <input type="hidden" name="allIDCheck" value="" id="allIDCheck"/>
-                <input type="hidden" name="fangyuanEntity.fyXqName" value="" id="fyXqName"/>
-                <div id="container">
-                    <div class="ui_content">
-                        <div class="ui_text_indent">
-                            <div id="box_border">
-                                <div id="box_top">搜索</div>
-                                <div id="box_center">
-                                    订单状态
-                                    <select name="fangyuanEntity.fyXqCode" id="fyXq" class="ui_select01" onchange="getFyDhListByFyXqCode();">
-                                        <option value=""
-                                        >--请选择--</option>
-                                        <option value="6">正在进行</option>
-                                        <option value="77">已完成</option>
-                                        <option value="83">已取消</option>
-                                    </select>
-
-                                    栋号
-                                    <select name="fangyuanEntity.fyDhCode" id="fyDh" class="ui_select01">
-                                        <option value="">--请选择--</option>
-                                    </select>
-                                    户型
-                                    <select name="fangyuanEntity.fyHxCode" id="fyHx" class="ui_select01">
-                                        <option value="">--请选择--</option>
-                                        <option value="76">一室一厅一卫</option>
-                                        <option value="10">两室一厅一卫</option>
-                                        <option value="14">三室一厅一卫</option>
-                                        <option value="71">三室两厅一卫</option>
-                                    </select>
-                                    状态
-                                    <select name="fangyuanEntity.fyStatus" id="fyStatus" class="ui_select01">
-                                        <option value="">--请选择--</option>
-                                        <option value="26">在建</option>
-                                        <option value="25">建成待租</option>
-                                        <option value="13">已配租</option>
-                                        <option value="12">已租赁</option>
-                                        <option value="24">腾退待租</option>
-                                        <option value="23">欠费</option>
-                                        <option value="27">其他</option>
-                                    </select>
-
-                                    座落&nbsp;&nbsp;<input type="text" id="fyZldz" name="fangyuanEntity.fyZldz" class="ui_input_txt02" />
-                                </div>
-                                <div id="box_bottom">
-                                    <input type="button" value="查询" class="btn btn-info" onclick="search();" />
-                                    <input type="button" value="新增" class="btn btn-info" id="addBtn" />
-                                    <input type="button" value="删除" class="btn btn-info" onclick="batchDel();" />
-                                    <input type="button" value="导入" class="btn btn-info" id="importBtn" />
-                                    <input type="button" value="导出" class="btn btn-info" onclick="exportExcel();" />
-                                </div>
+            <input type="hidden" name="allIDCheck" value="" id="allIDCheck"/>
+            <input type="hidden" name="fangyuanEntity.fyXqName" value="" id="fyXqName"/>
+            <div id="container">
+                <div class="ui_content">
+                    <div class="ui_text_indent">
+                        <div id="box_border">
+                            <div id="box_top">搜索</div>
+                            <div id="box_center">
+                                <form action="/user/currentUserOrder" method="get">
+                                    <input th:value="${serchid}" placeholder="请输入订单号" style="width: 300px;height: 40px;" type="text" id="serchid" name="serchid"  />
+                                    <div id="box_bottom" style="display: inline-block">
+                                        <input style="width: 80px;height: 40px;" type="submit" value="查询" class="btn btn-info"  />
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -293,16 +256,16 @@
                                 <tr th:each="order:${pages.list}">
                                     <td><input type="checkbox" name="IDCheck" value="${order.orderid}" class="acb" /></td>
                                     <td id="orderno" th:text="${order.orderno}"></td>
-                                    <td th:text="${order.createTime}"></td>
+                                    <td th:text="${#dates.format(order.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:text="${order.commentNum}"></td>
                                     <td th:text="${order.totalAmount}"></td>
                                     <td th:text="${order.ReturnStatus}"></td>
                                     <td th:text="${order.note}"></td>
                                     <td>
                                         <a
-                                           th:onclick="updateStatus([[${order.ReturnConfirmStatus}]],[[${order.id}]])"
-                                           class="queren"
-                                           th:text="${order.ReturnConfirmStatus}"></a>
+                                                th:onclick="updateStatus([[${order.ReturnConfirmStatus}]],[[${order.id}]])"
+                                                class="queren"
+                                                th:text="${order.ReturnConfirmStatus}"></a>
                                     </td>
                                     <td><a th:onclick="checkOrderDetail([[${order.id}]])">点击显示详情</a></td>
                                 </tr>
@@ -330,8 +293,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
 <!-------------contenr end--------->
     </div>
 
@@ -502,8 +464,9 @@
     /** 普通跳转 **/
     function jumpNormalPage(page){
         var totalPage = parseInt($("#pages").val());
+        var  serch = $("#serchid").val();
         if(page>0 && page<=totalPage){
-            window.location.href="/user/currentUserOrder?indexpage=" + page;
+            window.location.href="/user/currentUserOrder?indexpage=" + page+"&serchid="+serch;
         }
 
 

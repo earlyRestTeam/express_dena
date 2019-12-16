@@ -3,8 +3,11 @@ package com.example.express_dena.services.impl;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.domain.AlipayTradeQueryModel;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.example.express_dena.config.AliPayConfig;
 import com.example.express_dena.services.IAliPayService;
 import org.springframework.beans.factory.InitializingBean;
@@ -93,6 +96,28 @@ public class AliPayService implements IAliPayService, InitializingBean {
         return alipayClient.execute(alipayRequest).getBody();
         //输出
     }
+
+    @Override
+    public boolean checkAlipay(String outTradeNo) {
+        try {
+            //实例化客户端（参数：网关地址、商户appid、商户私钥、格式、编码、支付宝公钥、加密类型）
+            AlipayClient alipayClient = new DefaultAlipayClient(aliPayConfig.GATEWAY_URL, aliPayConfig.APP_ID,
+                    aliPayConfig.APP_PRIVATE_KEY, aliPayConfig.FORMAT, aliPayConfig.CHARSET,
+                    aliPayConfig.ALIPAY_PUBLIC_KEY,aliPayConfig.SIGN_TYPE);
+            AlipayTradeQueryRequest alipayTradeQueryRequest = new AlipayTradeQueryRequest();
+            alipayTradeQueryRequest.setBizContent("{" +
+                    "\"out_trade_no\":\""+outTradeNo+"\"" +
+                    "}");
+            AlipayTradeQueryResponse alipayTradeQueryResponse = alipayClient.execute(alipayTradeQueryRequest);
+            if(alipayTradeQueryResponse.isSuccess())
+                 return true;
+        } catch (AlipayApiException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     @Override
     public void afterPropertiesSet() throws Exception {

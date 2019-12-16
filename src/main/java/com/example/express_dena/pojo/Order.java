@@ -233,8 +233,10 @@ public class Order implements Serializable {
             return "以接单";
         }else if(status ==3){
             return "已完成";
-        }else{
+        }else if(status ==4){
             return "已取消";
+        }else{
+            return "待支付";
         }
     }
 
