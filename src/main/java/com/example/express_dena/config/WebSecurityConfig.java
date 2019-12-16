@@ -2,10 +2,7 @@ package com.example.express_dena.config;
 
 
 
-import com.example.express_dena.security.LoginFailureHandler;
-import com.example.express_dena.security.LoginSuccessHandler;
-import com.example.express_dena.security.LoginUrlEntryPoint;
-import com.example.express_dena.security.MyUsernamePasswordAuthenticationFilter;
+import com.example.express_dena.security.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -50,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()    //表单 登陆
                 .loginPage("/index")// 自定义登录页面
                 .loginProcessingUrl("/login")// 自定义登录路径
+                .failureForwardUrl("/user/login?error=true")
                 .failureHandler(loginFailureHandler())
                 .successHandler(loginSuccessHandler())
                 .and()
@@ -63,19 +60,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(loginUrlEntryPoint())
                 .accessDeniedPage("/403");
 
-        http.addFilter(myUsernamePasswordAuthenticationFilter());
+//        http.addFilter(myUsernamePasswordAuthenticationFilter());
+        //放入拦截器链之前
+        http.addFilterBefore(myUsernamePasswordAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
     }
 
 
 
+    /**
+     * 将自己写的 登陆认证器 加入到 登陆拦截中
+     * @return
+     * @throws Exception
+     */
     @Bean
     public MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter() throws Exception {
-        MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter = new MyUsernamePasswordAuthenticationFilter();
+        MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter = new MyUsernamePasswordAuthenticationFilter("/**");
         myUsernamePasswordAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
         return myUsernamePasswordAuthenticationFilter;
     }
+
+
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

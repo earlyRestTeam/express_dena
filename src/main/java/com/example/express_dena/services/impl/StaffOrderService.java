@@ -1,9 +1,8 @@
 package com.example.express_dena.services.impl;
 
 import com.example.express_dena.mapper.OrderMapper;
-import com.example.express_dena.pojo.Horseman;
-import com.example.express_dena.pojo.Order;
-import com.example.express_dena.pojo.OrderExample;
+import com.example.express_dena.mapper.OrderdetailMapper;
+import com.example.express_dena.pojo.*;
 import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.IStaffOrderService;
 import com.github.pagehelper.PageHelper;
@@ -22,6 +21,9 @@ public class StaffOrderService implements IStaffOrderService {
     OrderMapper orderMapper;
     @Autowired
     LoginEntityHelper loginEntityHelper;
+    @Autowired
+    OrderdetailMapper orderdetailMapper;
+
     @Override
     public PageInfo<Order> selectUserOrder(Integer indexpage, Integer status) {
         indexpage = indexpage == null ? 1: indexpage;
@@ -38,12 +40,23 @@ public class StaffOrderService implements IStaffOrderService {
     }
 
     @Override
-    public PageInfo<Order> selectOrderBaoguo(Integer indexpage, String orderon) {
-        return null;
+    public List<Orderdetail> selectOrderdetail(Integer orderid) {
+        OrderdetailExample orderdetailExample = new OrderdetailExample();
+        OrderdetailExample.Criteria criteria = orderdetailExample.createCriteria();
+        criteria.andOrderidEqualTo(orderid);
+
+        return orderdetailMapper.selectByExample(orderdetailExample);
     }
 
     @Override
-    public boolean pickupUserOrder(Integer orderid) {
+    public Order selectOrderByOrderId(Integer orderid) {
+
+        return orderMapper.selectByPrimaryKey(orderid);
+    }
+
+
+    @Override
+    public boolean updatePickupUserOrder(Integer orderid) {
         Horseman horseman = loginEntityHelper.getEntityByClass(Horseman.class);
         if(horseman==null){
             throw new RuntimeException("error");
@@ -74,7 +87,7 @@ public class StaffOrderService implements IStaffOrderService {
     }
 
     @Override
-    public boolean filishOrder(Integer orderid, Integer hosermanid,Integer status) {
+    public boolean updateFinishOrder(Integer orderid, Integer hosermanid,Integer status) {
         Order order = orderMapper.selectByPrimaryKey(orderid);
         if(order != null && order.getStatus()==status && order.getHosermanid()==hosermanid){
             order.setComfirmHosemanStatus(1);

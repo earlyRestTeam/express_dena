@@ -10,6 +10,7 @@ import com.example.express_dena.services.impl.AdminServiceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -142,7 +143,7 @@ public class AdminController {
      */
     @RequestMapping("member_list_frozenuser")
     public String member_list_frozenuser(Integer userid){
-        adminServiceimpl.forzenUser(userid);
+        adminServiceimpl.updateUserForzen(userid);
         return "redirect:/admin/member_list";
     }
 
@@ -153,7 +154,7 @@ public class AdminController {
      */
     @RequestMapping("member_list_startuser")
     public String member_list_startuser(Integer userid){
-        adminServiceimpl.startUser(userid);
+        adminServiceimpl.updateUserStart(userid);
         return "redirect:/admin/member_list_stop";
     }
 
@@ -198,7 +199,7 @@ public class AdminController {
      */
     @RequestMapping("horseman_list_frozenuser")
     public String horseman_list_frozenuser(Integer horsemanid){
-        adminServiceimpl.forzenHorseman(horsemanid);
+        adminServiceimpl.updateHorsemanForzen(horsemanid);
         return "redirect:/admin/horseman_list";
     }
 
@@ -209,7 +210,7 @@ public class AdminController {
      */
     @RequestMapping("horseman_list_startuser")
     public String horseman_list_startuser(Integer horsemanid){
-        adminServiceimpl.startHorseman(horsemanid);
+        adminServiceimpl.updateHorsemanStart(horsemanid);
         return "redirect:/admin/horseman_list_stop";
     }
 
@@ -239,7 +240,7 @@ public class AdminController {
      */
     @RequestMapping("checked_apply")
     public String checked_apply(Integer horsemanid,Byte status){
-        adminServiceimpl.checked_apply(horsemanid,status);
+        adminServiceimpl.updateChecked_apply(horsemanid,status);
         return "redirect:/admin/article_list";
     }
 
@@ -263,12 +264,14 @@ public class AdminController {
      * @return
      */
     @RequestMapping("comment_list")
-    public String comment_list(HttpServletRequest request,Integer indexpage,Integer serchid){
-        PageInfo pageInfo = adminServiceimpl.selectComment(indexpage, serchid);
-        request.setAttribute("pages",pageInfo);
-        if (!"null".equals(serchid)){
-            request.setAttribute("serchid",serchid);
+    public String comment_list(HttpServletRequest request,Integer indexpage,String serchid){
+        Integer serchid1 = null;
+        if (serchid!=null&&serchid.matches("^[0-9]*$")&&!serchid.equals("")){
+            serchid1 = Integer.valueOf(serchid);
         }
+        PageInfo pageInfo = adminServiceimpl.selectComment(indexpage, serchid1);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchid",serchid);
         return "/admin/comment-list";
     }
 
@@ -280,12 +283,14 @@ public class AdminController {
      * @return
      */
     @RequestMapping("comment_list_stop")
-    public String comment_list_stop(HttpServletRequest request,Integer indexpage,Integer serchid){
-        PageInfo pageInfo = adminServiceimpl.selectCommentStop(indexpage, serchid);
-        request.setAttribute("pages",pageInfo);
-        if (!"null".equals(serchid)){
-            request.setAttribute("serchid",serchid);
+    public String comment_list_stop(HttpServletRequest request,Integer indexpage,String serchid){
+        Integer serchid1 = null;
+        if (serchid!=null&&serchid.matches("^[0-9]*$")&&!serchid.equals("")){
+            serchid1 = Integer.valueOf(serchid);
         }
+        PageInfo pageInfo = adminServiceimpl.selectCommentStop(indexpage, serchid1);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchid",serchid);
         return "/admin/comment-del";
     }
 
@@ -310,7 +315,7 @@ public class AdminController {
      */
     @RequestMapping("comment_list_frozencomment")
     public String comment_list_frozencomment(Integer commentid){
-        adminServiceimpl.forzenComment(commentid);
+        adminServiceimpl.updateCommentForzen(commentid);
         return "redirect:/admin/comment_list";
     }
 
@@ -321,8 +326,65 @@ public class AdminController {
      */
     @RequestMapping("comment_list_startcomment")
     public String comment_list_startcomment(Integer commentid){
-        adminServiceimpl.startComment(commentid);
+        adminServiceimpl.updateCommentStart(commentid);
         return "redirect:/admin/comment_list_stop";
+    }
+
+    /**
+     * 查询提现申请
+     * @param indexpage
+     * @param status
+     * @param serchid
+     * @return
+     */
+    @RequestMapping("drawmoney_list")
+    public String drawmoney_list(HttpServletRequest request,Integer indexpage,Integer status,String serchid){
+        Integer serchid1 = null;
+        if (serchid!=null&&serchid.matches("^[0-9]*$")&&!serchid.equals("")){
+             serchid1 = Integer.valueOf(serchid);
+        }
+        PageInfo pageInfo = adminServiceimpl.selectDrawmoney(indexpage, status, serchid1);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchid",serchid);
+        if (status == 2){
+            return "/admin/drawmoney-list";
+        }
+       return "/admin/drawmoney-ok";
+    }
+
+
+    /**
+     * 处理提现申请并且发送消息提醒
+     * @param id
+     * @return
+     */
+    @RequestMapping("update_drawmoney")
+    public String update_drawmoney(Integer id,Float withdrawalsBalance){
+        boolean b = adminServiceimpl.updateDrawmoney(id,withdrawalsBalance);
+        return "redirect:/admin/drawmoney_list?status=2";
+    }
+
+    /**
+     * 根据用户类型和ID查找消息列表
+     * @param request
+     * @param indexpage
+     * @param receiverType
+     * @param serchid
+     * @return
+     */
+    @RequestMapping("message_list")
+    public String message_list(HttpServletRequest request,Integer indexpage,Integer receiverType,String serchid){
+        Integer serchid1 = null;
+        if (serchid!=null&&serchid.matches("^[0-9]*$")&&!serchid.equals("")){
+            serchid1 = Integer.valueOf(serchid);
+        }
+        PageInfo pageInfo = adminServiceimpl.selectMessaage(indexpage, receiverType, serchid1);
+        request.setAttribute("pages",pageInfo);
+        request.setAttribute("serchid",serchid);
+        if (receiverType == 1){
+            return "/admin/messageuser-list";
+        }
+        return "/admin/messagehorseman-list";
     }
 
 

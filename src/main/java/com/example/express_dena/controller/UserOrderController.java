@@ -4,9 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.express_dena.pojo.Message;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.Orderdetail;
+import com.example.express_dena.pojo.User;
+import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.IAliPayService;
+import com.example.express_dena.services.IMessageService;
 import com.example.express_dena.services.UserOrderService;
 import com.example.express_dena.util.APIResult;
+import com.example.express_dena.util.PayException;
 import com.example.express_dena.util.StaticPool;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.regexp.internal.RE;
@@ -15,18 +19,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * @author :Yang Jiahong
  * @date :2019/12/11 16:03
  */
 @Controller
+@RequestMapping("/user")
 public class UserOrderController {
 
     @Autowired
@@ -36,19 +43,27 @@ public class UserOrderController {
     IAliPayService iAliPayService;
 
 
+    @Autowired
+    IMessageService iMessageService;
+
+
+    //查看用户当前订单
     @RequestMapping("currentUserOrder")
     public String selectOrderCurrent(Integer indexpage, HttpServletRequest request){
-        int userid = 1;
-        PageInfo info = service.selectOrderCurrent(userid,indexpage);
-        request.setAttribute("page",info);
+        LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
+        User user =loginEntityHelper.getEntityByClass(User.class);
+        PageInfo info = service.selectOrderCurrent(user.getId(),indexpage);
+        request.setAttribute("pages",info);
         return "/currentUserOrder";
     }
 
+    //查看用户历史订单
     @RequestMapping("userHistoryOrder")
     public String selectuserHistoryOrder(Integer indexpage, HttpServletRequest request){
-        int userid = 1;
-        PageInfo info = service.selectOrderCurrent(userid,indexpage);
-        request.setAttribute("page",info);
+        LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
+        User user =loginEntityHelper.getEntityByClass(User.class);
+        PageInfo info = service.selectHistoryOrder(user.getId(),indexpage);
+        request.setAttribute("pages",info);
         return "/userHistoryOrder";
     }
 
@@ -59,7 +74,7 @@ public class UserOrderController {
     }
 
     //前往支付页面
-    @RequestMapping("payOrder")
+    @RequestMapping("returnpayOrder")
     public String returnpayOrder(HttpServletRequest request,Order order,String[] message,
                                  String identityaddress,String cityaddress,
                                  String areaaddress,String streetaddress){
@@ -92,6 +107,7 @@ public class UserOrderController {
         String note = (String) jsonObject.get("note");
         String targetAddress = (String) jsonObject.get("targetAddress");
         String orderno = UUID.randomUUID().toString().replaceAll("-","");
+        String username = (String) jsonObject.get("username");
         Order order = new Order();
         order.setTotalAmount(Float.parseFloat(totalAmount));
         order.setPickUpAddress(pickUpAddress);
@@ -99,6 +115,7 @@ public class UserOrderController {
         order.setNote(note);
         order.setOrderno(orderno);
         order.setTargetAddress(targetAddress);
+        order.setUsername(username);
 
         Map<String, Object> returnresult = new HashMap<>();
         returnresult.put("totalAmount",totalAmount);
@@ -122,6 +139,7 @@ public class UserOrderController {
         return apiResult;
     }
 
+    //前往支付页面
     @RequestMapping("topay")
     public void payorder(String totalAmount, String orderno, HttpServletResponse httpResponse) throws IOException {
 
@@ -132,12 +150,67 @@ public class UserOrderController {
         httpResponse.getWriter().close();
     }
 
+    //支付成功后返回
     @RequestMapping("returnUrl")
     public String returnusrl(){
         System.out.println("支付");
           return "submitOrder";
     }
 
+    //取消订单
+    @RequestMapping("cancelOrderByID")
+    @ResponseBody
+    public APIResult updateCancelOrderByID(@RequestBody JSONObject jsonObject){
+        Integer orderid = (Integer) jsonObject.get("orderid");
+        try{
+            Map<String,String> map =  service.updateCancelOrderByID(orderid);
 
+            return APIResult.genSuccessApiResponse(map.get(StaticPool.SUCCESS));
+        }catch (PayException e){
+            System.out.println("e.getMessage() = " + e.getMessage());
+            APIResult apiResult = APIResult.genFailApiResponse(e.getMessage());
+//            Logger.error("reback error");
+            return apiResult;
+        }
+    }
+
+    //确认订单完成订单
+    @RequestMapping("completeOrder")
+    @ResponseBody
+    public APIResult updateCompleteOrder(@RequestBody JSONObject jsonObject){
+        Integer orderid = (Integer) jsonObject.get("orderid");
+        try{
+            Map<String,String> map =  service.updateCompleteOrder(orderid);
+            return APIResult.genSuccessApiResponse(map.get(StaticPool.SUCCESS));
+        } catch (PayException e){
+            System.out.println("e.getMessage() = " + e.getMessage());
+            APIResult apiResult = APIResult.genFailApiResponse(e.getMessage());
+//            Logger.error("reback error");
+            return apiResult;
+        }
+    }
+
+
+    //删除用户历史订单
+    @RequestMapping("deleteUserOrder")
+    @ResponseBody
+    public APIResult deleteUserOrder(@RequestBody JSONObject jsonObject){
+        Integer orderid = (Integer) jsonObject.get("orderid");
+        Map<String,String> map =  service.deleteUserOrderByID(orderid);
+        APIResult apiResult = new APIResult();
+        apiResult.setData(map);
+        return apiResult;
+    }
+
+    //查看订单详情
+    @RequestMapping("checkOrderDetail")
+    public String checkOrderDetail(Integer orderid, HttpServletRequest request){
+       /* Integer orderid = (Integer) jsonObject.get("orderid");*/
+        Order order = service.selectOrderById(orderid);
+        List<Orderdetail> list = service.selectOrderdetailById(orderid);
+        request.setAttribute("order",order);
+        request.setAttribute("orderdetail",list);
+        return "orderdetils";
+    }
 
 }

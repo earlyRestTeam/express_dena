@@ -41,7 +41,7 @@ public class StaffService implements IStaffService {
     }
 
     @Override
-    public Map<String, String> changePassword(int hosermanid, String oldPassword, String newPassword) {
+    public Map<String, String> updateChangePassword(int hosermanid, String oldPassword, String newPassword) {
         Map<String,String> res = new HashMap<>();
 
         Horseman horseman = horsemanMapper.selectByPrimaryKey(hosermanid);

@@ -8,7 +8,7 @@ import com.example.express_dena.services.IStaffOrderService;
 import com.example.express_dena.services.IStaffService;
 import com.example.express_dena.services.UserService;
 import com.example.express_dena.util.MD5Utils;
-import com.example.express_dena.util.StaticPool;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AuthProvider implements AuthenticationProvider {
+
 
     @Autowired
     MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter;
@@ -47,18 +48,27 @@ public class AuthProvider implements AuthenticationProvider {
         switch (type){
             case "admin":
                 Admin admin = adminService.loadByAccount(name);
-                obj = admin;
                 truePassword = (admin == null ? null:admin.getPassword() );
+                if(admin != null)
+                    admin.setPassword(null);
+                obj = admin;
+
                 break;
             case "staff":
                 Horseman h = staffService.loadStaffByAccount(name);
-                obj = h;
                 truePassword = (h == null ? null:h.getPassword() );
+                if(h != null)
+                    h.setPassword(null);
+                obj = h;
+
                 break;
             case "user":
                 User user = userService.selectByUserName(name);
-                obj = user;
                 truePassword = (user == null ? null:user.getPassword() );
+                if(user != null)
+                    user.setPassword(null);
+                obj = user;
+
                 break;
             default:
                 throw new BadCredentialsException("error");

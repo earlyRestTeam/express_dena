@@ -945,6 +945,66 @@ public class OrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andPickUpTimeIsNull() {
+            addCriterion("pick_up_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeIsNotNull() {
+            addCriterion("pick_up_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeEqualTo(Date value) {
+            addCriterion("pick_up_time =", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeNotEqualTo(Date value) {
+            addCriterion("pick_up_time <>", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeGreaterThan(Date value) {
+            addCriterion("pick_up_time >", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("pick_up_time >=", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeLessThan(Date value) {
+            addCriterion("pick_up_time <", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeLessThanOrEqualTo(Date value) {
+            addCriterion("pick_up_time <=", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeIn(List<Date> values) {
+            addCriterion("pick_up_time in", values, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeNotIn(List<Date> values) {
+            addCriterion("pick_up_time not in", values, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeBetween(Date value1, Date value2) {
+            addCriterion("pick_up_time between", value1, value2, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeNotBetween(Date value1, Date value2) {
+            addCriterion("pick_up_time not between", value1, value2, "pickUpTime");
+            return (Criteria) this;
+        }
+
         public Criteria andHosermainPhoneIsNull() {
             addCriterion("hosermain_phone is null");
             return (Criteria) this;

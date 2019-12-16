@@ -3,6 +3,7 @@ package com.example.express_dena.services;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.OrderExample;
 import com.example.express_dena.pojo.Orderdetail;
+import com.example.express_dena.util.PayException;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -24,14 +25,20 @@ public interface UserOrderService {
     //查询历史已完成订单
     public PageInfo selectHistoryOrder(int userid,Integer indexpage);
 
+    //根据orderid查询订单信息
+    public Order selectOrderById(int orderid);
+
+    //根据orderid查询该订单的所有包裹详情
+    public List<Orderdetail> selectOrderdetailById(int orderid);
+
     //删除历史订单
-    public Map<String,String> deleteOrderByID(int orderid);
+    public Map<String,String> deleteUserOrderByID(int orderid);
 
     //查询订单状态
     public int selectStatus(int orderid);
 
     //取消订单
-    public Map<String,String> updateCancelOrderByID(int orderid);
+    public Map<String,String> updateCancelOrderByID(int orderid) throws PayException;
 
     //查询订单详情
     public Map<String,String> selectOrderDetail(int orderid);
@@ -49,7 +56,5 @@ public interface UserOrderService {
      * @return
      */
     int selectOrderCountByUseridAndOrderStatus(int userid,int status);
-
-
 
 }

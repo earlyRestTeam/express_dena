@@ -7,6 +7,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 /**
+ * 事件队列
+ *
  * @author 王志坚
  * @createTime 2019.12.11.14:24
  */

@@ -15,6 +15,7 @@
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="hosermanid" jdbcType="INTEGER" property="hosermanid" />
+    <result column="pick_up_time" jdbcType="TIMESTAMP" property="pickUpTime" />
     <result column="hosermain_phone" jdbcType="VARCHAR" property="hosermainPhone" />
     <result column="hoserman_name" jdbcType="VARCHAR" property="hosermanName" />
     <result column="show_hoseman_status" jdbcType="INTEGER" property="showHosemanStatus" />
@@ -84,8 +85,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, orderno, status, username, user_telephone, total_amount, userid, note, pick_up_address, 
-    target_address, comment_num, create_time, hosermanid, hosermain_phone, hoserman_name, 
-    show_hoseman_status, showUserstatus, comfirm_user_status, comfirm_hoseman_status, 
+    target_address, comment_num, create_time, hosermanid, pick_up_time, hosermain_phone, 
+    hoserman_name, show_hoseman_status, showUserstatus, comfirm_user_status, comfirm_hoseman_status, 
     end_time, remark1
   </sql>
   <select id="selectByExample" parameterType="com.example.express_dena.pojo.OrderExample" resultMap="BaseResultMap">
@@ -122,20 +123,22 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into `order` (orderno, status, username,
+    insert into `order` (orderno, status, username, 
       user_telephone, total_amount, userid, 
       note, pick_up_address, target_address, 
       comment_num, create_time, hosermanid, 
-      hosermain_phone, hoserman_name, show_hoseman_status, 
-      showUserstatus, comfirm_user_status, comfirm_hoseman_status, 
-      end_time, remark1)
+      pick_up_time, hosermain_phone, hoserman_name, 
+      show_hoseman_status, showUserstatus, comfirm_user_status, 
+      comfirm_hoseman_status, end_time, remark1
+      )
     values (#{orderno,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
       #{userTelephone,jdbcType=VARCHAR}, #{totalAmount,jdbcType=REAL}, #{userid,jdbcType=INTEGER}, 
       #{note,jdbcType=VARCHAR}, #{pickUpAddress,jdbcType=VARCHAR}, #{targetAddress,jdbcType=VARCHAR}, 
       #{commentNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{hosermanid,jdbcType=INTEGER}, 
-      #{hosermainPhone,jdbcType=VARCHAR}, #{hosermanName,jdbcType=VARCHAR}, #{showHosemanStatus,jdbcType=INTEGER}, 
-      #{showuserstatus,jdbcType=INTEGER}, #{comfirmUserStatus,jdbcType=INTEGER}, #{comfirmHosemanStatus,jdbcType=INTEGER}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{remark1,jdbcType=VARCHAR})
+      #{pickUpTime,jdbcType=TIMESTAMP}, #{hosermainPhone,jdbcType=VARCHAR}, #{hosermanName,jdbcType=VARCHAR}, 
+      #{showHosemanStatus,jdbcType=INTEGER}, #{showuserstatus,jdbcType=INTEGER}, #{comfirmUserStatus,jdbcType=INTEGER}, 
+      #{comfirmHosemanStatus,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, #{remark1,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.express_dena.pojo.Order">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -178,6 +181,9 @@
       </if>
       <if test="hosermanid != null">
         hosermanid,
+      </if>
+      <if test="pickUpTime != null">
+        pick_up_time,
       </if>
       <if test="hosermainPhone != null">
         hosermain_phone,
@@ -240,6 +246,9 @@
       </if>
       <if test="hosermanid != null">
         #{hosermanid,jdbcType=INTEGER},
+      </if>
+      <if test="pickUpTime != null">
+        #{pickUpTime,jdbcType=TIMESTAMP},
       </if>
       <if test="hosermainPhone != null">
         #{hosermainPhone,jdbcType=VARCHAR},
@@ -315,6 +324,9 @@
       <if test="record.hosermanid != null">
         hosermanid = #{record.hosermanid,jdbcType=INTEGER},
       </if>
+      <if test="record.pickUpTime != null">
+        pick_up_time = #{record.pickUpTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.hosermainPhone != null">
         hosermain_phone = #{record.hosermainPhone,jdbcType=VARCHAR},
       </if>
@@ -359,6 +371,7 @@
       comment_num = #{record.commentNum,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       hosermanid = #{record.hosermanid,jdbcType=INTEGER},
+      pick_up_time = #{record.pickUpTime,jdbcType=TIMESTAMP},
       hosermain_phone = #{record.hosermainPhone,jdbcType=VARCHAR},
       hoserman_name = #{record.hosermanName,jdbcType=VARCHAR},
       show_hoseman_status = #{record.showHosemanStatus,jdbcType=INTEGER},
@@ -410,6 +423,9 @@
       <if test="hosermanid != null">
         hosermanid = #{hosermanid,jdbcType=INTEGER},
       </if>
+      <if test="pickUpTime != null">
+        pick_up_time = #{pickUpTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="hosermainPhone != null">
         hosermain_phone = #{hosermainPhone,jdbcType=VARCHAR},
       </if>
@@ -451,6 +467,7 @@
       comment_num = #{commentNum,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       hosermanid = #{hosermanid,jdbcType=INTEGER},
+      pick_up_time = #{pickUpTime,jdbcType=TIMESTAMP},
       hosermain_phone = #{hosermainPhone,jdbcType=VARCHAR},
       hoserman_name = #{hosermanName,jdbcType=VARCHAR},
       show_hoseman_status = #{showHosemanStatus,jdbcType=INTEGER},

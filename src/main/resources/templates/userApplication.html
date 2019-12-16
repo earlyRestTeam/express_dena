@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -42,7 +42,7 @@
 <!----------------Preloader end----------------->
 
 <!-------------Header start--------->
-<div class="tp-header">
+<div class="tp-header" th:replace="common :: tp_header">
     <div class="container">
         <div class="row">
             <div class="col-xs-7 col-md-6">
@@ -66,7 +66,7 @@
     </div>
 </div>
 
-<header>
+<header th:replace="common :: header_area">
     <div class="container">
         <nav class="navbar navbar-default">
             <div class="navbar-header">
@@ -100,7 +100,7 @@
 
 <!-------------main start--------->
     <div class="main-container">
-        <div class="sidebar">
+        <div class="sidebar" th:replace="common :: sidebar_area">
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-title">风火轮</li>
@@ -195,7 +195,7 @@
         </div>
 
 <!-------------contenr start--------->
-        <div class="content">
+        <div class="content"  >
             <section class="aui-content">
                 <div style="height:20px;"></div>
                 <div class="aui-content-up">
@@ -247,27 +247,37 @@
                                 <textarea class="aui-form-control" name="description" id="5" minlength="5">请输入您要推广的内容...</textarea>
                             </div>
                         </div>
-                        <div class="aui-form-group clear">
+                        <div class="aui-form-group clear" >
                             <label class="aui-label-control">
                                 身份证正面
                             </label>
-                            <img  id="idCardPre" src="" style="width: 80px;height: 80px">
-                            <input type="file" id="idCardPreUrl" >
-                            <input type="button" class="btn btn-primary" onclick="upload('idCardPreUrl','idCardPre')" value="确定"></input>
+                            <div style="float: left;width: 120px">
+                                <img  id="idCardPre" src="" style="width: 80px;height: 80px">
+                            </div>
+                            <div >
+                                <input type="file" id="idCardPreUrl" style="margin: 8px">
+                                <input type="button" class="btn btn-primary" style="margin: 8px"  onclick="upload('idCardPreUrl','idCardPre')" value="确定上传">
+                            </div>
+
                         </div>
                         <div class="aui-form-group clear">
                             <label class="aui-label-control">
                                 身份证背面
                             </label>
-                            <img id="idCardBack" src="" style="width: 80px;height: 80px">
-                            <input  type="file" id="idCardBackUrl" >
-                            <input type="button" class="btn btn-primary" onclick="upload('idCardBackUrl','idCardBack')" value="确定"></input>
+                            <div style="float: left;width: 120px">
+                                <img id="idCardBack" src="" style="width: 80px;height: 80px">
+                            </div>
+                            <div >
+                                <input  type="file" id="idCardBackUrl" style="margin: 8px" >
+                                <input type="button" class="btn btn-primary" style="margin: 8px"  onclick="upload('idCardBackUrl','idCardBack')" value="确定上传">
+                            </div>
+
                         </div>
 
                     </form>
                 </div>
                 <div class="aui-btn-default">
-                    <input  type="button" class="aui-btn aui-btn-account"  onclick="userApplication()" value="保存并提交审核"></input>
+                    <input  type="button" class="aui-btn aui-btn-account"  onclick="userApplication()" value="保存并提交审核">
                 </div>
             </section>
             <!-- mask begin -->

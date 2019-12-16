@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:fragment="tp_header" class="tp-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-7 col-md-6">
+                    <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                    <a href="#"> <i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </div>
+                <div th:if="${entity == null}" class="col-xs-5 col-md-6 text-right">
+                    <span class="signin">
+                        <a class="hidden-xs" href="/user/login">用户登陆</a>
+                        <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
+                    </span>
+                    <span class="signin">
+                        <a class="hidden-xs" href="/staff/login">骑手登陆</a>
+                        <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
+                    </span>
+                    <span class="register" >
+                        <a class="hidden-xs" href="/register">注册</a>
+                        </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
+                    </i></span>
+                </div>
+                <div th:if="${entity != null}" class="col-xs-5 col-md-6 text-right">
+                    <span class="signin">
+                        <a class="hidden-xs" th:if="${type == 1}" href="/user/main" th:text="${entity.username}"></a>
+                        <a class="hidden-xs" th:if="${type == 2}" href="/admin/index" th:text="${entity.username}"></a>
+                        <a class="hidden-xs" th:if="${type == 3}" href="/staff/staffmain" th:text="${entity.username}"></a>
+                        <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
+                    </span>
+
+                    <span class="register">
+                        <a class="hidden-xs" href="/logout">退出登陆</a>
+                        </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
+                    </i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header th:fragment="header_area">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#myMegamenu"><span
+                            class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+
+                    </button>
+                    <a class="navbar-brand" href="index">
+                        <img src="images/3.png" class="img-responsive" alt="company-logo">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
+                    <ul class="nav navbar-nav">
+                        <li class="list2"><a href="index" class="hvr-underline-from-center">主页</a></li>
+                        <li class="list2"><a href="/user/main" class="hvr-underline-from-center">个人中心</a></li>
+                        <li class="list2"><a href="/about_us" class="hvr-underline-from-center">关于我们</a></li>
+                        <li class="list2"><a href="blog" class="hvr-underline-from-center">博客</a></li>
+                        <li class="list2"><a href="careers" class="hvr-underline-from-center">职业</a></li>
+                        <li class="list2"><a href="products" class="hvr-underline-from-center">产品</a></li>
+                        <li class="list2"><a href="contact_us" class="hvr-underline-from-center">联系我们</a></li>
+                    </ul>
+                </div>
+
+            </nav>
+        </div>
+    </header>
+    <div class="sidebar" th:fragment="sidebar_area" >
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-title">风火轮</li>
+
+                <li class="nav-item">
+                    <a href="main" class="nav-link active">
+                        <i class="icon icon-speedometer"></i> Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item nav-dropdown">
+                    <a href="#" class="nav-link nav-dropdown-toggle">
+                        <i class="icon icon-target"></i> 个人主页 <i class="fa fa-caret-left"></i>
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a href="/user/userInfo" id="myMessage" class="nav-link">
+                                <i class="icon icon-target"></i> 我的信息
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/user/changePwd" class="nav-link">
+                                <i class="icon icon-target"></i> 修改密码
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/user/wallet" class="nav-link">
+                                <i class="icon icon-target"></i> 我的钱包
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item nav-dropdown">
+                    <a href="#" class="nav-link nav-dropdown-toggle">
+                        <i class="icon icon-energy"></i> 我的订单 <i class="fa fa-caret-left"></i>
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a href="/user/submitOrder" class="nav-link">
+                                <i class="icon icon-energy"></i> 发布订单
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/user/currentUserOrder" class="nav-link">
+                                <i class="icon icon-energy"></i> 我的订单
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/user/userHistoryOrder" class="nav-link">
+                                <i class="icon icon-energy"></i> 历史订单
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item nav-dropdown">
+                    <a href="#" class="nav-link nav-dropdown-toggle">
+                        <i class="icon icon-graph"></i> 我的消息 <i class="fa fa-caret-left"></i>
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a href="/user/message" class="nav-link">
+                                <i class="icon icon-graph"></i> 消息
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item nav-dropdown">
+                    <a href="#" class="nav-link nav-dropdown-toggle">
+                        <i class="icon icon-graph"></i> 加入我们 <i class="fa fa-caret-left"></i>
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a href="/user/userApplication" class="nav-link">
+                                <i class="icon icon-graph"></i> 申请
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</body>
+</html>

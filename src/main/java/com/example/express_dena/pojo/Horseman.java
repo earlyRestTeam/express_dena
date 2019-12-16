@@ -116,7 +116,7 @@ public class Horseman implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return status==1;
+        return true;
     }
 
     public void setUsername(String username) {

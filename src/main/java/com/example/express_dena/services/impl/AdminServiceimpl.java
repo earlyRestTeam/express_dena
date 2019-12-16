@@ -3,10 +3,7 @@ package com.example.express_dena.services.impl;
 import com.example.express_dena.asyn.Event;
 import com.example.express_dena.asyn.EventProductor;
 import com.example.express_dena.asyn.EventType;
-import com.example.express_dena.mapper.CommentMapper;
-import com.example.express_dena.mapper.AdminMapper;
-import com.example.express_dena.mapper.HorsemanMapper;
-import com.example.express_dena.mapper.UserMapper;
+import com.example.express_dena.mapper.*;
 import com.example.express_dena.pojo.*;
 import com.example.express_dena.services.AdminService;
 import com.example.express_dena.util.MD5Utils;
@@ -15,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +33,10 @@ public class AdminServiceimpl implements AdminService {
     CommentMapper commentMapper;
     @Autowired
     AdminMapper adminMapper;
+    @Autowired
+    WithdrawalsMapper withdrawalsMapper;
+    @Autowired
+    MessageMapper messageMapper;
 
     /**
      * 查询启用用户
@@ -97,7 +99,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean forzenUser(Integer userid) {
+    public boolean updateUserForzen(Integer userid) {
         User user = userMapper.selectByPrimaryKey(userid);
         user.setStatus((byte) -1);
         return userMapper.updateByPrimaryKey(user)>0;
@@ -109,7 +111,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean startUser(Integer userid) {
+    public boolean updateUserStart(Integer userid) {
         User user = userMapper.selectByPrimaryKey(userid);
         user.setStatus((byte) 1);
         return userMapper.updateByPrimaryKey(user)>0;
@@ -175,7 +177,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean forzenHorseman(Integer horsemanid) {
+    public boolean updateHorsemanForzen(Integer horsemanid) {
         Horseman horseman = horsemanMapper.selectByPrimaryKey(horsemanid);
         horseman.setStatus((byte) -1);
         return horsemanMapper.updateByPrimaryKey(horseman)>0;
@@ -187,7 +189,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean startHorseman(Integer horsemanid) {
+    public boolean updateHorsemanStart(Integer horsemanid) {
         Horseman horseman = horsemanMapper.selectByPrimaryKey(horsemanid);
         horseman.setStatus((byte) 0);
         return horsemanMapper.updateByPrimaryKey(horseman)>0;
@@ -219,7 +221,7 @@ public class AdminServiceimpl implements AdminService {
     }
 
     @Override
-    public boolean checked_apply(Integer horsemanid, Byte status) {
+    public boolean updateChecked_apply(Integer horsemanid, Byte status) {
         HorsemanExample horsemanExample = new HorsemanExample();
         String account;
         String password;
@@ -320,7 +322,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean forzenComment(Integer commentid) {
+    public boolean updateCommentForzen(Integer commentid) {
         Comment comment = commentMapper.selectByPrimaryKey(commentid);
         comment.setStatus((byte) 0);
         return commentMapper.updateByPrimaryKey(comment)>0;
@@ -332,7 +334,7 @@ public class AdminServiceimpl implements AdminService {
      * @return
      */
     @Override
-    public boolean startComment(Integer commentid) {
+    public boolean updateCommentStart(Integer commentid) {
         Comment comment = commentMapper.selectByPrimaryKey(commentid);
         comment.setStatus((byte) 1);
         return commentMapper.updateByPrimaryKey(comment)>0;
@@ -346,6 +348,70 @@ public class AdminServiceimpl implements AdminService {
     @Override
     public Comment selectCommentbyid(Integer commentid) {
         return commentMapper.selectByPrimaryKey(commentid);
+    }
+
+    @Override
+    public PageInfo selectDrawmoney(Integer indexpage, Integer status, Integer serchid) {
+        if (indexpage == null){
+            indexpage = 0;
+        }
+
+        WithdrawalsExample example = new WithdrawalsExample();
+        if (serchid != null&&!serchid.equals(0)&&!serchid.equals("null")){
+           example.or().andHorsemanidEqualTo(serchid).andTypeEqualTo(status);
+           Float serchidf=Float.parseFloat(serchid.toString());
+           example.or().andWithdrawalsBalanceEqualTo(serchidf).andTypeEqualTo(status);
+        }else {
+            example.or().andTypeEqualTo(status);
+        }
+        PageHelper.startPage(indexpage,10);
+        List<Withdrawals> withdrawals = withdrawalsMapper.selectByExample(example);
+        PageInfo info = new PageInfo(withdrawals,5);
+        return info;
+    }
+
+    /**
+     * 处理提现申请并且发送消息提醒
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean updateDrawmoney(Integer id,Float withdrawalsBalance) {
+        Withdrawals withdrawals = withdrawalsMapper.selectByPrimaryKey(id);
+        withdrawals.setType(1);
+        Message message = new Message();
+        message.setReceiverid(id);
+        message.setStatus(1);
+        message.setReceiverType(2);
+        message.setSendTime(new Date(System.currentTimeMillis()));
+        message.setContent("恭喜您的提现申请成功！您的提现金额"+withdrawalsBalance+"会在5分钟之内到账，请注意查收！");
+        messageMapper.insert(message);
+        return withdrawalsMapper.updateByPrimaryKey(withdrawals)>0;
+    }
+
+    /**
+     * 根据用户类型和ID查找消息列表
+     * @param indexpage
+     * @param receiver_type
+     * @param serchid
+     * @return
+     */
+    @Override
+    public PageInfo selectMessaage(Integer indexpage, Integer receiver_type, Integer serchid) {
+        if (indexpage == null){
+            indexpage = 0;
+        }
+
+        MessageExample example = new MessageExample();
+        if (serchid != null&&!serchid.equals(0)&&!serchid.equals("null")){
+            example.or().andReceiveridEqualTo(serchid).andReceiverTypeEqualTo(receiver_type);
+        }else {
+            example.or().andReceiverTypeEqualTo(receiver_type);
+        }
+        PageHelper.startPage(indexpage,10);
+        List<Message> messages = messageMapper.selectByExample(example);
+        PageInfo info = new PageInfo(messages,5);
+        return info;
     }
 
     @Override

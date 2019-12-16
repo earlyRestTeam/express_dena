@@ -72,7 +72,7 @@ public class AliPayService implements IAliPayService, InitializingBean {
     }
 
     @Override
-    public String refund(String outTradeNo) throws AlipayApiException {
+    public String refund(String outTradeNo,String balance) throws AlipayApiException {
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(aliPayConfig.GATEWAY_URL
                 , aliPayConfig.APP_ID, aliPayConfig.APP_PRIVATE_KEY, "json"
@@ -82,7 +82,7 @@ public class AliPayService implements IAliPayService, InitializingBean {
         //商户订单号，必填
         String out_trade_no = new String(outTradeNo);
         //需要退款的金额，该金额不能大于订单金额，必填
-        String refund_amount = "10.00";
+        String refund_amount = balance;
         //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
         String out_request_no = new String(UUID.randomUUID().toString());
 

@@ -38,7 +38,7 @@
 <!----------------Preloader end----------------->
 
 <!-------------Header start--------->
-<div class="tp-header"  th:replace="common :: tp_header">
+<div class="tp-header">
     <div class="container">
         <div class="row">
             <div class="col-xs-7 col-md-6">
@@ -47,22 +47,38 @@
                 <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                 <a href="#"> <i class="fa fa-instagram" aria-hidden="true"></i></a>
             </div>
-            <div class="col-xs-5 col-md-6 text-right">
-              <span class="signin" data-toggle="modal" data-target="#myModal">
-                    <a class="hidden-xs" href="/user/login">登陆</a>
+
+            <div th:if="${entity == null}" class="col-xs-5 col-md-6 text-right">
+             <span class="signin" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="/staff/login">登陆</a>
                     <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
                 </span>
 
                 <span class="register" data-toggle="modal" data-target="#myModal">
-                    <a class="hidden-xs" href="register">注册</a>
+                    <a class="hidden-xs" href="/staff/register">注册</a>
                     </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
                 </i></span>
             </div>
+
+            <div th:if="${entity != null}" class="col-xs-5 col-md-6 text-right">
+             <span class="signin" data-toggle="modal" data-target="#myModal">
+                 用户名：
+                    <a class="hidden-xs" href="/staff/staffmain" th:text="${entity.username}">用户名</a>
+                    <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
+                </span>
+
+                <span class="register" data-toggle="modal" data-target="#myModal">
+                    <a class="hidden-xs" href="/logout">退出登录</a>
+                    </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
+                </i></span>
+            </div>
+
+
         </div>
     </div>
 </div>
 
-<header  th:replace="common :: header_area">
+<header>
     <div class="container">
         <nav class="navbar navbar-default">
             <div class="navbar-header">
@@ -79,13 +95,8 @@
             </div>
             <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
                 <ul class="nav navbar-nav">
-                    <li class="list2"><a href="index" class="hvr-underline-from-center">主页</a></li>
-                    <li class="list2"><a href="main" class="hvr-underline-from-center">个人中心</a></li>
-                    <li class="list2"><a href="about_us" class="hvr-underline-from-center">关于我们</a></li>
-                    <li class="list2"><a href="blog" class="hvr-underline-from-center">博客</a></li>
-                    <li class="list2"><a href="careers" class="hvr-underline-from-center">职业</a></li>
-                    <li class="list2"><a href="products" class="hvr-underline-from-center">产品</a></li>
-                    <li class="list2"><a href="contact_us" class="hvr-underline-from-center">联系我们</a></li>
+                    <li class="list2"><a href="../index" class="hvr-underline-from-center">主页</a></li>
+                    <li class="list2"><a href="/staff/staffmain" class="hvr-underline-from-center">个人中心</a></li>
                 </ul>
             </div>
 
@@ -110,7 +121,7 @@
                     </div>
                         <img id="headUrl" src="/images/avatar.jpg" style="width: 80px;height: 80px">
                         <input type="file" id="file" >
-                        <button class="btn btn-primary" onclick="upload()">确认选择</button>
+                        <button class="btn btn-primary" onclick="upload()">确定</button>
                         <input hidden id="userHeadUrl">
                         <div class="form-group">
                             <label for="inputUsername">username</label>
@@ -132,37 +143,37 @@
             </div><!-- /.modal -->
         </div>
 
-        <div class="sidebar" th:replace="common :: sidebar_area" >
+        <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-title">风火轮</li>
 
                     <li class="nav-item">
-                        <a href="main" class="nav-link active">
-                            <i class="icon icon-speedometer"></i> Dashboard
+                        <a href="../index" class="nav-link active">
+                            <i class="icon icon-speedometer"></i> 首页
                         </a>
                     </li>
 
                     <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
+                        <a href="/staff/staffmain" class="nav-link nav-dropdown-toggle">
                             <i class="icon icon-target"></i> 个人主页 <i class="fa fa-caret-left"></i>
                         </a>
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="userInfo" class="nav-link">
+                                <a href="/staff/staffinfo" class="nav-link">
                                     <i class="icon icon-target"></i> 我的信息
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="changePwd" class="nav-link">
+                                <a href="/staff/staffchangePwd" class="nav-link">
                                     <i class="icon icon-target"></i> 修改密码
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="wallet" class="nav-link">
+                                <a href="/staff/staffwallet" class="nav-link">
                                     <i class="icon icon-target"></i> 我的钱包
                                 </a>
                             </li>
@@ -176,19 +187,19 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="submitOrder" class="nav-link">
-                                    <i class="icon icon-energy"></i> 发布订单
+                                <a href="/staff/currentStaffOrder" class="nav-link">
+                                    <i class="icon icon-energy"></i> 接单大厅
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="currentUserOrder" class="nav-link">
+                                <a href="/staff/staffGetOrder" class="nav-link">
                                     <i class="icon icon-energy"></i> 我的订单
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="userHistoryOrder" class="nav-link">
+                                <a href="/staff/staffHistoryOrder" class="nav-link">
                                     <i class="icon icon-energy"></i> 历史订单
                                 </a>
                             </li>
@@ -202,79 +213,145 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="/user/message" class="nav-link">
+                                <a href="/staff/staffMessage" class="nav-link">
                                     <i class="icon icon-graph"></i> 消息
                                 </a>
                             </li>
                         </ul>
                     </li>
 
-                    <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="icon icon-graph"></i> 加入我们 <i class="fa fa-caret-left"></i>
-                        </a>
 
-                        <ul class="nav-dropdown-items">
-                            <li class="nav-item">
-                                <a href="userApplication" class="nav-link">
-                                    <i class="icon icon-graph"></i> 申请
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </nav>
         </div>
 
 <!-------------contenr start--------->
         <div class="content">
-            <p>我的资料</p>
-            <div class="main-info">
-                <div class="main-info-left">
-                    <div class="info-avatar">
-                        <img th:src="@{${user.avatar}}" id="showHead" src="/images/avatar.jpg">
+            <p>订单详情</p>
+            <div  class="main-info" style="width: 1500px">
+                <div style="width: 500px"  class="main-info-left">
+                    <table style="margin:70px 20px;height: 220px;width: 380px " class="main-info-center-table">
+                        <tr >
+                            <td width="100px" class="glyphicon glyphicon-user" >下单用户:</td>
+                            <td  class="main-info-center-content" th:text="${order.username}">绿青蛙</td>
+                        </tr>
+                        <tr >
+                            <td class="glyphicon glyphicon-user">接单骑手:</td>
+                            <td  class="main-info-center-content" th:text="${order.hosermanName}">青蛙绿</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-envelope">取件地址:</td>
+                            <td  class="main-info-center-content" th:text="${order.pickUpAddress}">青蛙池</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-envelope">收件地址:</td>
+                            <td  class="main-info-center-content" th:text="${order.targetAddress}">青蛙池中间</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-phone-alt">用户电话:</td>
+                            <td  class="main-info-center-content" th:text="${order.userTelephone}">123456789</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-phone-alt">骑手电话:</td>
+                            <td  class="main-info-center-content" th:text="${order.hosermainPhone}">123456789</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="main-info-center">
+
+
+                    <table style="height: 250px;top: 60px" class="main-info-center-table">
+
+                        <tr>
+                            <td width="100px" class="glyphicon glyphicon-yen">订单金额:</td>
+                            <td  class="main-info-center-content" th:text="${order.totalAmount}+'￥'">15W</td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="glyphicon glyphicon-align-justify">总件数:</td>
+                            <td  class="main-info-center-content" th:text="${order.commentNum}">20</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-time">下单时间:</td>
+                            <td class="main-info-center-content" th:text="${#dates.format(order.createTime,'yyyy-MM-dd HH:mm:ss')}">2018-9-16</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-time">结束时间:</td>
+                            <td class="main-info-center-content" th:text="${#dates.format(order.endTime,'yyyy-MM-dd HH:mm:ss')}">2018-9-16</td>
+                        </tr>
+                        <tr>
+                            <td class="glyphicon glyphicon-phone-alt">备注:</td>
+                            <td  class="main-info-center-content" th:text="${order.note}">青蛙沙窝</td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="main-info-xian"></div>
+
+                <div class="main-info-right">
+                    <div class="main-info-right-up" th:switch="${order.status}">
+                        <p class="title">订单状态:</p>
+                        <p class="main-info-right-content" th:case="1" style="color: dodgerblue">待领取</p>
+                        <p class="main-info-right-content" th:case="2" style="color: #ff7800">真正派送</p>
+                        <p class="main-info-right-content" th:case="3" style="color: #d9534f">已完成</p>
+
                     </div>
-                    <div class="main-info-name">
-                        <p class="info-name" th:text="${user.username}" id="showName">杨秀秀</p>
+                    <div class="main-info-right-xian"></div>
+                    <div style="left: 350px; top: 38px;"  class="main-info-center-modify" onclick="jsOpenModal()">
+                        <i class="glyphicon glyphicon-paperclip">订单评论</i>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;width: 1500px" class="main-info" th:each="orderdetail:${pages.list}">
+                <div style="width: 500px"  class="main-info-left">
+                    <div style="margin: 0 110px;top: 130px" class="main-info-name">
+                        <p style="font-size: 40px" class="info-name"  id="showName">包裹1</p>
                     </div>
                 </div>
 
                 <div class="main-info-center">
 
-                    <div class="main-info-center-modify" onclick="jsOpenModal()">
-                        <i class="glyphicon glyphicon-pencil">点击修改</i>
-                    </div>
+
                     <table class="main-info-center-table">
                         <tr >
-                            <td class="glyphicon glyphicon-user">账号:</td>
-                            <td th:text="${user.account}" class="main-info-center-content">15697404438</td>
+                            <td class="glyphicon glyphicon-yen" >金额:</td>
+                            <td  class="main-info-center-content" th:text="${orderdetail.balance}+'￥'">15.6</td>
                         </tr>
                         <tr>
-                            <td class="glyphicon glyphicon-envelope">邮箱:</td>
-                            <td th:text="${user.account}" class="main-info-center-content">2205348277@qq.com</td>
+                            <td class="glyphicon glyphicon-briefcase">重量:</td>
+                            <td  class="main-info-center-content" th:text="${orderdetail.kg}+'Kg'">15kg</td>
                         </tr>
                         <tr>
-                            <td class="glyphicon glyphicon-phone-alt">联系电话:</td>
-                            <td th:text="${user.phone}" class="main-info-center-content" id="showPhone">15697404438</td>
+                            <td class="glyphicon glyphicon-transfer">取件地址:</td>
+                            <td  class="main-info-center-content" id="showPhone" th:text="${order.pickUpAddress}">123456</td>
                         </tr>
                         <tr>
-                            <td class="glyphicon glyphicon-time">注册时间:</td>
-                            <td th:text="${#dates.format(user.createTime, 'yyyy-MM-dd')}" class="main-info-center-content">2018-11-30 17:49:10</td>
+                            <td class="glyphicon glyphicon-plane" >快递公司:</td>
+                            <td class="main-info-center-content" th:text="${orderdetail.courierCompany}">中通</td>
                         </tr>
                     </table>
+
                 </div>
 
                 <div class="main-info-xian"></div>
 
                 <div class="main-info-right">
                     <div class="main-info-right-up">
-                        <p class="title">订单成交数:</p>
-                        <p class="main-info-right-content" th:text="${count}">50笔</p>
+                        <p class="title">取件码:</p>
+                        <p class="main-info-right-content" th:text="${orderdetail.pickUpCode}">123456</p>
                     </div>
                     <div class="main-info-right-xian"></div>
+
                 </div>
             </div>
+
+
         </div>
+
 <!-------------contenr end--------->
     </div>
 
@@ -291,8 +368,7 @@
 <script type="text/javascript">
     function jsOpenModal() {
         var showHead = $('#showHead').attr("src");
-        console.log(showHead);
-        $("#headUrl").attr("src",showHead);
+        $("headUrl").attr("src",showHead);
         var showName = $("#showName").text();
         $("#inputUsername").val(showName);
         var showPhone = $("#showPhone").text();

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -57,7 +57,7 @@
 <!----------------Preloader end----------------->
 
 <!-------------Header start--------->
-<div class="tp-header">
+<div class="tp-header" th:replace="common :: tp_header">
     <div class="container">
         <div class="row">
             <div class="col-xs-7 col-md-6">
@@ -81,7 +81,7 @@
     </div>
 </div>
 
-<header>
+<header th:replace="common :: header_area">
     <div class="container">
         <nav class="navbar navbar-default">
             <div class="navbar-header">
@@ -115,7 +115,7 @@
 
 <!-------------main start--------->
     <div class="main-container">
-        <div class="sidebar">
+        <div class="sidebar" th:replace="common :: sidebar_area">
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-title">风火轮</li>
@@ -281,7 +281,7 @@
                                     <th>显示详情</th>
                                 </tr>
 
-                                <tr th:each="order:${page.list}">
+                                <tr th:each="order:${pages.list}">
                                     <td><input type="checkbox" name="IDCheck" value="${order.orderid}" class="acb" /></td>
                                     <td th:text="${order.orderno}"></td>
                                     <td th:text="${order.hosermanName}"></td>
@@ -290,38 +290,31 @@
                                     <td th:text="${order.commentNum}"></td>
                                     <td th:text="${order.endTime}"></td>
                                     <td>
-                                        <a href="javascript:del('14458632171244');" class="queren">删除订单</a>
+                                        <a th:onclick="comment([[${order.id}]])" class="queren">去评论</a>
+                                        <a th:onclick="del([[${order.id}]])" class="queren">删除订单</a>
                                     </td>
-                                    <td><button>点击显示详情</button></td>
+                                    <td><a th:onclick="checkOrderDetail([[${order.id}]])">点击显示详情</a></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="ui_tb_h30">
                             <div class="ui_flt" style="height: 30px; line-height: 30px;">
-                                共有
-                                <span class="ui_txt_bold04">90</span>
-                                条记录，当前第
-                                <span class="ui_txt_bold04">1
-						/
-						9</span>
+                                共有<span class="ui_txt_bold04" th:text="${pages.total}"></span>
+                                条记录，当前第<span class="ui_txt_bold04" th:text="${pages.pageNum}"></span>
+                                /<span class="ui_txt_bold04" th:text="${pages.pages}"></span>
                                 页
                             </div>
                             <div class="ui_frt">
                                 <!--    如果是第一页，则只显示下一页、尾页 -->
 
-                                <input type="button" value="首页" class="ui_input_btn01" />
-                                <input type="button" value="上一页" class="ui_input_btn01" />
-                                <input type="button" value="下一页" class="ui_input_btn01"
-                                       onclick="jumpNormalPage(2);" />
-                                <input type="button" value="尾页" class="ui_input_btn01"
-                                       onclick="jumpNormalPage(9);" />
-
-
-
+                                <input onclick="jumpNormalPage(1);"  type="button" value="首页" class="ui_input_btn01" />
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.prePage}')|" type="button" value="上一页" class="ui_input_btn01" />
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.nextPage}')|" type="button" value="下一页" class="ui_input_btn01"/>
+                                <input th:onclick="|javascript : jumpNormalPage( '${pages.pages}')|" type="button" value="尾页" class="ui_input_btn01"/>
                                 <!--     如果是最后一页，则只显示首页、上一页 -->
-
                                 转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
-                                <input type="button" class="ui_input_btn01" value="跳转" onclick="jumpInputPage(9);" />
+                                <input th:onclick="|javascript : jumpInputPage('${pages.pages}')|" type="button" class="ui_input_btn01" value="跳转"  />
+                                <input id="pages" type="hidden" th:value="${pages.pages}" />
                             </div>
                         </div>
                     </div>
@@ -419,13 +412,29 @@
         }
     }
 
-    /** 删除 **/
-    function del(fyID){
-        // 非空判断
-        if(fyID == '') return;
-        if(confirm("您确定要删除吗？")){
-            $("#submitForm").attr("action", "/xngzf/archives/delFangyuan.action?fyID=" + fyID).submit();
-        }
+    /** 删除订单 **/
+    function del(orderid){
+        if(confirm("您确定要删除订单吗")){
+                $.ajax({
+                    url:"/user/deleteUserOrder",
+                    data:JSON.stringify({orderid:orderid}),
+                    contentType: 'application/json; charset=UTF-8',
+                    type:"post",
+                    dataType:"json",
+                    success:function(result){
+                        if (result.data.success != null){
+                            window.location.reload();
+                            alert(result.data.success)
+                        }else{
+                            alert(result.data.error)
+                        }
+                    }
+                })
+            }
+    }
+
+    function  comment(fyID){
+
     }
 
     /** 批量删除 **/
@@ -463,7 +472,13 @@
 
     /** 普通跳转 **/
     function jumpNormalPage(page){
-        $("#submitForm").attr("action", "house_list?page=" + page).submit();
+        var totalPage = parseInt($("#pages").val());
+        if(page>0 && page<=totalPage){
+            window.location.href="/user/userHistoryOrder?indexpage=" + page;
+        }
+
+
+        // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + page).submit();
     }
 
     /** 输入页跳转 **/
@@ -476,12 +491,20 @@
                 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
                 pageNum = 1;
             }
-            $("#submitForm").attr("action", "house_list?page=" + pageNum).submit();
+            window.location.href="/user/userHistoryOrder?indexpage=" + pageNum;
+            // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + pageNum).submit();
         }else{
             // “跳转页数”为空
             art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-            $("#submitForm").attr("action", "house_list?page=" + 1).submit();
+            window.location.href="/user/userHistoryOrder?indexpage=" + 1;
+            // $("#submitForm").attr("action", "staffhistoryOrder?indexpage=" + 1).submit();
         }
+    }
+
+    /*查看订单详情*/
+    function checkOrderDetail(orderid) {
+        alert(orderid);
+        window.location.href ="/user/checkOrderDetail?orderid="+orderid;
     }
 </script>
 </body>

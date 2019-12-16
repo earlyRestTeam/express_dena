@@ -18,7 +18,7 @@ public interface IStaffService {
      * @param newPassword
      * @return
      */
-    Map<String,String> changePassword(int hosermanid, String oldPassword, String newPassword);
+    Map<String,String> updateChangePassword(int hosermanid, String oldPassword, String newPassword);
 
     /**
      * 修改信息

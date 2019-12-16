@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
 
         user.setAccount(user.getEmail());
         user.setAvatar("images/avatar.jpg");
+        user.setPassword(MD5Utils.StringInMd5(user.getPassword()));
         user.setCreateTime(new Date());
 
         if(users !=  null && users.size() > 0){

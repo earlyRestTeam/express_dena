@@ -9,8 +9,11 @@ import com.example.express_dena.pojo.User;
 import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.CodeCenter;
 import com.example.express_dena.services.UserService;
+import com.example.express_dena.services.impl.MessageService;
 import com.example.express_dena.util.APIResult;
 import com.example.express_dena.util.StaticPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +30,8 @@ import java.util.Map;
 @RestController
 public class UserApiController {
 
+    Logger logger = LoggerFactory.getLogger(UserApiController.class);
+
     @Autowired
     UserService userService;
     @Autowired
@@ -35,7 +40,15 @@ public class UserApiController {
     CodeCenter codeCenter;
     @Autowired
     LoginEntityHelper loginEntityHelper;
+    @Autowired
+    MessageService messageService;
 
+    /**
+     * 修改个人信息
+     * @param u
+     * @param request
+     * @return
+     */
     @PostMapping("/user/update")
     public APIResult updateUserInfo(@RequestBody  User u, HttpServletRequest request){
 
@@ -47,6 +60,7 @@ public class UserApiController {
             throw new RuntimeException("error");
 
         u.setId(u2.getId());
+
         APIResult result = null;
         Map<String, String> res = userService.updateUserInfo(u);
         if( res.get(StaticPool.ERROR) != null ){
@@ -57,6 +71,11 @@ public class UserApiController {
         return result;
     }
 
+    /**
+     * 修改密码
+     * @param jsonObject
+     * @return
+     */
     @PostMapping("/user/changePassword")
     public APIResult changePassword(@RequestBody JSONObject jsonObject){
         //        HttpSession session = request.getSession();
@@ -86,6 +105,27 @@ public class UserApiController {
         }
         return result;
     }
+
+    /**
+     * 获取 未读信息
+     * @return
+     */
+    @PostMapping("/user/getUserUnreadMessageCount")
+    public APIResult getUserUnreadMessageCount(){
+        User u2 = loginEntityHelper.getEntityByClass(User.class);
+        if ( u2 == null )
+            throw new RuntimeException("error");
+
+        APIResult result = null;
+        int res = messageService.queryEntityUnreadMessageCount(u2.getId(),1);
+        System.out.println("res = " + res);
+        return APIResult.genSuccessApiResponse(""+res);
+    }
+    /**
+     * 账号找回
+     * @param jsonObject
+     * @return
+     */
     @PostMapping("/findBack")
     public APIResult findBack(@RequestBody JSONObject jsonObject){
         APIResult result = null;
@@ -106,6 +146,11 @@ public class UserApiController {
         return result;
     }
 
+    /**
+     * 获取 找回账号、注册 的验证码
+     * @param jsonObject
+     * @return
+     */
     @PostMapping("/getCode")
     public APIResult getCode(@RequestBody JSONObject jsonObject){
         String email = (String) jsonObject.get("email");
@@ -132,6 +177,12 @@ public class UserApiController {
         }
         return result;
     }
+
+    /**
+     * 注册
+     * @param jsonObject
+     * @return
+     */
     @PostMapping("register")
     public APIResult register(@RequestBody JSONObject jsonObject){
 
@@ -173,6 +224,12 @@ public class UserApiController {
 
         return result;
     }
+
+    /**
+     * 成为骑手
+     * @param horseman
+     * @return
+     */
     @PostMapping("/becomeToHorseman")
     public APIResult becomeToHorseman(@RequestBody Horseman horseman){
 
@@ -196,6 +253,12 @@ public class UserApiController {
         }
         return result;
     }
+
+    /**
+     * 骑手提现
+     * @param jsonObject
+     * @return
+     */
     @PostMapping("/staff/tixian")
     public APIResult tixian(@RequestBody JSONObject jsonObject){
 
@@ -209,6 +272,7 @@ public class UserApiController {
         String count = (String) jsonObject.get("count");
 
         if(StringUtils.isEmpty(payNum) || StringUtils.isEmpty(count)){
+
             result =  APIResult.genFailApiResponse("PARAMS ERROR!");
             return result;
         }
@@ -221,4 +285,6 @@ public class UserApiController {
         }
         return result;
     }
+
+
 }

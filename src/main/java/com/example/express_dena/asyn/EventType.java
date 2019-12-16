@@ -1,6 +1,8 @@
 package com.example.express_dena.asyn;
 
 /**
+ * 事件类型的 枚举类型
+ *
  * @author 王志坚
  * @createTime 2019.04.27.11:13
  */

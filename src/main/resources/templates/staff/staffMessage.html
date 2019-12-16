@@ -23,18 +23,31 @@
 </head>
 <body>
 <style>
-    .delete{
+    .edit{
         font: bold 11px Arial;
         text-decoration: none;
         background-color: red;
-        color: white;
+        color: red;
         padding: 2px 6px 2px 6px;
         border-top: 1px solid #CCCCCC;
-        border-right: 1px solid #CCCCCC;
-        border-bottom: 1px solid #CCCCCC;
+        border-right: 1px solid #333333;
+        border-bottom: 1px solid #333333;
+        border-left: 1px solid #CCCCCC;
+    }
+    .queren{
+        font: bold 11px Arial;
+        text-decoration: none;
+        background-color: #EEEEEE;
+        color: #333333;
+        padding: 2px 6px 2px 6px;
+        border-top: 1px solid #CCCCCC;
+        border-right: 1px solid #333333;
+        border-bottom: 1px solid #333333;
         border-left: 1px solid #CCCCCC;
     }
 </style>
+
+
 <!-------------------Preloader---------------->
 <div class="preloader" style="position:fixed;
     width:100%;
@@ -66,10 +79,8 @@
                 <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                 <a href="#"> <i class="fa fa-instagram" aria-hidden="true"></i></a>
             </div>
-
             <div th:if="${entity == null}" class="col-xs-5 col-md-6 text-right">
              <span class="signin" data-toggle="modal" data-target="#myModal">
-
                     <a class="hidden-xs" href="/staff/login">登陆</a>
                     <i class="fa fa-sign-in visible-xs-block" aria-hidden="true"></i>
                 </span>
@@ -92,7 +103,6 @@
                     </a><i class="fa fa-user-plus visible-xs-block" aria-hidden="true">
                 </i></span>
             </div>
-
         </div>
     </div>
 </div>
@@ -177,7 +187,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="/staff/currentStaffOrder" class="nav-link">
+                                <a href="/staff/staffGetOrder" class="nav-link">
                                     <i class="icon icon-energy"></i> 我的订单
                                 </a>
                             </li>
@@ -216,9 +226,9 @@
                     <div class="ui_content">
                         <div class="ui_text_indent">
                             <div id="box_border">
-                                <div id="box_top"><a href="/staff/staffHistoryOrder" style="color: #fff;">历史订单</a></div>
+                                <div id="box_top"><a href="/staff/staffGetOrder" style="color: #fff;">消息中心</a></div>
                                 <div id="box_center">
-                                    <form action="/staff/searchHistoryOrder" method="get">
+                                    <form action="/staff/searchGetOrder" method="get">
                                         <input style="width: 300px;height: 40px;" type="text" id="fyZldz" name="orderno" class="ui_input_txt02" />
                                         <div id="box_bottom" style="display: inline-block">
                                             <input style="width: 80px;height: 40px;" type="submit" value="查询" class="btn btn-info"  />
@@ -235,41 +245,28 @@
                                 <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
                                     <tr>
     <!--                                    <th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" /></th>-->
-                                        <th>订单号</th>
-                                        <th>下单用户</th>
-                                        <th>取件地址</th>
-                                        <th>价格订单</th>
-                                        <th>包裹数量</th>
-                                        <th>收件地址</th>
-                                        <th>完成时间</th>
-                                        <th>操作</th>
-                                        <th>查看详情</th>
-
+                                        <th width="200px" >时间</th>
+                                        <th>消息内容</th>
+                                        <th width="200px">操作</th>
                                     </tr>
 
-                                        <tr th:each="order:${pages.list}">
-        <!--                                    <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>-->
-                                            <td th:text="${order.orderno}"></td>
-                                            <td th:text="${order.username}"></td>
-                                            <td th:text="${order.pickUpAddress}"></td>
-                                            <td th:text="${order.totalAmount}"></td>
-                                            <td th:text="${order.commentNum}"></td>
-                                            <td th:text="${order.targetAddress}"></td>
-                                            <td th:text="${#dates.format(order.endTime,'yyyy-MM-dd HH:mm:ss')}"></td>
-
-                                            <td>
-                                                <a th:onclick="|javascript : del('${order.id}')|" class="delete">删除订单</a>
-                                            </td>
-                                            <td><a  th:href="@{'/staff/orderetils?id='+${order.id}}">查看详情</a></td>
-                                        </tr>
+                                    <tr th:each="message:${pages.list}" >
+    <!--                                    <td><input type="checkbox" name="IDCheck" value="14458632171244" class="acb" /></td>-->
+                                        <td th:text="${#dates.format(message.sendTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${message.content}"></td>
+                                        <td th:switch="${message.status}">
+    <!--                                        <a th:href="@{'/staff/filishOrder?id='+ ${order.id}}" class="queren">完成任务</a>-->
+                                            <a th:case="0"  th:onclick="|javascript : readMessage( '${message.id}')|" class="queren" style="color: #ff7800">已读</a>
+                                            <a th:case="1" >消息已读</a>
+                                        </td>
+                                    </tr>
 
                                 </table>
                             </div>
-
                             <div class="ui_tb_h30">
                                 <div class="ui_flt" style="height: 30px; line-height: 30px;">
                                     共有<span class="ui_txt_bold04" th:text="${pages.total}"></span>
-                                    条记录，当前第<span class="ui_txt_bold04" th:text="${pages.pageNum}"></span>
+                                    条信息，当前第<span class="ui_txt_bold04" th:text="${pages.pageNum}"></span>
                                     /<span class="ui_txt_bold04" th:text="${pages.pages}"></span>
                                     页
                                 </div>
@@ -279,17 +276,18 @@
                                     <input onclick="jumpNormalPage(1);"  type="button" value="首页" class="ui_input_btn01" />
                                     <input th:onclick="|javascript : jumpNormalPage( '${pages.prePage}')|" type="button" value="上一页" class="ui_input_btn01" />
                                     <input th:onclick="|javascript : jumpNormalPage( '${pages.nextPage}')|" type="button" value="下一页" class="ui_input_btn01"/>
-
                                     <input th:onclick="|javascript : jumpNormalPage( '${pages.pages}')|" type="button" value="尾页" class="ui_input_btn01"/>
+
+
                                     <!--     如果是最后一页，则只显示首页、上一页 -->
+
                                     转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
-                                    <input th:onclick="|javascript : jumpInputPage('${pages.pages}')|" type="button" class="ui_input_btn01" value="跳转"  />
-                                    <input id="pages" type="hidden" th:value="${pages.pages}" />
+                                    <input th:onclick="|javascript : jumpInputPage('${pages.pages}')|" type="button" class="ui_input_btn01" value="跳转" />
+                                    <input id="pages" type="hidden" th:value="${pages.pages}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 <!--            </form>-->
         </div>
@@ -384,15 +382,27 @@
         }
     }
 
+    /** 读取消息 **/
+    function readMessage(id){
+        // 非空判断
+        if(id == '') return;
+        if(confirm("您确定读完消息吗？")){
+            window.location.href="/staff/readMessage?messageId=" + id;
+            // $("#finishOrder").attr("action", "/staff/filishOrder?id=" + orderid).submit();
+        }
+    }
+
+
     /** 删除 **/
     function del(fyID){
         // 非空判断
         if(fyID == '') return;
-        if(confirm("您确定要删除吗？")){
-            window.location.href="/staff/deleteHistoryOrder?id="+fyID;
-            // $("#submitForm").attr("action", "/staff/delete?id=" + fyID).submit();
+        if(confirm("您确定领取任务吗？")){
+            $("#submitForm").attr("action", "/xngzf/archives/delFangyuan.action?fyID=" + fyID).submit();
         }
     }
+
+
 
     /** 批量删除 **/
     function batchDel(){
@@ -427,9 +437,38 @@
         }
     }
 
-
+    // /** 普通跳转 **/
+    // function jumpNormalPage(page){
+    //     var totaPage = parseInt($("#pages").val());
+    //     if(page==0 | page==totaPage){
+    //
+    //     }else {
+    //         window.location.href="/staff/staffGetOrder?indexpage=" + page;
+    //     }
+    //
+    //     // $("#submitForm").attr("action", "staffGetOrder?indexpage=" + page).submit();
+    // }
+    //
+    // /** 输入页跳转 **/
+    // function jumpInputPage(totalPage){
+    //     // 如果“跳转页数”不为空
+    //     if($("#jumpNumTxt").val() != ''){
+    //         var pageNum = parseInt($("#jumpNumTxt").val());
+    //         // 如果跳转页数在不合理范围内，则置为1
+    //         if(pageNum<1 | pageNum>totalPage){
+    //             art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
+    //             pageNum = 1;
+    //         }
+    //         window.location.href="/staff/staffGetOrder?indexpage=" + pageNum;
+    //         // $("#submitForm").attr("action", "staffGetOrder?indexpage=" + pageNum).submit();
+    //     }else{
+    //         // “跳转页数”为空
+    //         art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
+    //         // $("#submitForm").attr("action", "staffGetOrder?indexpage=" + 1).submit();
+    //         window.location.href="/staff/staffGetOrder?indexpage=" + 1;
+    //     }
+    // }
 </script>
-
 
 <!--跳转-->
 <script>
@@ -438,7 +477,7 @@
         var totalPage = parseInt($("#pages").val());
         if(page>0 && page<=totalPage){
             // window.location.href="/staff/staffHistoryOrder?indexpage=" + page;
-            var url = '/staff/staffHistoryOrder?indexpage=' + page;
+            var url = '/staff/staffMessage?indexpage=' + page;
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -459,7 +498,7 @@
                 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
                 pageNum = 1;
             }
-            var url = '/staff/staffHistoryOrder?indexpage=' + pageNum;
+            var url = '/staff/staffMessage?indexpage=' + pageNum;
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -471,7 +510,7 @@
             // “跳转页数”为空
             art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
             //
-            var url = '/staff/staffHistoryOrder?indexpage=' + 1;
+            var url = '/staff/staffMessage?indexpage=' + 1;
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -482,7 +521,6 @@
         }
     }
 </script>
-
 </body>
 </html>
 

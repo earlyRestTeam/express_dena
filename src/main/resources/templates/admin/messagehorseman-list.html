@@ -1,0 +1,97 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/pagination.css"/>
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>图片列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 图片管理 <span class="c-gray en">&gt;</span> 图片列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="text-c">
+        <form method="post"  action="message_list">
+            <input type="number" style="display: none" name="receiverType" value="2">
+            <input th:value="${serchid}" type="number" class="input-text" style="width:250px" placeholder="输入接收者ID" id="serchid" name="serchid">
+            <button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+        </form>
+	</div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l">共有数据：<strong th:text="${pages.size}"></strong> 条</span> </div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="40"><input name="" type="checkbox" value=""></th>
+					<th width="40">消息ID</th>
+					<th width="40">接收骑手ID</th>
+                    <th width="400">消息内容</th>
+                    <th width="80">发送时间</th>
+					<th width="80">状态</th>
+				</tr>
+			</thead>
+			<tbody id="tablebody">
+				<tr  class="text-c" th:each="u:${pages.list}">
+					<td><input name="" type="checkbox" value=""></td>
+                    <td th:text="${u.id}"></td>
+                    <td th:text="${u.receiverid}"></td>
+                    <td th:text="${u.content}"></td>
+                    <td th:text="${#dates.format(u.sendTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+					<td th:text="${u.status}"></td>
+				</tr>
+                <tr style="height: 50px;">
+                    <td style="text-align: center" colspan="10">
+
+                        <a class="yb-reward-history__pagination" th:href="'message_list?indexpage='+${pages.prePage}+'&serchid='+${serchid}+'&receiverType=2'">上一页</a>
+                        <a class="yb-reward-history__pagination" th:href="'message_list?indexpage=1&serchid='+${serchid}+'&receiverType=2'">1</a>
+                        ...
+                        <a th:each="p:${pages.navigatepageNums}" th:text="${p}"  th:href="'message_list?indexpage='+${p}+'&serchid='+${serchid}+'&receiverType=2'" class="yb-reward-history__pagination"></a>
+                        ...<a th:text="${pages.pages}" th:href="'message_list?indexpage='+${pages.pages}+'&serchid='+${serchid}+'&receiverType=2'" class="yb-reward-history__pagination"></a>
+                        <a class="yb-reward-history__pagination"  th:href="'message_list?indexpage='+${pages.nextPage}+'&serchid='+${serchid}+'&receiverType=2'" >下一页</a>
+                    </td>
+                </tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+
+    $("#tablebody").find("tr").each(function () {
+        var tdArr  = $(this).children()
+        var statuscode = tdArr.eq(5).text()
+        if (statuscode == 1 || statuscode == "1"){
+            tdArr.eq(5).html("<span class=\"label label-success radius\">已读</span>")
+        }else if (statuscode == 2 || statuscode == "2") {
+            tdArr.eq(5).html("<span class=\"label label-danger radius\">未读</span>")
+        }
+    })
+
+</script>
+</body>
+</html>
