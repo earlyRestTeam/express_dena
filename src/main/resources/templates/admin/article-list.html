@@ -31,7 +31,9 @@
             <button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont">&#xe665;</i> 搜骑手</button>
         </form>
 	</div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l">共有数据：<strong th:text="${pages.size}"></strong> 条</span> </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"><a href="javascript:;" onclick="ckeckedpass()" class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe600;</i> 批量通过审核</a></span>
+        <span class="l"><a href="javascript:;" onclick="ckeckedstop()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe600;</i> 批量不通过审核</a></span>
+        <span class="r">共有数据：<strong th:text="${pages.size}"></strong> 条</span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
 			<thead>
@@ -54,7 +56,7 @@
 			</thead>
 			<tbody id="tablebody">
             <tr class="text-c" th:each="u:${pages.list}">
-                <td><input type="checkbox" value="1" name=""></td>
+                <td><input type="checkbox" th:value="${u.id}" name="ids"></td>
                 <td th:text="${u.id}"></td>
                 <td><img width="60px" height="60px" th:src="${u.avatar}"/></td>
                 <td th:text="${u.username}"></td>
@@ -95,6 +97,7 @@
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
+    //点击查看大图片
     $("img").bind("click",function(){
         var url= $(this).attr("src")
         var index = layer.open({
@@ -104,6 +107,7 @@
         });
         layer.full(index);
     });
+    //根据审核状态id显示对应的
     $("#tablebody").find("tr").each(function () {
         var tdArr  = $(this).children();
         var statuscode = tdArr.eq(12).text()
@@ -116,6 +120,61 @@
             tdArr.eq(12).html("<span class=\"label label-danger radius\">已冻结</span>")
         }
     })
+    //批量通过审核
+    function ckeckedpass() {
+        var Checkbox = false;
+        $("input[name='ids']").each(function () {
+            if (this.checked == true){
+                Checkbox = true;
+            }
+        })
+        if (Checkbox){
+            var t = confirm("您确认要通过所选的申请吗？")
+            if (t==false){
+                return false;
+            } else {
+                var checkedID=[]
+                $("input[name='ids']").each(function() {
+                    if (this.checked == true) {
+                        checkedID.splice(0, 0, this.value);
+                    }
+                });
+                window.location.replace("checked_applymore?horsemanid="+checkedID+"&status=1");
+
+            }
+        }else {
+            alert("请选择您要通过的申请!");
+            return false;
+        }
+    }
+    //批量不通过审核
+    function ckeckedstop() {
+        var Checkbox = false;
+        $("input[name='ids']").each(function () {
+            if (this.checked == true){
+                Checkbox = true;
+            }
+        })
+        if (Checkbox){
+            var t = confirm("您确认要不通过所选的申请吗？")
+            if (t==false){
+                return false;
+            } else {
+                var checkedID=[]
+                $("input[name='ids']").each(function() {
+                    if (this.checked == true) {
+                        checkedID.splice(0, 0, this.value);
+                    }
+                });
+                window.location.replace("checked_applymore?horsemanid="+checkedID+"&status=-1");
+
+            }
+        }else {
+            alert("请选择您要不通过的申请!");
+            return false;
+        }
+    }
+
 /*资讯-添加*/
 function article_add(title,url,w,h){
 	var index = layer.open({
