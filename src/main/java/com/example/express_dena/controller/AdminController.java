@@ -1,6 +1,10 @@
 package com.example.express_dena.controller;
 
 
+import com.example.express_dena.mapper.NoticeMapper;
+import com.example.express_dena.pojo.Notice;
+import com.example.express_dena.pojo.NoticeExample;
+import com.example.express_dena.services.impl.AdminServiceimpl;
 import com.example.express_dena.pojo.Advertising;
 import com.example.express_dena.pojo.Comment;
 import com.example.express_dena.services.impl.*;
@@ -11,9 +15,14 @@ import com.example.express_dena.services.impl.AdminServiceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
@@ -38,6 +47,8 @@ public class AdminController {
 
     @Autowired
     AdminServiceimpl adminServiceimpl;
+    @Autowired
+    NoticeMapper noticeMapper;
 
     @Autowired
     ManagerAdvertsingServiceImpl advertsingService;
@@ -87,7 +98,6 @@ public class AdminController {
     public String admin_role_add(){
         return "/admin/admin-role-add";
     }
-
 
     @RequestMapping("change_password")
     public String change_password(){
@@ -435,9 +445,36 @@ public class AdminController {
         return "/admin/picture-add";
     }
 
+    @RequestMapping("notice_add")
+    public String notice_add(){
+        return "/admin/notice-add";
+    }
+
+    @RequestMapping("/update")
+    public String updateNotice(Model model,@RequestParam Integer id){
+        NoticeExample example = new NoticeExample();
+        NoticeExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(id);
+
+        Notice notice1 = noticeMapper.selectByPrimaryKey(id);
+        model.addAttribute("id",id);
+        model.addAttribute("notices",notice1);
+        return "/admin/notice-update";
+    }
+
+//    @RequestMapping("notice_update")
+//    public String notice_add(){
+//        return "/admin/notice-add";
+//    }
+
+//    @RequestMapping("notice_update")
+//    public String notice_update(@RequestParam re){
+//        return "/admin/update";
+//    }
+
     @RequestMapping("picture_list")
     public String picture_list(){
-        return "/admin/picture-list";
+        return "forward:/admin/notice/index";
     }
 
     @RequestMapping("picture_show")
@@ -694,32 +731,5 @@ public class AdminController {
         return "redirect:/admin/advertsing_list";
     }
 
-    @RequestMapping("advertsing_delone")
-    public String advertsing_delone(Integer id){
-        Advertising advertsing = new Advertising();
-        advertsing.setId(id);
-        advertsingService.deleteAdversing(advertsing);
-        return "redirect:/admin/advertsing_list";
-    }
 
-    @RequestMapping("advertsing_del")
-    public String advertsing_del(Integer[] ids){
-        advertsingService.deleteADs(ids);
-        return "redirect:/admin/advertsing_list";
-    }
-
-    @RequestMapping("advertsing_show")
-    public String advertsing_show(){
-        return "advertsing-show";
-    }
-
-    @RequestMapping("order_list")
-    public String order_list(Integer indexpage, HttpServletRequest request, String serchno, String serchuser, String serchhoser){
-        PageInfo info = orderService.selectOrder(indexpage, serchno, serchuser, serchhoser);
-        request.setAttribute("pages",info);
-        request.setAttribute("serchno",serchno);
-        request.setAttribute("serchuser",serchuser);
-        request.setAttribute("serchhoser",serchhoser);
-        return "/admin/order-list";
-    }
 }
