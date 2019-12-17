@@ -3,8 +3,6 @@ package com.example.express_dena.mapper;
 import com.example.express_dena.pojo.Order;
 import com.example.express_dena.pojo.OrderExample;
 import java.util.List;
-
-import com.example.express_dena.pojo.Orderdetail;
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderMapper {
@@ -29,5 +27,4 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
-
 }

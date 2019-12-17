@@ -32,6 +32,8 @@ public class Order implements Serializable {
 
     private Date pickUpTime;
 
+    private Date sendTime;
+
     private String hosermainPhone;
 
     private String hosermanName;
@@ -162,6 +164,14 @@ public class Order implements Serializable {
         this.pickUpTime = pickUpTime;
     }
 
+    public Date getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
+    }
+
     public String getHosermainPhone() {
         return hosermainPhone;
     }
@@ -225,7 +235,6 @@ public class Order implements Serializable {
     public void setRemark1(String remark1) {
         this.remark1 = remark1;
     }
-
     public String getReturnStatus(){
         if(status == 1){
             return "未结单";
@@ -250,6 +259,7 @@ public class Order implements Serializable {
         }
     }
 
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -270,6 +280,7 @@ public class Order implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", hosermanid=").append(hosermanid);
         sb.append(", pickUpTime=").append(pickUpTime);
+        sb.append(", sendTime=").append(sendTime);
         sb.append(", hosermainPhone=").append(hosermainPhone);
         sb.append(", hosermanName=").append(hosermanName);
         sb.append(", showHosemanStatus=").append(showHosemanStatus);

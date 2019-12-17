@@ -33,6 +33,10 @@ public class PageController {
     public String about_us(){
         return "/about_us";
     }
+    @GetMapping("findBackPage")
+    public String findBackPage(){
+        return "/findBack";
+    }
     @GetMapping({"index","/"})
     public String index(){
         return "/index";
