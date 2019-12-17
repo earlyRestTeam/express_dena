@@ -34,7 +34,7 @@
     top: 50%;
     background-position: center;
     margin:-25px 0 0 -25px;">
-        <img src="images/loader.gif" alt="loading...">
+        <img src="../../images/loader.gif" alt="loading...">
     </div>
 </div>
 <!----------------Preloader end----------------->
@@ -76,7 +76,7 @@
 
                 </button>
                 <a class="navbar-brand" href="index">
-                    <img src="images/3.png" class="img-responsive" alt="company-logo">
+                    <img src="../../images/3.png" class="img-responsive" alt="company-logo">
                 </a>
             </div>
             <div class="collapse navbar-collapse navbar-right" id="myMegamenu">
@@ -196,7 +196,7 @@
         <div class="content">
             <div class="wallet">
                 <h4 class="wallet-p">账户余额</h4>
-                <p class="wallet-m" >￥<span id="banlance">18</span></p>
+                <p class="wallet-m" >￥<span id="banlance" th:text="${balance}">18</span></p>
                 <h4 class="wallet-p">提现方式</h4>
                 <label class="wallet-method">
                     <input name="支付宝" type="radio" value="" />支付宝 </label><br>
@@ -234,7 +234,7 @@
         $.ajax({
             type: 'POST',//方法类型
             dataType: "json",//预期服务器返回的数据类型
-            url: 'user/tixian',//url
+            url: '/staff/tixian',//url
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             success: function (result) {

@@ -83,10 +83,7 @@ public class UserController {
         m.addAttribute("count",count);
         return "/userInfo";
     }
-    @GetMapping("wallet")
-    public String wallet(){
-        return "/wallet";
-    }
+
     @GetMapping("findBack")
     public String findBack(){
         return "/findBack";
