@@ -730,6 +730,25 @@ public class AdminController {
 
         return "redirect:/admin/advertsing_list";
     }
+    @RequestMapping("advertsing_del")
+    public String advertsing_del(Integer[] ids){
+        advertsingService.deleteADs(ids);
+        return "redirect:/admin/advertsing_list";
+    }
 
+    @RequestMapping("advertsing_show")
+    public String advertsing_show(){
+        return "advertsing-show";
+    }
+
+    @RequestMapping("order_list")
+    public String order_list(Integer indexpage, HttpServletRequest request, String serchno, String serchuser, String serchhoser){
+        PageInfo info = orderService.selectOrder(indexpage, serchno, serchuser, serchhoser);
+        request.setAttribute("pages",info);
+        request.setAttribute("serchno",serchno);
+        request.setAttribute("serchuser",serchuser);
+        request.setAttribute("serchhoser",serchhoser);
+        return "/admin/order-list";
+    }
 
 }
