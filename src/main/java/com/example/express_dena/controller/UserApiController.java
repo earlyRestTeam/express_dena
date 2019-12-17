@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.11.10:27
- */
+
 @RestController
 public class UserApiController {
 

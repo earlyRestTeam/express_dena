@@ -7,13 +7,6 @@ import com.github.pagehelper.PageInfo;
 import java.util.Date;
 
 
-/**
- * @author 谢晓峰
- * @Classname IManagerOrderService
- * @Description TODO
- * @Date 2019/12/11 10:36
- * @Version V1.0
- */
 public interface IManagerOrderService {
 
     /**

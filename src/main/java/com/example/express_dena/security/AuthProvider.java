@@ -18,10 +18,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.05.21:52
- */
+
 @Service
 public class AuthProvider implements AuthenticationProvider {
 

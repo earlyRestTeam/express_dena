@@ -1,18 +1,5 @@
 package com.example.express_dena.config;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.12.22:07
- */
-/**
- *@ClassName DruidConfig
- *@Description TODO 数据源Druid 配置化类
- *@Author Ni Klaus
- *@Date 2019/10/8 0008 下午 17:08
- *@Version 1.0
- */
-
-
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;

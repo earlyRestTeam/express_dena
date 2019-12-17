@@ -10,12 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 基于角色 的 登录入口 控制器
- *
- * @author 王志坚
- * @createTime 2019.11.29.9:43
- */
+
 public class LoginUrlEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
     // 路径 对应 登陆 入口

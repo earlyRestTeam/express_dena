@@ -13,13 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author 谢晓峰
- * @Classname ManagerOrderServiceImpl
- * @Description TODO
- * @Date 2019/12/11 10:46
- * @Version V1.0
- */
+
 @Service
 public class ManagerOrderServiceImpl implements IManagerOrderService {
 

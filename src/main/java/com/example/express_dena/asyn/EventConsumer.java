@@ -13,12 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 事件消费者 -- 实现 ApplicationContextAware 获取 spring上下文
- * -- 实现 InitializingBean 在创建对象之后 进行初始化操作
- * @author 王志坚
- * @createTime 2019.04.27.12:04
- */
 @Component
 public class EventConsumer implements InitializingBean, ApplicationContextAware {
     private Map<EventType, List<EventHandler>> map;

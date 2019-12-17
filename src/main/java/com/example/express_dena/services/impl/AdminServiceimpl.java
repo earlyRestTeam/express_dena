@@ -16,10 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @auther: XIE XING YU
- * @data: 2019/12/11
- */
+
 @Service
 public class AdminServiceimpl implements AdminService {
 

@@ -17,10 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-/**
- * @author 王志坚
- * @createTime 2019.12.12.15:42
- */
+
 public class MyUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private String type ;

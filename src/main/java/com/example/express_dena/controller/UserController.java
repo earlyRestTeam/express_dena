@@ -17,12 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
-/**
- * @author 王志坚
- * @createTime 2019.12.11.10:26
- */
 @Controller
 @RequestMapping("/user")
 public class UserController {

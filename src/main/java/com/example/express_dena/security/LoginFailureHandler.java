@@ -8,10 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.06.9:20
- */
+
 public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     private final MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter;

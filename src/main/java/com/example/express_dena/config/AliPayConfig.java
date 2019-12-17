@@ -1,9 +1,5 @@
 package com.example.express_dena.config;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.09.16:57
- */
 
 public class AliPayConfig {
     public final String APP_ID = "2016101600701148";

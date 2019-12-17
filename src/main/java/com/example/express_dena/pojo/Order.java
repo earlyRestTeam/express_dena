@@ -237,7 +237,7 @@ public class Order implements Serializable {
     }
     public String getReturnStatus(){
         if(status == 1){
-            return "未结单";
+            return "未接单";
         }else if(status == 2){
             return "以接单";
         }else if(status ==3){

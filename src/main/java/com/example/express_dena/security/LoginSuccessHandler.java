@@ -10,10 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.07.11:19
- */
+
 public class LoginSuccessHandler implements
         AuthenticationSuccessHandler {
 

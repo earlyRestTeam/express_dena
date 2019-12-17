@@ -18,10 +18,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
-/**
- * @author 王志坚
- * @createTime 2019.11.25.20:13
- */
+
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     @Value("${spring.thymeleaf.cache}")

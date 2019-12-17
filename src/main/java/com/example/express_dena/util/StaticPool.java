@@ -1,9 +1,5 @@
 package com.example.express_dena.util;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.10.21:43
- */
 public interface StaticPool {
      String ERROR = "error";
      String SUCCESS = "success";

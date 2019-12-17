@@ -13,10 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.11.14:45
- */
+
 @Component
 public class EmailHandler implements EventHandler {
     @Autowired

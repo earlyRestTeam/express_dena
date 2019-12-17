@@ -12,13 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @author 谢晓峰
- * @Classname ManagerAdvertsingServiceImpl
- * @Description TODO
- * @Date 2019/12/13 14:47
- * @Version V1.0
- */
+
 @Service
 public class ManagerAdvertsingServiceImpl implements IManagerAdvertsingService {
 

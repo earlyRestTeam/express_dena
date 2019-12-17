@@ -22,10 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-/**
- * @author :Yang Jiahong
- * @date :2019/12/10 22:59
- */
 @Service
 public class UserOrderServiceImpl implements UserOrderService {
 

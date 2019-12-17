@@ -11,12 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
- * @ClassName NoticeController
- * @Author czb
- * @Date 2019/12/11
- * @Version V1.0
- **/
 @Controller
 @RequestMapping("/admin/notice")
 public class NoticeController {

@@ -28,10 +28,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
 
-/**
- * @author :Yang Jiahong
- * @date :2019/12/11 16:03
- */
+
 @Controller
 @RequestMapping("/user")
 public class UserOrderController {

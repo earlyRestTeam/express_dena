@@ -22,10 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
- * @author :Yang Jiahong
- * @date :2019/12/10 20:58
- */
 @Controller
 @RequestMapping("/staff")
 public class StaffController {

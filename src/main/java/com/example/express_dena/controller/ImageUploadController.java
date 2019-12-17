@@ -15,10 +15,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.UUID;
 
-/**
- * @author 王志坚
- * @createTime 2019.11.27.19:57
- */
+
 @Controller
 public class ImageUploadController {
 

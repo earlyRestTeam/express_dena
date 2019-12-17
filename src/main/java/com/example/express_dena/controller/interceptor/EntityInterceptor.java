@@ -15,10 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.13.19:00
- */
 @Component
 public class EntityInterceptor implements HandlerInterceptor {
 

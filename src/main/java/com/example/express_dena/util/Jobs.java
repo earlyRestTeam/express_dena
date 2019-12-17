@@ -13,10 +13,6 @@ import org.thymeleaf.expression.Dates;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @date :2019/12/16 22:04
- */
-
 @Component
 public class Jobs {
     public final static long ONE_Minute =  60 * 1000;

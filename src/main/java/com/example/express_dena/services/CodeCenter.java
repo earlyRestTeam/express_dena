@@ -6,10 +6,6 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.11.14:53
- */
 @Component
 public class CodeCenter {
 

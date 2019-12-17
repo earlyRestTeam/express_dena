@@ -18,12 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @ClassName NoticeManageServiceImpl
- * @Author czb
- * @Date 2019/12/11
- * @Version V1.0
- **/
+
 @Service
 public class NoticeManageServiceImpl implements NoticeManageService {
 

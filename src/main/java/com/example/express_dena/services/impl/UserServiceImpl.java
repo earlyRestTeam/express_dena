@@ -13,10 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-/**
- * @author :Yang Jiahong
- * @date :2019/12/10 15:12
- */
 @Service
 public class UserServiceImpl implements UserService {
 

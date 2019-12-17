@@ -17,10 +17,6 @@ import org.springframework.stereotype.Service;
 import java.util.Random;
 import java.util.UUID;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.09.15:45
- */
 @Service
 public class AliPayService implements IAliPayService, InitializingBean {
 

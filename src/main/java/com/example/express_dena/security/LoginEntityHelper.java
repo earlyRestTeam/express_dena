@@ -5,10 +5,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 
-/**
- * @author 王志坚
- * @createTime 2019.12.12.8:48
- */
 @Component
 public class LoginEntityHelper {
 

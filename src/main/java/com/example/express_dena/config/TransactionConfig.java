@@ -13,13 +13,7 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 import org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
-/**
- *
- * 事务 增强 类配置
- * @author 王志坚
- * @createTime 2019.12.12.21:31
- *
- */
+
 @Configuration
 @Aspect
 public class TransactionConfig {

@@ -16,10 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.10.20:25
- */
+
 @Controller
 public class PageController {
     @Autowired

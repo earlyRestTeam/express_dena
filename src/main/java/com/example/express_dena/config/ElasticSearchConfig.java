@@ -10,10 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.net.InetAddress;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.07.10:43
- */
+
 //@Configuration
 public class ElasticSearchConfig {
 //    @Value("${elasticsearch.host}")

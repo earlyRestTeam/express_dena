@@ -17,10 +17,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import java.util.Map;
 
-/**
- * @author 王志坚
- * @createTime 2019.12.05.20:44
- */
+
 @Service
 public class SendMail implements ISendMail {
 

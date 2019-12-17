@@ -10,11 +10,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author :Yang Jiahong
- * @date :2019/12/10 21:52
- */
-
 public interface UserOrderService {
 
     //发布订单

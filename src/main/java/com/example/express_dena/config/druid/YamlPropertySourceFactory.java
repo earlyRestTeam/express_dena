@@ -1,7 +1,6 @@
 package com.example.express_dena.config.druid;
 
 /**
- * @author 王志坚
  * @createTime 2019.12.12.22:08
  */
 
@@ -16,13 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- *@ClassName YamlPropertySourceFactory
- *@Description TODO  重写 PropertySourceFactory 的 createPropertySource 使 @PropertySource 注解支持读取 .yml类型的配置文件
- *@Author Ni Klaus
- *@Date 2019/10/8 0008 下午 17:53
- *@Version 1.0
- */
 public class YamlPropertySourceFactory implements PropertySourceFactory {
     @Override
     public PropertySource<?> createPropertySource(@Nullable String name, EncodedResource resource) throws IOException {
