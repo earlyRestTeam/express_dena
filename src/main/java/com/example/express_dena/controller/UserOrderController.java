@@ -225,14 +225,14 @@ public class UserOrderController {
         List<Orderdetail> list = service.selectOrderdetailById(orderid);
         request.setAttribute("order",order);
         request.setAttribute("orderdetail",list);
-        return "orderdetils";
+        return "/orderdetils";
     }
 
-    //查看订单详情
+    //去评论
     @RequestMapping("tocomments")
     public String tocomments(Integer orderid, HttpServletRequest request){
         request.setAttribute("orderid",orderid);
-        return "comments";
+        return "/comments";
     }
 
     @RequestMapping("submitcomments")
@@ -240,8 +240,6 @@ public class UserOrderController {
     public APIResult submitcomments(@RequestBody JSONObject jsonObject,HttpServletRequest request){
         String orderid = (String) jsonObject.get("orderid");
         String comments = (String) jsonObject.get("comments");
-        System.out.println("orderid"+orderid);
-        System.out.println("comments"+comments);
         Order order = service.selectOrderById(Integer.parseInt(orderid));
 
         int userid = order.getUserid();

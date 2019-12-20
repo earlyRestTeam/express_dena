@@ -151,6 +151,7 @@ public class UserOrderServiceImpl implements UserOrderService {
 
         return info;
     }
+
     //根据id查询订单详情
     @Override
     public Order selectOrderById(int orderid) {
@@ -181,7 +182,15 @@ public class UserOrderServiceImpl implements UserOrderService {
     public Map<String, String> deleteUserOrderByID(int orderid) {
         Map<String, String> res = new HashMap<>();
         Order order1 = orderMapper.selectByPrimaryKey(orderid);
-        System.out.println(order1.toString());
+        if (order1 == null)
+            throw new PayException("订单异常");
+
+        LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
+        User user = loginEntityHelper.getEntityByClass(User.class);
+
+        if(order1.getUserid() != user.getId())
+            throw new PayException("登陆异常");
+
         order1.setShowuserstatus(1);
         int result = orderMapper.updateByPrimaryKey(order1);
         if (result > 0) {
@@ -252,7 +261,6 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     }
 
-    //查询订单详情
     @Override
     public Map<String, String> selectOrderDetail(int orderid) {
         return null;
@@ -328,8 +336,17 @@ public class UserOrderServiceImpl implements UserOrderService {
     public Map<String, String> insertComments(Comment comment) {
         int orderid = comment.getOrderId();
         Order order = orderMapper.selectByPrimaryKey(orderid);
+
         if(order == null)
-            throw new PayException("订单取消失败");
+            throw new PayException("订单状态异常");
+
+        LoginEntityHelper loginEntityHelper = new LoginEntityHelper();
+        User user = loginEntityHelper.getEntityByClass(User.class);
+
+        if(order.getUserid() != user.getId())
+            throw new PayException("登陆状态异常状态异常");
+
+
         if(order.getRemark1().equals("未评论，点击评论")){
             order.setRemark1("以评论，再评论?");
             int updateorder = orderMapper.updateByPrimaryKey(order);
