@@ -256,7 +256,8 @@
                         </tr>
                         <tr>
                             <td class="glyphicon glyphicon-phone-alt">骑手电话:</td>
-                            <td  class="main-info-center-content" th:text="${order.hosermainPhone}">123456789</td>
+                            <td th:if="${order.status == 1}" class="main-info-center-content" >接单后查看</td>
+                            <td th:if="${order.status == 2}" class="main-info-center-content" th:text="${order.hosermainPhone}">123456789</td>
                         </tr>
                     </table>
                 </div>
@@ -312,7 +313,7 @@
             <div style="margin-top: 20px;width: 1500px" class="main-info" th:each="orderdetail:${pages.list}">
                 <div style="width: 500px"  class="main-info-left">
                     <div style="margin: 0 110px;top: 130px" class="main-info-name">
-                        <p style="font-size: 40px" class="info-name"  id="showName">包裹1</p>
+                        <p style="font-size: 40px" class="info-name"  id="showName">包裹</p>
                     </div>
                 </div>
 
@@ -345,7 +346,8 @@
                 <div class="main-info-right">
                     <div class="main-info-right-up">
                         <p class="title">取件码:</p>
-                        <p class="main-info-right-content" th:text="${orderdetail.pickUpCode}">123456</p>
+                        <p th:if="${order.status == 1}" class="main-info-right-content" >接单后显示</p>
+                        <p th:if="${order.status == 2}" class="main-info-right-content" th:text="${orderdetail.pickUpCode}">123456</p>
                     </div>
                     <div class="main-info-right-xian"></div>
 
