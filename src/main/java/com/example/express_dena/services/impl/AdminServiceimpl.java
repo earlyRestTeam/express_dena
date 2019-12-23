@@ -250,6 +250,8 @@ public class AdminServiceimpl implements AdminService {
             horseman.setAccount(account);
             horseman.setPassword(md5Password);
             horseman.setStatus(status);
+            horseman.setBalance(0.0f);
+            horseman.setCreateTime(new Date());
             Event event = new Event();
             event.setEventType(EventType.SEND_MAIL);
             event.mapSet("key","sendaccount");
