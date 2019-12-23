@@ -256,8 +256,8 @@
                                         <td th:text="${message.content}"></td>
                                         <td th:switch="${message.status}">
     <!--                                        <a th:href="@{'/staff/filishOrder?id='+ ${order.id}}" class="queren">完成任务</a>-->
-                                            <a th:case="0"  th:onclick="|javascript : readMessage( '${message.id}')|" class="queren" style="color: #ff7800">已读</a>
-                                            <a th:case="1" >消息已读</a>
+                                            <a th:case="1"  th:onclick="|javascript : readMessage( '${message.id}')|" class="queren" style="color: #ff7800">已读</a>
+                                            <a th:case="2" >消息已读</a>
                                         </td>
                                     </tr>
 

@@ -47,7 +47,7 @@ public class StaffService implements IStaffService {
             if( horseman.getPassword().equals(MD5Utils.StringInMd5(oldPassword)) ){
                 String password = MD5Utils.StringInMd5(newPassword);
                 horseman.setPassword(password);
-                if(horsemanMapper.updateByPrimaryKey(horseman) > 0){
+                if(horsemanMapper.updateByPrimaryKeySelective(horseman) > 0){
                     res.put(StaticPool.SUCCESS,"修改成功！");
                 }else {
                     res.put(StaticPool.ERROR,"修改失败！请稍后再试！");
@@ -72,7 +72,7 @@ public class StaffService implements IStaffService {
         horseman1.setAvatar(horseman.getAvatar());
 
 
-        int ans = horsemanMapper.updateByPrimaryKey(horseman1);
+        int ans = horsemanMapper.updateByPrimaryKeySelective(horseman1);
         if(ans > 0 )
             res.put(StaticPool.SUCCESS,"修改成功！");
         else

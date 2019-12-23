@@ -54,7 +54,7 @@ public class StaffOrderControlle {
 
 
         boolean b = staffOrderService.updatePickupUserOrder(id);
-        System.out.println("领取任务:" + b);
+
         if (b){
             return "redirect:/staff/staffGetOrder";
         }else {
