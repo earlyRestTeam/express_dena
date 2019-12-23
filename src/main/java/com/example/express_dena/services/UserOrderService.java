@@ -59,6 +59,9 @@ public interface UserOrderService {
     //是未支付订单状态变为未结单
     public int updatePickOrder(int orderid);
 
+    //系统自动确认完成
+    public Map<String, String> updateSysCompleteOrder(int orderid);
+
 
 
 }

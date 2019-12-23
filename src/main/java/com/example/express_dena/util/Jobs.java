@@ -65,7 +65,7 @@ public class Jobs {
                     Date date = new Date();
                     if((date.getTime() - sendTime.getTime()) > submit){
                         System.out.println(order.getId());
-                        service.updateCompleteOrder(order.getId());
+                        service.updateSysCompleteOrder(order.getId());
                     }
                 }
             }
