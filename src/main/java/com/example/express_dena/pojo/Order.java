@@ -254,8 +254,10 @@ public class Order implements Serializable {
             return "取消定单";
         }else if(comfirmUserStatus == 0 && status == 2){
             return "确认完成";
-        }else {
-            return "完成";
+        }else if(status == 5){
+            return "去支付";
+        }else{
+            return "异常";
         }
     }
 

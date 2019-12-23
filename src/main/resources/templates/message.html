@@ -225,7 +225,7 @@
                                 </tr>
                                 <tr th:each="message : ${pageResult.list}">
                                     <td th:text="${message.content}">df122002</td>
-                                    <td th:value="${#dates.format(message.sendTime, 'yyyy-MM-dd')}">杨秀秀</td>
+                                    <td th:value="${#dates.format(message.sendTime,'yyyy-MM-dd')}"></td>
                                 </tr>
                             </table>
                         </div>

@@ -263,7 +263,7 @@
                                     <td th:text="${order.note}"></td>
                                     <td>
                                         <a
-                                                th:onclick="updateStatus([[${order.ReturnConfirmStatus}]],[[${order.id}]])"
+                                                th:onclick="updateStatus([[${order.ReturnConfirmStatus}]],[[${order.id}]],[[${order.totalAmount}]],[[${order.orderno}]])"
                                                 class="queren"
                                                 th:text="${order.ReturnConfirmStatus}"></a>
                                     </td>
@@ -386,8 +386,8 @@
     }
 
     /** 修改订单状态 **/
-    function updateStatus(status,orderid){
-        alert(status+orderid)
+    function updateStatus(status,orderid,totalAmount,orderno){
+        alert(status+orderid + totalAmount+orderno);
 
         if(confirm("您确定要"+status+"订单吗？")){
             if (status == "取消定单") {
@@ -408,7 +408,7 @@
                 })
             }
 
-            else if(status== "确认完成") {
+            else if(status== "确认完成"){
                 $.ajax({
                     url:"/user/completeOrder",
                     data:JSON.stringify({orderid:orderid}),
@@ -424,6 +424,10 @@
                         }
                     }
                 })
+            }
+            
+            else if (status == "去支付"){
+                window.location.href = "/user/topay?totalAmount="+totalAmount+"& orderno="+orderno;
             }
         }
     }

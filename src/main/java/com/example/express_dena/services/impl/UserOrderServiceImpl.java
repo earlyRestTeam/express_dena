@@ -300,7 +300,7 @@ public class UserOrderServiceImpl implements UserOrderService {
         Message hosermanmessage = new Message();     //发给骑手信息
         hosermanmessage.setReceiverid(order1.getUserid());
         String hosercontent = "您的订单编号为" + order1.getOrderno() + "已完成,到账" + order1.getTotalAmount() + "元";
-        hosermanmessage.setContent(content);         //设置发送内容
+        hosermanmessage.setContent(hosercontent);         //设置发送内容
         hosermanmessage.setReceiverType(2);          //设置发送用户类型 1.普通用户 2.骑手
         hosermanmessage.setSendTime(new Date());     //设置发送时间
         hosermanmessage.setStatus(1);                //设置信息状态 1.未读 2.已读
@@ -325,7 +325,7 @@ public class UserOrderServiceImpl implements UserOrderService {
         hoserres = iMessageService.sendMessage(hosermanmessage); //给骑手发送信息
 
         if (userres.get(StaticPool.SUCCESS) == null || hoserres.get(StaticPool.SUCCESS) == null)
-            throw new PayException("消息异常");
+                  throw new PayException("消息异常");
 
         res.put(StaticPool.SUCCESS, "订单完成");
         return res;
