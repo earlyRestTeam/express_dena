@@ -58,10 +58,11 @@ public class MessageService implements IMessageService {
     @Override
     public boolean updateReadMessage(Integer id) {
         Message message = messageMapper.selectByPrimaryKey(id);
-        System.out.println("message:" +message);
+
         if(message != null){
-            message.setStatus(1);
-            return messageMapper.updateByPrimaryKey(message) > 0;
+
+            message.setStatus(2);
+            return messageMapper.updateByPrimaryKeySelective(message) > 0;
         }else {
             throw new RuntimeException("error");
         }
