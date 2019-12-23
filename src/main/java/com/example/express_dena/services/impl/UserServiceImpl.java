@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
             userMapper.updateByPrimaryKey(u);
             res.put(StaticPool.SUCCESS,"修改成功！");
         }else {
-            res.put(StaticPool.ERROR,"修改失败！code错误！");
+            res.put(StaticPool.ERROR,"修改失败！验证码错误！");
         }
 
         return res;

@@ -42,6 +42,10 @@ public class Horseman implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
+    public Horseman() {
+        avatar = "/avatar.jpg";
+    }
+
     public Integer getId() {
         return id;
     }

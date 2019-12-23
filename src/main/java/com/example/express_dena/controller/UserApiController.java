@@ -5,6 +5,7 @@ import com.example.express_dena.asyn.Event;
 import com.example.express_dena.asyn.EventProductor;
 import com.example.express_dena.asyn.EventType;
 import com.example.express_dena.pojo.Horseman;
+import com.example.express_dena.pojo.Message;
 import com.example.express_dena.pojo.User;
 import com.example.express_dena.security.LoginEntityHelper;
 import com.example.express_dena.services.CodeCenter;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -242,12 +244,21 @@ public class UserApiController {
             result =  APIResult.genFailApiResponse("PARAMS ERROR!");
             return result;
         }
+        int userid = loginEntityHelper.getEntityByClass(User.class).getId();
         Map<String, String> res = userService.applicationStaff(horseman);
         if( res.get(StaticPool.ERROR) != null ){
             result = APIResult.genFailApiResponse(res.get(StaticPool.ERROR));
         }else {
             result = APIResult.genSuccessApiResponse(res.get(StaticPool.SUCCESS));
         }
+        Message message = new Message();
+        message.setReceiverid(userid);
+        message.setReceiverid(1);
+        message.setSendTime(new Date());
+        message.setStatus(1);
+        message.setContent("您已成功申请棋手，工作人员会在24小时内进行审核！");
+        messageService.sendMessage(message);
+
         return result;
     }
 
